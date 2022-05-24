@@ -10,10 +10,21 @@ import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { es} from 'date-fns/locale'
+
 
 const DATA_FORM = {
   name: '',
   status: 'Activo',
+  UTMNorth: "",
+  UTMEast: "",
+  startDate: "",
+  endDate: "",
+  maxDepth: 0,
+  section: "",
+  
 }
 
 const theme = createTheme({
@@ -41,11 +52,16 @@ return (
 
 function NewUnit () {
   const navigate = useNavigate();
+  const [startDate, setStartDate] = React.useState(new Date());
+  const [endDate, setEndDate] = React.useState(new Date());
 
   async function handleSubmit(){
+
     const proyect_id = window.location.pathname.split("/")[2];
     const site_id = window.location.pathname.split("/")[4];
     DATA_FORM.excavationSite = site_id;
+    DATA_FORM.startDate = startDate;
+    DATA_FORM.endDate = endDate;
     await fetch(`${process.env.REACT_APP_API_URL}/project/${proyect_id}/excavationSite/${site_id}/createUnit`, {
       method: 'POST',
       body: JSON.stringify(DATA_FORM),
@@ -90,6 +106,63 @@ function NewUnit () {
                     autoComplete="nombre"
                     autoFocus
                     onChange={(e) => {DATA_FORM.name = e.target.value}}
+                  />
+                  Fecha Inicio:
+                  <DatePicker
+                  dateFormat="dd/MM/yyyy"
+                  locale={es}
+                  selected={startDate}
+                  onChange={(date) => setStartDate(date)} />
+                  Fecha Fin:
+                  <DatePicker
+                  dateFormat="dd/MM/yyyy"
+                  locale={es}
+                  selected={endDate}
+                  onChange={(date_end) => setEndDate(date_end)} />
+                  UTM Norte:
+                  <TextField
+                    
+                    helperText="UTM Norte de la Unidad"
+                    id="UTMNorth"
+                    name="UTMNorth"
+                    fullWidth
+                    autoComplete="UTMNorth"
+                    
+                    onChange={(e) => {DATA_FORM.UTMNorth = e.target.value}}
+                  />
+                  UTM Este:
+                  <TextField
+                    
+                    helperText="UTM Este de la Unidad"
+                    id="UTMEast"
+                    name="UTMEast"
+                    fullWidth
+                    autoComplete="UTMEast"
+                    
+                    onChange={(e) => {DATA_FORM.UTMEast = e.target.value}}
+                  />
+                  Profundidad Máxima:
+                  <TextField
+                    
+                    type = "number"
+                    helperText="Profundidad Máxima de la unidad"
+                    id="maxDepth"
+                    name="maxDepth"
+                    fullWidth
+                    autoComplete="maxDepth"
+                    
+                    onChange={(e) => {DATA_FORM.maxDepth = e.target.value}}
+                  />
+                  Seccion:
+                  <TextField
+                    
+                    helperText="Seccion de la unidad"
+                    id="section"
+                    name="section"
+                    fullWidth
+                    autoComplete="section"
+                    
+                    onChange={(e) => {DATA_FORM.section = e.target.value}}
                   />
                   <Button
                       variant="contained"

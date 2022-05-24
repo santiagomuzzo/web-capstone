@@ -46,15 +46,17 @@ function IndexUnits() {
     }
 
     const handleDelete = async (id) => {
-        await fetch(`${process.env.REACT_APP_API_URL}/unit/${id}}`, {
+        console.log(id);
+        const data = await fetch(`${process.env.REACT_APP_API_URL}/unit/${id}`, {
             method: 'PUT',
             headers: {
-                'Content-Type': 'application/json'
+              'Content-Type': 'application/json'
             },
             body: JSON.stringify({
                 status: "Inactivo"
+      
             })
-        })
+          })
         window.location.reload()
     }
     return (
