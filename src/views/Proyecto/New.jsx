@@ -42,7 +42,7 @@ function NewProyect () {
   const navigate = useNavigate();
 
   async function handleSubmit(){
-    await fetch('${process.env.REACT_APP_API_URL}/project', {
+    await fetch(`${process.env.REACT_APP_API_URL}/project`, {
       method: 'POST',
       body: JSON.stringify(DATA_FORM),
       headers: {
