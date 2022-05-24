@@ -2,7 +2,7 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-Deploy: https://black-bush-0dd4c9c10.1.azurestaticapps.net
+Deploy: https://white-coast-0eaf9071e.1.azurestaticapps.net
 
 ## Available Scripts
 
