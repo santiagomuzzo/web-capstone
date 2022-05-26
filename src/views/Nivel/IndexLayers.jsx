@@ -10,10 +10,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Link } from "react-router-dom";
-
-const DATA_FORM = {
-    capas: {},
-}
+import { useDomain, defineDomain } from '../../useDomain';
 
 
 const theme = createTheme({
@@ -25,6 +22,7 @@ const theme = createTheme({
   });
 
 function IndexLayers() {
+    const {domain, setDomain} = useDomain()
 
     const [layerList, setLayerList] = React.useState([])
 
@@ -33,14 +31,37 @@ function IndexLayers() {
         }, [])
 
     const obtainData = async () => {
-        const id = window.location.pathname.split("/")[2];
-        const data = await fetch(`${process.env.REACT_APP_API_URL}/unit/${id}/level/${id}/layers`)
+        defineDomain("", "layer", domain, setDomain);
+        const unit_id = window.location.pathname.split("/")[6];
+        const level_id = window.location.pathname.split("/")[8];
+        const data = await fetch(`${process.env.REACT_APP_API_URL}/unit/${unit_id}/level/${level_id}/layers`)
         const raw = await data.json()
-        for (const key in raw) {
-            DATA_FORM.niveles[key] = raw[key]
-        }
-        setLayerList(DATA_FORM.capas)
+        console.log(raw)
+        const array = []
+        raw.forEach((obj) => {
+            if (obj.status === "Activo") {
+                array.push(obj)
+            }
+          })
+        setLayerList(array)
     }
+
+    const handleDelete = async (id) => {
+        const unit_id = window.location.pathname.split("/")[6];
+        const level_id = window.location.pathname.split("/")[8];
+        const data = await fetch(`${process.env.REACT_APP_API_URL}/unit/${unit_id}/level/${level_id}/updateLayer/${id}`, {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                status: "Inactivo"
+      
+            })
+          })
+        window.location.reload()
+    }
+
     return (
         <ThemeProvider theme={theme}>
             <CssBaseline />
@@ -53,26 +74,28 @@ function IndexLayers() {
                     </Grid>
                     <Grid item xs={12}>
                         <Grid container spacing={3}>
-                            {Object.keys(DATA_FORM.capas).map(key => (
-                                <Grid item xs={12} sm={6} md={4} key={key}>
+                            {layerList.map((layer, index) => (
+                                <Grid item xs={12} sm={6} md={4} key={index}>
                                     <Card>
                                         <CardMedia
                                             component="img"
                                             alt="Contemplative Reptile"
                                             height="140"
-                                            image={`https://source.unsplash.com/random?${key}`}
+                                            image={`https://source.unsplash.com/random?${index}`}
                                             title="Contemplative Reptile"
                                         />
                                         <CardContent>
                                             <Typography gutterBottom variant="h5" component="h2">
-                                                {DATA_FORM.capas[key].name}
+                                                {layer.matrixDescription.sedimentType}
+                                                {layer.status}
+                                                {layer._id}
                                             </Typography>
                                         </CardContent>
                                         <CardActions>
                                             <Button size="small" color="primary">
-                                            <Link to={`/Levels/${DATA_FORM.capas[key]._id}`}>Ver/Editar</Link>
+                                            <Link to={`./${layer._id}`}>Ver/Editar</Link>
                                             </Button>
-                                            <Button size="small" color='error'>Eliminar</Button>
+                                            <Button size="small" color='error' onClick={()=> handleDelete(layer._id)}>Archivar</Button>
                                         </CardActions>
                                     </Card>
                                 </Grid>

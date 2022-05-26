@@ -10,9 +10,16 @@ import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { es} from 'date-fns/locale'
 
 const DATA_FORM = {
+  startDepth: 0,
+  endDepth: 0,
   index: 0,
+  date: "",
+  feature: "",
 }
 
 const theme = createTheme({
@@ -40,11 +47,13 @@ return (
 
 function NewLevel () {
    const navigate = useNavigate();
+   const [date, setDate] = React.useState(new Date());
 
    async function handleSubmit() {
     const proyect_id = window.location.pathname.split("/")[2];
     const site_id = window.location.pathname.split("/")[4];
     const unit_id = window.location.pathname.split("/")[6];
+    DATA_FORM.date = date;
     console.log(DATA_FORM);
 
     await fetch(`${process.env.REACT_APP_API_URL}/unit/${unit_id}/createLevel`, {
@@ -82,29 +91,8 @@ function NewLevel () {
             <form onSubmit={handleSubmit}>
               <Grid container spacing={3}>
                 <Grid item xs={12}>
-                  <TextField
-                    type="number"
-                    required
-                    id="start_depth"
-                    name="Profundidad inicial"
-                    label="Profundidad inicial"
-                    fullWidth
-                    autoComplete="Profundidad inicial"
-                    autoFocus
-                    onChange={(e) => {DATA_FORM.startDepth = e.target.value}}
-                  />
-                  <TextField
-                    type="number"
-                    required
-                    id="end_depth"
-                    name="Profundidad final"
-                    label="Profundidad final"
-                    fullWidth
-                    autoComplete="Profundidad final"
-                    autoFocus
-                    onChange={(e) => {DATA_FORM.endDepth = e.target.value}}
-                  />
-                  <TextField
+                
+                <TextField
                     type="number"
                     required
                     id="index"
@@ -112,17 +100,48 @@ function NewLevel () {
                     label="Indice"
                     fullWidth
                     autoComplete="Indice"
+                    helperText="Indice del nivel"
                     autoFocus
                     onChange={(e) => {DATA_FORM.index = e.target.value}}
                   />
+                  Profundidad Inicial:
+                  <TextField
+                    type="number"
+                    required
+                    id="start_depth"
+                    name="Profundidad inicial"
+                    fullWidth
+                    autoComplete="Profundidad inicial"
+                    helperText="Profundidad inicial del nivel"
+                    onChange={(e) => {DATA_FORM.startDepth = e.target.value}}
+                  />
+                  Profundidad Final:
+                  <TextField
+                    type="number"
+                    required
+                    id="end_depth"
+                    name="Profundidad final"
+                    fullWidth
+                    autoComplete="Profundidad final"
+                    helperText="Profundidad final del nivel"
+                    onChange={(e) => {DATA_FORM.endDepth = e.target.value}}
+                  />
+                  Fecha:
+                  <DatePicker
+                  dateFormat="dd/MM/yyyy"
+                  locale={es}
+                  selected={date}
+                  onChange={(date) => setDate(date)} />
+
+                  Características:
                   <TextField
                     required
                     id="feature"
                     name="Caracteristica"
-                    label="Caracteristica"
                     fullWidth
                     autoComplete="Caracteristica"
-                    autoFocus
+                    helperText="Características del nivel"
+
                     onChange={(e) => {DATA_FORM.feature = e.target.value}}
                   />
                   <Button
