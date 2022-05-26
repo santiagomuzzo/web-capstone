@@ -77,7 +77,7 @@ function UnitShow() {
       <Container maxWidth="sm">
         <Paper style={{ padding: '1rem' }}>
           <Typography variant="h4" component="h1" gutterBottom>
-            Sitio {unit.name}
+            Unidad {unit.name}
           </Typography>
           <Grid container spacing={3}>
             <Grid item xs={12}>

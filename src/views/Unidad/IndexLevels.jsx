@@ -36,18 +36,23 @@ function IndexLevels() {
         const unit_id = window.location.pathname.split("/")[6];
         const data = await fetch(`${process.env.REACT_APP_API_URL}/unit/${unit_id}/levels`)
         const raw = await data.json()
-        console.log(raw)
+        console.log("hola", raw)
         const array = []
+        //raw.forEach((obj) => {
+            //if ( obj.status === "Activo") {
+            //    array.push(obj)
+            //}
+        //})
         raw.forEach((obj) => {
             array.push(obj)
-
         })
+
         setLevelList(array)
     }
 
     const handleDelete = async (id) => {
         const unit_id = window.location.pathname.split("/")[6];
-        await fetch(`${process.env.REACT_APP_API_URL}/unit/${unit_id}/updateLevel/${id}}`, {
+        const data = await fetch(`${process.env.REACT_APP_API_URL}/unit/${unit_id}/updateLevel/${id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -83,6 +88,9 @@ function IndexLevels() {
                                         <CardContent>
                                             <Typography gutterBottom variant="h5" component="h2">
                                                 {level.index}
+                                            </Typography>
+                                            <Typography variant="body2" color="textSecondary" component="p">
+                                                Capas: {level.layers.length}
                                             </Typography>
                                         </CardContent>
                                         <CardActions>
