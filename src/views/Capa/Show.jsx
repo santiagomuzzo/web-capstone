@@ -1,4 +1,7 @@
 import * as React from 'react';
+import { AuthenticatedTemplate, UnauthenticatedTemplate, 
+  useMsal, useAccount } from "@azure/msal-react";
+import { loginRequest } from "../../authConfig";
 import { useNavigate } from "react-router-dom";
 import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
@@ -10,8 +13,10 @@ import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
+// eslint-disable-next-line no-unused-vars
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+// eslint-disable-next-line no-unused-vars
 import { es} from 'date-fns/locale';
 import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
@@ -41,7 +46,7 @@ function Copyright() {
 
 
 
-function LayerShow() {
+function LayerShowContent() {
   const steps = [
     "Descripción Matriz",
     "Descripción Materiales",
@@ -77,13 +82,44 @@ function LayerShow() {
   const layer_id = window.location.pathname.split("/")[10];
   const [layer, setLayer] = React.useState({})
   const navigate = useNavigate();
+  //Codigo para obtener el Token
+  const { instance, accounts} = useMsal();
+  const account = useAccount(accounts[0] || {});
+  const [accessToken, setAccessToken] = React.useState(null);
+  function RequestAccessToken() {
+      const request = {
+          ...loginRequest,
+          account: account
+      };
+
+      // Silently acquires an access token which is then attached to a request for Microsoft Graph data
+      instance.acquireTokenSilent(request).then((response) => {
+          setAccessToken(response.accessToken);
+      }).catch((e) => {
+          instance.acquireTokenPopup(request).then((response) => {
+              setAccessToken(response.accessToken);
+          });
+      });
+  }
+  //
 
   React.useEffect(() => {
-    obtainData()
-  }, [])
-
+  
+    if (!accessToken && !layer._id) {
+      RequestAccessToken();
+      obtainData();
+    } else if(accessToken && !layer._id) {
+      obtainData();
+    }  
+  });
   const obtainData = async () => {
-    const data = await fetch(`${process.env.REACT_APP_API_URL}/unit/${unit_id}/level/${level_id}/layer/${layer_id}`)
+    const bearer = `Bearer ${accessToken}`; 
+    const data = await fetch(`${process.env.REACT_APP_API_URL}/unit/${unit_id}/level/${level_id}/layer/${layer_id}`,{
+      method: "GET",
+      headers: {
+      Authorization: bearer
+      }
+    })
     const raw = await data.json()
     setLayer(raw)
     
@@ -91,10 +127,12 @@ function LayerShow() {
   }
 
   const handleEdit = async (id) => {
-    const data = await fetch(`${process.env.REACT_APP_API_URL}/unit/${unit_id}/level/${level_id}/updateLayer/${layer_id}`, {
+    const bearer = `Bearer ${accessToken}`; 
+    await fetch(`${process.env.REACT_APP_API_URL}/unit/${unit_id}/level/${level_id}/updateLayer/${layer_id}`, {
       method: 'PUT',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        Authorization: bearer
       },
       body: JSON.stringify({
         status: layer.status,
@@ -591,6 +629,16 @@ function LayerShow() {
       </Container>
     </ThemeProvider>
   );
+}
+function LayerShow(){
+  return(
+    <><AuthenticatedTemplate>
+        <LayerShowContent/>
+    </AuthenticatedTemplate><UnauthenticatedTemplate>
+            <p>Aún no has iniciado sesión</p>
+        </UnauthenticatedTemplate></>  
+);
+
 }
 
 

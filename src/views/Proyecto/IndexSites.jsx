@@ -25,9 +25,9 @@ const theme = createTheme({
   });
 
 function IndexSitesContent() {
-
     const {domain, setDomain} = useDomain()
     const [siteList, setSiteList] = React.useState([])
+
     const { instance, accounts} = useMsal();
     const account = useAccount(accounts[0] || {});
     const [accessToken, setAccessToken] = React.useState(null);
@@ -49,11 +49,9 @@ function IndexSitesContent() {
     React.useEffect(() => {  
         if (!accessToken && !siteList.length) {
             RequestAccessToken();
-            obtainData();
-        
+            obtainData();    
         } else if(accessToken && !siteList.length){
             obtainData();
-
         }  
     });
 
@@ -68,7 +66,6 @@ function IndexSitesContent() {
         });
         const raw = await data.json()
         const array = []
-        console.log(raw)
         raw.forEach((obj) => {
             if (obj.status === "Activo") {
                 array.push(obj)

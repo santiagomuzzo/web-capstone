@@ -1,4 +1,7 @@
 import * as React from 'react';
+import { AuthenticatedTemplate, UnauthenticatedTemplate, 
+  useMsal, useAccount } from "@azure/msal-react";
+import { loginRequest } from "../../authConfig";
 import { useNavigate } from "react-router-dom";
 import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
@@ -11,6 +14,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
 
+// eslint-disable-next-line no-unused-vars
 import { useDomain, defineDomain } from '../../useDomain';
 
 const DATA_FORM = {
@@ -42,12 +46,38 @@ return (
 
 
 
-function NewSite() {
+function NewSiteContent() {
 
+  // eslint-disable-next-line no-unused-vars
   const {domain, setDomain} = useDomain()
   const navigate = useNavigate();
 
+  const { instance, accounts} = useMsal();
+  const account = useAccount(accounts[0] || {});
+  const [accessToken, setAccessToken] = React.useState(null);
+  function RequestAccessToken() {
+    const request = {
+      ...loginRequest,
+      account: account
+    };
+
+    // Silently acquires an access token which is then attached to a request for Microsoft Graph data
+    instance.acquireTokenSilent(request).then((response) => {
+      setAccessToken(response.accessToken);
+    }).catch((e) => {
+      instance.acquireTokenPopup(request).then((response) => {
+        setAccessToken(response.accessToken);
+      });
+    });
+  };
+
+  React.useEffect(() => {  
+    if (!accessToken){
+      RequestAccessToken();
+    } });
+  
   async function handleSubmit(domain){
+    const bearer = `Bearer ${accessToken}`;
     const id = domain.projectId
     await fetch(`${process.env.REACT_APP_API_URL}/project/${id}/createExcavationSite`, {
       method: 'POST',
@@ -55,6 +85,7 @@ function NewSite() {
       headers: {
         'Content-Type': 'application/json',
         'accept': 'application/json',
+        Authorization: bearer,
     },
   });
     navigate(`/Proyects/${id}/Sites`)
@@ -113,6 +144,15 @@ function NewSite() {
     </div>
 
   )
+}
+function NewSite(){
+  return(
+      <><AuthenticatedTemplate>
+          <NewSiteContent/>
+      </AuthenticatedTemplate><UnauthenticatedTemplate>
+              <p>Aún no has iniciado sesión</p>
+          </UnauthenticatedTemplate></>  
+  );
 }
 
 export default NewSite;
