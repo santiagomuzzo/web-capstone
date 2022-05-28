@@ -58,9 +58,7 @@ function ProyectosContent() {
         } else if(accessToken && !projectList.length){
             obtainData();
 
-        }
-        
-        
+        }  
     });
         
     const obtainData = async () => {

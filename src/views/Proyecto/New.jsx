@@ -1,4 +1,7 @@
 import * as React from 'react';
+import { AuthenticatedTemplate, UnauthenticatedTemplate, 
+  useMsal, useAccount } from "@azure/msal-react";
+import { loginRequest } from "../../authConfig";
 import { useNavigate } from "react-router-dom";
 import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
@@ -38,16 +41,41 @@ return (
 }
 
 
-function NewProyect () {
+function NewProyectForm () {
   const navigate = useNavigate();
+  const { instance, accounts} = useMsal();
+  const account = useAccount(accounts[0] || {});
+  const [accessToken, setAccessToken] = React.useState(null);
+  React.useEffect(() => {  
+    if (!accessToken){
+      RequestAccessToken();
+    } 
+});
+  function RequestAccessToken() {
+    const request = {
+      ...loginRequest,
+      account: account
+    };
 
+    // Silently acquires an access token which is then attached to a request for Microsoft Graph data
+    instance.acquireTokenSilent(request).then((response) => {
+      setAccessToken(response.accessToken);
+    }).catch((e) => {
+      instance.acquireTokenPopup(request).then((response) => {
+        setAccessToken(response.accessToken);
+      });
+    });
+  };
   async function handleSubmit(){
+    
+    const bearer = `Bearer ${accessToken}`;
     await fetch(`${process.env.REACT_APP_API_URL}/project`, {
       method: 'POST',
       body: JSON.stringify(DATA_FORM),
       headers: {
         'Content-Type': 'application/json',
         'accept': 'application/json',
+        Authorization: bearer,
       },
     });
     navigate(`/Proyects`)
@@ -109,4 +137,17 @@ function NewProyect () {
   )
 }
 
-export default NewProyect;
+function NewProject(){
+  return(
+      <><AuthenticatedTemplate>
+          <NewProyectForm/>
+      </AuthenticatedTemplate><UnauthenticatedTemplate>
+              <p>Aún no has iniciado sesión</p>
+          </UnauthenticatedTemplate></>  
+  );
+  
+
+
+}
+
+export default NewProject;

@@ -1,4 +1,7 @@
 import * as React from "react";
+import { AuthenticatedTemplate, UnauthenticatedTemplate, 
+  useMsal, useAccount } from "@azure/msal-react";
+import { loginRequest } from "../../authConfig";
 import CssBaseline from '@mui/material/CssBaseline';
 import Container from '@mui/material/Container';
 import Paper from '@mui/material/Paper';
@@ -17,29 +20,63 @@ const theme = createTheme({
     },
   });
 
-function ProyectShow() {
+function ProyectShowContent() {
 
   const project_id = window.location.pathname.split("/")[2];
   const [project, setProject] = React.useState({})
   const navigate = useNavigate();
-  
+
+  //Codigo para obtener el Token
+  const { instance, accounts} = useMsal();
+  const account = useAccount(accounts[0] || {});
+  const [accessToken, setAccessToken] = React.useState(null);
+  function RequestAccessToken() {
+      const request = {
+          ...loginRequest,
+          account: account
+      };
+
+      // Silently acquires an access token which is then attached to a request for Microsoft Graph data
+      instance.acquireTokenSilent(request).then((response) => {
+          setAccessToken(response.accessToken);
+      }).catch((e) => {
+          instance.acquireTokenPopup(request).then((response) => {
+              setAccessToken(response.accessToken);
+          });
+      });
+  }
+  //
 
   React.useEffect(() => {
-    obtainData()
-  }, [])
+  
+    if (!accessToken && !project._id) {
+      RequestAccessToken();
+      obtainData();
+    } else if(accessToken && !project._id) {
+      obtainData();
+    }  
+  });
 
   const obtainData = async () => {
-    const data = await fetch(`${process.env.REACT_APP_API_URL}/project/${project_id}`)
+    const bearer = `Bearer ${accessToken}`; 
+    const data = await fetch(`${process.env.REACT_APP_API_URL}/project/${project_id}`,{
+      method: "GET",
+      headers: {
+      Authorization: bearer
+      }
+    })
     const raw = await data.json()
     setProject(raw)
-    console.log(raw)
   }
   
   const handleEdit = async (id) => {
-    const data = await fetch(`${process.env.REACT_APP_API_URL}/project/${project_id}`, {
+    if(!accessToken) RequestAccessToken();
+    const bearer = `Bearer ${accessToken}`; 
+    await fetch(`${process.env.REACT_APP_API_URL}/project/${project_id}`, {
       method: 'PUT',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        Authorization: bearer,
       },
       body: JSON.stringify({
         name: project.name,
@@ -83,6 +120,17 @@ function ProyectShow() {
       </Container>
     </ThemeProvider>
   );
+}
+
+function ProyectShow(){
+  return(
+    <><AuthenticatedTemplate>
+        <ProyectShowContent/>
+    </AuthenticatedTemplate><UnauthenticatedTemplate>
+            <p>Aún no has iniciado sesión</p>
+        </UnauthenticatedTemplate></>  
+);
+
 }
 
 export default ProyectShow;
