@@ -13,7 +13,7 @@ import Users from "./views/Users";
 import FormShow from "./views/Forms/Show";
 import Proyectos from "./views/Proyecto/Index";
 import CustomizedBreadcrumbs from "./components/Breadcrumb";
-import NewProyect from "./views/Proyecto/New";
+import NewProject from "./views/Proyecto/New";
 import NewSite from "./views/Sitio/New";
 import NewUnit from "./views/Unidad/New";
 import NewLevel from "./views/Nivel/New";
@@ -49,7 +49,7 @@ function App({ instance }) {
 				<Route path="/Forms" element={<FormList />} />
 				<Route path="/Forms/:id" element={<FormShow />} />
 				<Route path="/Proyects" element={<Proyectos />} />
-				<Route path="/Proyects/new" element={<NewProyect />} />
+				<Route path="/Proyects/new" element={<NewProject />} />
 				<Route path="/Proyects/:id" element={<ProyectShow />} />
 				<Route path="/Proyects/:id/Sites" element={<IndexSites />} />
 				<Route path="/Proyects/:id/Sites/new" element={<NewSite />} />

@@ -1,4 +1,7 @@
 import * as React from 'react';
+import { AuthenticatedTemplate, UnauthenticatedTemplate, 
+    useMsal, useAccount } from "@azure/msal-react";
+import { loginRequest } from "../../authConfig";
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
@@ -23,19 +26,50 @@ const theme = createTheme({
   });
 
 
-
-function Proyectos() {
+function ProyectosContent() {
 
     const {domain, setDomain} = useDomain()
     const [projectList, setProjectList] = React.useState([])
+    const { instance, accounts} = useMsal();
+    const account = useAccount(accounts[0] || {});
+    const [accessToken, setAccessToken] = React.useState(null);
+    function RequestAccessToken() {
+        const request = {
+            ...loginRequest,
+            account: account
+        };
 
-    React.useEffect(() => {
-        obtainData()
-      }, [])
+        // Silently acquires an access token which is then attached to a request for Microsoft Graph data
+        instance.acquireTokenSilent(request).then((response) => {
+            setAccessToken(response.accessToken);
+        }).catch((e) => {
+            instance.acquireTokenPopup(request).then((response) => {
+                setAccessToken(response.accessToken);
+            });
+        });
+    }
+    
 
+    React.useEffect(() => {  
+        if (!accessToken && !projectList.length) {
+            RequestAccessToken();
+            obtainData();
+        
+        } else if(accessToken && !projectList.length){
+            obtainData();
+
+        }  
+    });
+        
     const obtainData = async () => {
-        defineDomain("", "all", domain, setDomain)
-        const data = await fetch(`${process.env.REACT_APP_API_URL}/project`)
+        defineDomain("", "all", domain, setDomain);   
+        const bearer = `Bearer ${accessToken}`; 
+        const data = await fetch(`${process.env.REACT_APP_API_URL}/project`,{
+            method: "GET",
+            headers: {
+            Authorization: bearer
+            }
+        });
         const raw = await data.json()
         const array = []
         raw.forEach((obj) => {
@@ -46,19 +80,21 @@ function Proyectos() {
         setProjectList(array)
     }
     const handleDelete = async (id) => {
+        if(!accessToken) RequestAccessToken();
+        const bearer = `Bearer ${accessToken}`;
         await fetch(`${process.env.REACT_APP_API_URL}/project/${id}`, {
             method: 'PUT',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                Authorization: bearer
             },
             body: JSON.stringify({
                 status: "Inactivo"
-            })
         })
-
+    })
+    
         window.location.reload()
     }
-
 
     if (!projectList) {
         return <CircularProgress></CircularProgress>
@@ -133,6 +169,19 @@ function Proyectos() {
             </Container>
         </ThemeProvider>
     );
+}
+
+function Proyectos(){
+    return(
+        <><AuthenticatedTemplate>
+            <ProyectosContent/>
+        </AuthenticatedTemplate><UnauthenticatedTemplate>
+                <p>Aún no has iniciado sesión</p>
+            </UnauthenticatedTemplate></>  
+    );
+    
+
+
 }
 
 export default Proyectos;

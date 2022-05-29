@@ -1,4 +1,8 @@
+/* eslint-disable no-unused-vars */
 import * as React from 'react';
+import { AuthenticatedTemplate, UnauthenticatedTemplate, 
+  useMsal, useAccount } from "@azure/msal-react";
+import { loginRequest } from "../../authConfig";
 import { useNavigate } from "react-router-dom";
 import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
@@ -86,8 +90,31 @@ function getStepContent(step) {
   }
 }
 
-function NewLayer () {
+function NewLayerContent () {
   const [activeStep, setActiveStep] = React.useState(0);
+  const { instance, accounts} = useMsal();
+  const account = useAccount(accounts[0] || {});
+  const [accessToken, setAccessToken] = React.useState(null);
+  React.useEffect(() => {  
+    if (!accessToken){
+      RequestAccessToken();
+    } 
+});
+  function RequestAccessToken() {
+    const request = {
+      ...loginRequest,
+      account: account
+    };
+
+    // Silently acquires an access token which is then attached to a request for Microsoft Graph data
+    instance.acquireTokenSilent(request).then((response) => {
+      setAccessToken(response.accessToken);
+    }).catch((e) => {
+      instance.acquireTokenPopup(request).then((response) => {
+        setAccessToken(response.accessToken);
+      });
+    });
+  };
 
   const handleNext = () => {
     setActiveStep(activeStep + 1);
@@ -101,6 +128,7 @@ function NewLayer () {
   const navigate = useNavigate();
 
   async function handleSubmit(){
+    const bearer = `Bearer ${accessToken}`;
     console.log("data form:", DATA_FORM)
     const proyect_id = window.location.pathname.split("/")[2];
     const site_id = window.location.pathname.split("/")[4];
@@ -112,6 +140,7 @@ function NewLayer () {
       headers: {
         'Content-Type': 'application/json',
         'accept': 'application/json',
+        Authorization: bearer,
     },
   });
   setActiveStep(activeStep + 1);
@@ -572,6 +601,15 @@ function Review() {
     </React.Fragment>
   );
 }
+function NewLayer(){
+  return(
+    <><AuthenticatedTemplate>
+        <NewLayerContent/>
+    </AuthenticatedTemplate><UnauthenticatedTemplate>
+            <p>Aún no has iniciado sesión</p>
+        </UnauthenticatedTemplate></>  
+);
 
+}
 export default NewLayer;
 

@@ -83,4 +83,4 @@ export const Hello = () => {
         </MsalAuthenticationTemplate>
       )
 };
-export default HelloContent;
+export default Hello;

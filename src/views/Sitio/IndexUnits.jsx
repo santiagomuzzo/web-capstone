@@ -1,4 +1,7 @@
 import * as React from 'react';
+import { AuthenticatedTemplate, UnauthenticatedTemplate, 
+    useMsal, useAccount } from "@azure/msal-react";
+import { loginRequest } from "../../authConfig";
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
@@ -21,19 +24,48 @@ const theme = createTheme({
     },
   });
 
-function IndexUnits() {
+function IndexUnitsContent() {
     const {domain, setDomain} = useDomain()
 
-    const [unitList, setUnitList] = React.useState([])
+    const [unitList, setUnitList] = React.useState([]);
+    const { instance, accounts} = useMsal();
+    const account = useAccount(accounts[0] || {});
+    const [accessToken, setAccessToken] = React.useState(null);
+    function RequestAccessToken() {
+        const request = {
+            ...loginRequest,
+            account: account
+        };
 
-    React.useEffect(() => {
-        obtainData()
-        }, [])
+        // Silently acquires an access token which is then attached to a request for Microsoft Graph data
+        instance.acquireTokenSilent(request).then((response) => {
+            setAccessToken(response.accessToken);
+        }).catch((e) => {
+            instance.acquireTokenPopup(request).then((response) => {
+                setAccessToken(response.accessToken);
+            });
+        });
+    }
+    React.useEffect(() => {  
+        if (!accessToken && !unitList.length) {
+            RequestAccessToken();
+            obtainData();
+        
+        } else if(accessToken && !unitList.length){
+            obtainData();
+
+        }  
+    });
 
     const obtainData = async () => {
         defineDomain("", "unit", domain, setDomain);
         const site_id = window.location.pathname.split("/")[4];
-        const data = await fetch(`${process.env.REACT_APP_API_URL}/unit`)
+        const bearer = `Bearer ${accessToken}`; 
+        const data = await fetch(`${process.env.REACT_APP_API_URL}/unit`,{
+            method: "GET",
+            headers: {
+            Authorization: bearer}
+        })
         const raw = await data.json()
         const array = []
         raw.forEach((obj) => {
@@ -42,15 +74,15 @@ function IndexUnits() {
             }
           })
         setUnitList(array)
-        console.log(array)
     }
 
     const handleDelete = async (id) => {
-        console.log(id);
-        const data = await fetch(`${process.env.REACT_APP_API_URL}/unit/${id}`, {
+        const bearer = `Bearer ${accessToken}`; 
+        await fetch(`${process.env.REACT_APP_API_URL}/unit/${id}`, {
             method: 'PUT',
             headers: {
-              'Content-Type': 'application/json'
+              'Content-Type': 'application/json',
+              Authorization: bearer,
             },
             body: JSON.stringify({
                 status: "Inactivo"
@@ -130,5 +162,16 @@ function IndexUnits() {
         </ThemeProvider>
     );
 }
+function IndexUnits(){
+    return(
+        <><AuthenticatedTemplate>
+            <IndexUnitsContent/>
+        </AuthenticatedTemplate><UnauthenticatedTemplate>
+                <p>Aún no has iniciado sesión</p>
+            </UnauthenticatedTemplate></>  
+    );
+    
 
+
+}
 export default IndexUnits;
