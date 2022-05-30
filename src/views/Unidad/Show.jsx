@@ -31,6 +31,9 @@ function UnitShowContent() {
   const [unit, setUnit] = React.useState({})
   const [startDate, setStartDate] = React.useState(new Date());
   const [endDate, setEndDate] = React.useState(new Date());
+  const [edit, setEdit] = React.useState(false);
+  const [color, setColor] = React.useState('success');
+  const [text, setText] = React.useState('Editar');
   const navigate = useNavigate();
   //Codigo para obtener el Token
   const { instance, accounts} = useMsal();
@@ -107,6 +110,19 @@ function UnitShowContent() {
     })
     navigate(`/proyects/${project_id}/sites/${site_id}/units`)
   }
+
+  const handleTextfield = () => {
+    if (edit){
+      setColor("success")
+      navigate(`/proyects/${project_id}/sites/${site_id}/units`)
+    }
+    else{
+      setColor("error")
+      setEdit(!edit)
+      setText("Cancelar")
+    }
+    
+  }
   
   return (
     <ThemeProvider theme={theme}>
@@ -117,9 +133,22 @@ function UnitShowContent() {
             Unidad {unit.name}
           </Typography>
           <Grid container spacing={3}>
+            <Grid item xs={4}>
+                  <Button
+                    variant="outlined"
+                    floated="right"
+                    onClick={handleTextfield}
+                    sx={{ mt: 3, ml: 1 }}
+                    color = {color}
+                    value="EDITAR"
+                  >
+                    {text}
+                  </Button>
+                </Grid>
             <Grid item xs={12}>
               Nombre:
               <TextField
+                disabled={!edit}
                 required
                 helperText="Nombre del Sitio"
                 id="name"
@@ -131,19 +160,21 @@ function UnitShowContent() {
               />
               Fecha Inicio:
               <DatePicker
+               disabled={!edit}
                dateFormat="dd/MM/yyyy"
                locale={es}
                selected={startDate}
                onChange={(date) => setStartDate(date)} />
               Fecha Fin:
               <DatePicker
+                disabled={!edit}
                dateFormat="dd/MM/yyyy"
                locale={es}
                selected={endDate}
                onChange={(date_end) => setEndDate(date_end)} />
               UTM Norte:
               <TextField
-                
+                disabled={!edit}
                 helperText="UTM Norte de la Unidad"
                 id="UTMNorth"
                 name="UTMNorth"
@@ -154,7 +185,7 @@ function UnitShowContent() {
               />
               UTM Este:
               <TextField
-                
+                disabled={!edit}
                 helperText="UTM Este de la Unidad"
                 id="UTMEast"
                 name="UTMEast"
@@ -165,7 +196,7 @@ function UnitShowContent() {
               />
               Profundidad Máxima:
               <TextField
-                
+                disabled={!edit}
                 type = "number"
                 helperText="Profundidad Máxima de la unidad"
                 id="maxDepth"
@@ -177,7 +208,7 @@ function UnitShowContent() {
               />
               Seccion:
               <TextField
-                
+                disabled={!edit}
                 helperText="Seccion de la unidad"
                 id="section"
                 name="section"
@@ -186,14 +217,14 @@ function UnitShowContent() {
                 value={unit.section}
                 onChange={(e) => setUnit({...unit, section: e.target.value})}
               />
-              <Button
+              {edit && (<Button
                 variant="contained"
                 onClick={handleEdit}
                 sx={{ mt: 3, ml: 1 }}
                 color = "success"
               >
-                Editar
-                </Button>
+                Guardar Cambios
+                </Button>)}
             </Grid>
           </Grid>
         </Paper>

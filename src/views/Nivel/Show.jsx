@@ -31,6 +31,9 @@ function LevelShowContent() {
   const level_id = window.location.pathname.split("/")[8];
   const [level, setLevel] = React.useState({})
   const [date, setDate] = React.useState(new Date());
+  const [edit, setEdit] = React.useState(false);
+  const [color, setColor] = React.useState('success');
+  const [text, setText] = React.useState('Editar');
   const navigate = useNavigate();
 
   //Codigo para obtener el Token
@@ -74,6 +77,8 @@ function LevelShowContent() {
     })
     const raw = await data.json()
     setLevel(raw)
+    console.log("LEVEL RAW", raw)
+    console.log("LEVEL LEVEL", level)
     if (raw.date){
       setDate(new Date(raw.date))
     }
@@ -98,6 +103,19 @@ function LevelShowContent() {
     navigate(`/proyects/${project_id}/sites/${site_id}/units/${unit_id}/levels`)
   }
 
+  const handleTextfield = () => {
+    if (edit){
+      setColor("success")
+      navigate(`/proyects/${project_id}/sites/${site_id}/units/${unit_id}/levels`)
+    }
+    else{
+      setColor("error")
+      setEdit(!edit)
+      setText("Cancelar")
+    }
+    
+  }
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -107,9 +125,21 @@ function LevelShowContent() {
             Nivel {level.id}
           </Typography>
           <Grid container spacing={3}>
+            <Grid item xs={4}>
+                  <Button
+                    variant="outlined"
+                    floated="right"
+                    onClick={handleTextfield}
+                    sx={{ mt: 3, ml: 1 }}
+                    color = {color}
+                  >
+                    {text}
+                  </Button>
+                </Grid>
             <Grid item xs={12}>
             Indice:
             <TextField
+                disabled={!edit}
                 type="number"
                 required
                 id="index"
@@ -123,6 +153,7 @@ function LevelShowContent() {
               />
               Profundidad Inicial:
               <TextField
+                disabled={!edit}
                 type="number"
                 required
                 id="start_depth"
@@ -135,6 +166,7 @@ function LevelShowContent() {
               />
               Profundidad Final:
               <TextField
+                disabled={!edit}
                 type="number"
                 required
                 id="end_depth"
@@ -147,6 +179,7 @@ function LevelShowContent() {
               />
               Fecha:
               <DatePicker
+                disabled={!edit}
                 dateFormat="dd/MM/yyyy"
                 locale={es}
                 selected={date}
@@ -154,6 +187,7 @@ function LevelShowContent() {
 
               Características:
               <TextField
+                disabled={!edit}
                 required
                 id="feature"
                 name="Caracteristica"
@@ -163,14 +197,14 @@ function LevelShowContent() {
                 value= {level.feature}
                 onChange={(e) => setLevel({...level, feature: e.target.value})}
                 />
-              <Button
+              {edit && (<Button
                 variant="contained"
                 onClick={handleEdit}
                 sx={{ mt: 3, ml: 1 }}
                 color = "success"
               >
-                Editar
-                </Button>
+                Guardar Cambios
+                </Button>)}
             </Grid>
           </Grid>
         </Paper>

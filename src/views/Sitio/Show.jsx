@@ -25,6 +25,9 @@ function SiteShowContent() {
   const project_id = window.location.pathname.split("/")[2];
   const site_id = window.location.pathname.split("/")[4];
   const [site, setSite] = React.useState({})
+  const [edit, setEdit] = React.useState(false);
+  const [color, setColor] = React.useState('success');
+  const [text, setText] = React.useState('Editar');
   const navigate = useNavigate();
   //Codigo para obtener el Token
   const { instance, accounts} = useMsal();
@@ -85,6 +88,19 @@ function SiteShowContent() {
     })
     navigate(`/proyects/${project_id}/sites`)
   }
+
+  const handleTextfield = () => {
+    if (edit){
+      setColor("success")
+      navigate(`/proyects/${project_id}/sites`)
+    }
+    else{
+      setColor("error")
+      setEdit(!edit)
+      setText("Cancelar")
+    }
+    
+  }
   
   return (
     <ThemeProvider theme={theme}>
@@ -95,9 +111,23 @@ function SiteShowContent() {
             Sitio {site.name}
           </Typography>
           <Grid container spacing={3}>
+            <Grid item xs={4}>
+                <Button
+                  variant="outlined"
+                  floated="right"
+                  onClick={handleTextfield}
+                  sx={{ mt: 3, ml: 1 }}
+                  color = {color}
+                  value="EDITAR"
+                >
+                  {text}
+                </Button>
+              </Grid>
+
             <Grid item xs={12}>
               Nombre:
               <TextField
+                disabled={!edit}
                 required
                 helperText="Nombre del Sitio"
                 id="name"
@@ -107,14 +137,14 @@ function SiteShowContent() {
                 value={site.name}
                 onChange={(e) => setSite({...site, name: e.target.value})}
               />
-              <Button
+              {edit &&(<Button
                 variant="contained"
                 onClick={handleEdit}
                 sx={{ mt: 3, ml: 1 }}
                 color = "success"
               >
-                Editar
-                </Button>
+                Guardar Cambios
+                </Button>)}
             </Grid>
           </Grid>
         </Paper>

@@ -82,6 +82,11 @@ function LayerShowContent() {
   const layer_id = window.location.pathname.split("/")[10];
 
   const [layer, setLayer] = React.useState({});
+  const [matrixDescription, setMatrixDescription] = React.useState({});
+  const [materialDescription, setMaterialDescription] = React.useState({});
+  const [edit, setEdit] = React.useState(false);
+  const [color, setColor] = React.useState('success');
+  const [text, setText] = React.useState('Editar');
 
   const navigate = useNavigate();
 
@@ -125,11 +130,12 @@ function LayerShowContent() {
       }
     })
     const raw = await data.json()
-    setLayer(raw);
+    setMatrixDescription(raw.matrixDescription);
+    setMaterialDescription(raw.materialDescription);
     
-    console.log("data de layeeeer RAW", raw)
-    const layer = raw;
-    console.log("data de layeeeer", layer)
+    //console.log("data de layeeeer RAW", raw)
+    //const layer = raw;
+    //console.log("data de layeeeer", layer)
   }
 
   const handleEdit = async (id) => {
@@ -141,40 +147,27 @@ function LayerShowContent() {
         Authorization: bearer
       },
       body: JSON.stringify({
-        status: layer.status,
 
-        matrixDescription: {
-          sedimentType: layer.matrixDescription.sedimentType,
-          compaction: layer.matrixDescription.compaction,
-          munsell: layer.matrixDescription.munsell,
-          inclusionType: layer.matrixDescription.inclusionType,
-          inclusionSize: layer.matrixDescription.inclusionSize,
-          inclusionDensity: layer.matrixDescription.inclusionDensity,
-          organicMatter: layer.matrixDescription.organicMatter,
-          humidity: layer.matrixDescription.humidity,
-          observations: layer.matrixDescription.observations,
-        },
+        matrixDescription: matrixDescription,
 
-        materialDescription: {
-          crockery: layer.materialDescription.crockery,
-          metal: layer.materialDescription.metal,
-          glass: layer.materialDescription.glass,
-          ceramic: layer.materialDescription.ceramic,
-          lithic: layer.materialDescription.lithic,
-          leather: layer.materialDescription.leather,
-          textile: layer.materialDescription.textile,
-          animalBones: layer.materialDescription.animalBones,
-          wood: layer.materialDescription.wood,
-          bioAntro: layer.materialDescription.bioAntro,
-          archeoBotanical: layer.materialDescription.archeoBotanical,
-          malacological: layer.materialDescription.malacological,
-          totalNumber: layer.materialDescription.totalNumber,
-          observations: layer.materialDescription.observations,
-        },
+        materialDescription: materialDescription,
       })
     })
     setActiveStep(activeStep + 1);
     navigate(`/proyects/${project_id}/sites/${site_id}/units/${unit_id}/levels/${level_id}/layers`)
+  }
+
+  const handleTextfield = () => {
+    if (edit){
+      setColor("success")
+      navigate(`/proyects/${project_id}/sites/${site_id}/units/${unit_id}/levels/${level_id}/layers`)
+    }
+    else{
+      setColor("error")
+      setEdit(!edit)
+      setText("Cancelar")
+    }
+    
   }
 
 
@@ -185,16 +178,18 @@ function LayerShowContent() {
           Descripción Matriz
         </Typography>
         <Grid>
+          
           <Grid item xs={12} sm={6}>
             <TextField
+              disabled={!edit}
               required
               id="rasgo"
               select
               label="Tipo de Sedimiento"
               fullWidth
               variant="standard"
-              value={layer.matrixDescription}
-              onChange={(e) => setLayer({...layer.matrixDescription, sedimentType: e.target.value})}
+              value={matrixDescription.sedimentType}
+              onChange={(e) => setMatrixDescription({...matrixDescription, sedimentType: e.target.value})}
   
             >
               <MenuItem value={"arena"}>Arena</MenuItem>
@@ -211,14 +206,15 @@ function LayerShowContent() {
   
           <Grid item xs={12} sm={6}>
             <TextField
+              disabled={!edit}
               required
               id="compactacion"
               select
               label="Compactación"
               fullWidth
               variant="standard"
-              value={layer.matrixDescription}
-              onChange={(e) => setLayer({...layer.matrixDescription, compaction: e.target.value})}
+              value={matrixDescription.compaction}
+              onChange={(e) => setMatrixDescription({...matrixDescription, compaction: e.target.value})}
   
             >
               <MenuItem value={"muy_compacta"}>Muy Compacta</MenuItem>
@@ -229,27 +225,29 @@ function LayerShowContent() {
           </Grid>
           <Grid item xs={12} md={6}>
             <TextField
+              disabled={!edit}
               required
               id="codigo_munsell"
               label="Código Munsell"
               fullWidth
               autoComplete="cc-exp"
               variant="standard"
-              value={layer.matrixDescription}
-              onChange={(e) => setLayer({...layer.matrixDescription, munsell: e.target.value})}
+              value={matrixDescription.munshell}
+              onChange={(e) => setMatrixDescription({...matrixDescription, munshell: e.target.value})}
   
             />
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
+              disabled={!edit}
               required
               id="tipo_de_inclusiones"
               select
               label="Tipo de inclusiones"
               fullWidth
               variant="standard"
-              value={layer.matrixDescription}
-              onChange={(e) => setLayer({...layer.matrixDescription, inclusionType: e.target.value})}
+              value={matrixDescription.inclusionType}
+              onChange={(e) => setMatrixDescription({...matrixDescription, inclusionType: e.target.value})}
   
               
             >
@@ -269,14 +267,15 @@ function LayerShowContent() {
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
+              disabled={!edit}
               required
               id="tamaño_de_inclusiones"
               select
               label="Tamaño de inclusiones"
               fullWidth
               variant="standard"
-              value={layer.matrixDescription}
-              onChange={(e) => setLayer({...layer.matrixDescription, inclusionSize: e.target.value})}
+              value={matrixDescription.inclusionSize}
+              onChange={(e) => setMatrixDescription({...matrixDescription, inclusionSize: e.target.value})}
   
             >
               <MenuItem value={"grande"}>Grande</MenuItem>
@@ -287,15 +286,15 @@ function LayerShowContent() {
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
+              disabled={!edit}
               required
               id="densidad_de_inclusiones"
               select
               label="Densidad de inclusiones"
               fullWidth
               variant="standard"
-              value={layer.matrixDescription}
-              onChange={(e) => setLayer({...layer.matrixDescription, inclusionDensity: e.target.value})}
-  
+              value={matrixDescription.inclusionDensity}
+              onChange={(e) => setMatrixDescription({...matrixDescription, inclusionDensity: e.target.value})}
             >
               <MenuItem value={"alta"}>Alta</MenuItem>
               <MenuItem value={"media"}>Media</MenuItem>
@@ -305,14 +304,15 @@ function LayerShowContent() {
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
+              disabled={!edit}
               required
               id="contenido_de_materia_organica"
               select
               label="Contenido de materia orgánica"
               fullWidth
               variant="standard"
-              value={layer.matrixDescription}
-              onChange={(e) => setLayer({...layer.matrixDescription, organicMatter: e.target.value})}
+              value={matrixDescription.organicMatter}
+              onChange={(e) => setMatrixDescription({...matrixDescription, organicMatter: e.target.value})}
   
             >
               <MenuItem value={"alto"}>Alto</MenuItem>
@@ -322,14 +322,15 @@ function LayerShowContent() {
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
+              disabled={!edit}
               required
               id="humedad"
               select
               label="Humedad"
               fullWidth
               variant="standard"
-              value={layer.matrixDescription}
-              onChange={(e) => setLayer({...layer.matrixDescription, humidity: e.target.value})}
+              value={matrixDescription.humidity}
+              onChange={(e) => setMatrixDescription({...matrixDescription, humidity: e.target.value})}
   
             >
               <MenuItem value={"muy_humeda"}>Muy Húmeda</MenuItem>
@@ -341,11 +342,12 @@ function LayerShowContent() {
           <Grid item xs={12}>
             <h4>Obersvaciones de la Matriz / Descripción del Rasgo:</h4>
             <textarea
+              disabled={!edit}
               name="observaciones_matriz"
               rows="4"
               cols="50"
-              value={layer.matrixDescription}
-              onChange={(e) => setLayer({...layer.matrixDescription, observations: e.target.value})}
+              value={matrixDescription.observations}
+              onChange={(e) => setMatrixDescription({...matrixDescription, observations: e.target.value})}
   
               
             ></textarea>
@@ -364,6 +366,7 @@ function LayerShowContent() {
   
         <Grid item xs={12} sm={6}>
           <TextField
+            disabled={!edit}
             id="loza"
             name="Loza"
             label="Loza"
@@ -371,13 +374,14 @@ function LayerShowContent() {
             autoComplete="given-name"
             variant="standard"
             type="number"
-            value={layer.materialDescription}
-            onChange={(e) => setLayer({...layer.materialDescription, crockery: e.target.value})}
+            value={materialDescription.crockery}
+            onChange={(e) => setMaterialDescription({...materialDescription, crockery: e.target.value})}
   
           />
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
+            disabled={!edit}
             id="metal"
             name="metal"
             label="Metal"
@@ -385,13 +389,13 @@ function LayerShowContent() {
             autoComplete="given-name"
             variant="standard"
             type="number"
-            value={layer.materialDescription}
-            onChange={(e) => setLayer({...layer.materialDescription, metal: e.target.value})}
-  
+            value={materialDescription.metal}
+            onChange={(e) => setMaterialDescription({...materialDescription, metal: e.target.value})}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
+            disabled={!edit}
             id="ceramica"
             name="cerámica"
             label="Cerámica"
@@ -399,13 +403,14 @@ function LayerShowContent() {
             autoComplete="given-name"
             variant="standard"
             type="number"
-            value={layer.materialDescription}
-            onChange={(e) => setLayer({...layer.materialDescription, ceramics: e.target.value})}
+            value={materialDescription.ceramic}
+            onChange={(e) => setMaterialDescription({...materialDescription, ceramic: e.target.value})}
   
           />
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
+            disabled={!edit}  
             id="vidrio"
             name="vidrio"
             label="Vidrio"
@@ -413,12 +418,13 @@ function LayerShowContent() {
             autoComplete="given-name"
             variant="standard"
             type="number"
-            value={layer.materialDescription}
-            onChange={(e) => setLayer({...layer.materialDescription, glass: e.target.value})}
+            value={materialDescription.glass}
+            onChange={(e) => setMaterialDescription({...materialDescription, glass: e.target.value})}
   
           />
           <Grid item xs={12} sm={6}>
             <TextField
+              disabled={!edit}
               id="litico"
               name="litico"
               label="Lítico"
@@ -426,12 +432,13 @@ function LayerShowContent() {
               autoComplete="given-name"
               variant="standard"
               type="number"
-              value={layer.materialDescription}
-              onChange={(e) => setLayer({...layer.materialDescription, lithic: e.target.value})}
+              value={materialDescription.lithic}
+              onChange={(e) => setMaterialDescription({...materialDescription, lithic: e.target.value})}
   
             />
             <Grid item xs={12} sm={6}>
               <TextField
+                disabled={!edit}
                 id="cuero"
                 name="cuero"
                 label="Cuero"
@@ -439,13 +446,14 @@ function LayerShowContent() {
                 autoComplete="given-name"
                 variant="standard"
                 type="number"
-                value={layer.materialDescription}
-                onChange={(e) => setLayer({...layer.materialDescription, leather: e.target.value})}
+                value={materialDescription.leather}
+                onChange={(e) => setMaterialDescription({...materialDescription, leather: e.target.value})}
   
               />
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
+                disabled={!edit}
                 id="textil"
                 name="textil"
                 label="Textil"
@@ -453,13 +461,13 @@ function LayerShowContent() {
                 autoComplete="given-name"
                 variant="standard"
                 type="number"
-                value={layer.materialDescription}
-                onChange={(e) => setLayer({...layer.materialDescription, textile: e.target.value})}
-  
+                value={materialDescription.textile}
+                onChange={(e) => setMaterialDescription({...materialDescription, textile: e.target.value})}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
+                disabled={!edit}
                 id="osteofauna"
                 name="osteofauna"
                 label="Osteofauna"
@@ -467,13 +475,14 @@ function LayerShowContent() {
                 autoComplete="given-name"
                 variant="standard"
                 type="number"
-                value={layer.materialDescription}
-                onChange={(e) => setLayer({...layer.materialDescription, animalBones: e.target.value})}
+                value={materialDescription.animalBones}
+                onChange={(e) => setMaterialDescription({...materialDescription, animalBones: e.target.value})}
   
               />
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
+                disabled={!edit}
                 id="madera"
                 name="madera"
                 label="Madera"
@@ -481,13 +490,13 @@ function LayerShowContent() {
                 autoComplete="given-name"
                 variant="standard"
                 type="number"
-                value={layer.materialDescription}
-                onChange={(e) => setLayer({...layer.materialDescription, wood: e.target.value})}
-  
+                value={materialDescription.wood}
+                onChange={(e) => setMaterialDescription({...materialDescription, wood: e.target.value})}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
+                disabled={!edit}
                 id="bioantropologico"
                 name="bioantropologico"
                 label="Bioantropológico"
@@ -495,13 +504,14 @@ function LayerShowContent() {
                 autoComplete="given-name"
                 variant="standard"
                 type="number"
-                value={layer.materialDescription}
-                onChange={(e) => setLayer({...layer.materialDescription, bioAntro: e.target.value})}
+                value={materialDescription.bioAntro}
+                onChange={(e) => setMaterialDescription({...materialDescription, bioAntro: e.target.value})}
   
               />
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
+                disabled={!edit}
                 id="arqueobotanico"
                 name="arqueobotanico"
                 label="Arqueobotánico"
@@ -509,13 +519,14 @@ function LayerShowContent() {
                 autoComplete="given-name"
                 variant="standard"
                 type="number"
-                value={layer.materialDescription}
-                onChange={(e) => setLayer({...layer.materialDescription, archeoBotanical: e.target.value})}
+                value={materialDescription.archeoBotanical}
+                onChange={(e) => setMaterialDescription({...materialDescription, archeoBotanical: e.target.value})}
   
               />
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
+                disabled={!edit}
                 id="malacologico"
                 name="malacologico"
                 label="Malacológico"
@@ -523,13 +534,13 @@ function LayerShowContent() {
                 autoComplete="given-name"
                 variant="standard"
                 type="number"
-                value={layer.materialDescription}
-                onChange={(e) => setLayer({...layer.materialDescription, malacological: e.target.value})}
-  
+                value={materialDescription.malacological}
+                onChange={(e) => setMaterialDescription({...materialDescription, malacological: e.target.value})}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
+                disabled={!edit}
                 required
                 id="total"
                 name="total"
@@ -538,20 +549,19 @@ function LayerShowContent() {
                 autoComplete="given-name"
                 variant="standard"
                 type="number"
-                value={layer.materialDescription}
-                onChange={(e) => setLayer({...layer.materialDescription, totalNumber: e.target.value})}
-  
+                value={materialDescription.totalNumber}
+                onChange={(e) => setMaterialDescription({...materialDescription, totalNumber: e.target.value})}
               />
             </Grid>
             <Grid item xs={12}>
               <h4>Obersvaciones de los materiales:</h4>
               <textarea
+                disabled={!edit}
                 name="observaciones_materiales"
                 rows="4"
                 cols="50"
-                value={layer.materialDescription}
-                onChange={(e) => setLayer({...layer.materialDescription, observations: e.target.value})}
-  
+                value={materialDescription.observations}
+                onChange={(e) => setMaterialDescription({...materialDescription, observations: e.target.value})}
               ></textarea>
             </Grid>
           </Grid>
@@ -575,6 +585,17 @@ function LayerShowContent() {
           <Typography component="h1" variant="h4" align="center">
             Ficha de Excavación Arqueológica
           </Typography>
+          <Grid item xs={4}>
+              <Button
+                variant="outlined"
+                floated="right"
+                onClick={handleTextfield}
+                sx={{ mt: 3, ml: 1 }}
+                color = {color}
+              >
+                {text}
+              </Button>
+            </Grid>
           <Stepper activeStep={activeStep} sx={{ pt: 3, pb: 5 }}>
             {steps.map((label) => (
               <Step key={label}>
@@ -617,14 +638,14 @@ function LayerShowContent() {
                     </Button>
                   )}
                   {activeStep === steps.length - 1 && (
-                    <Button
+                    edit && (<Button
                       variant="contained"
                       onClick={handleEdit}
                       sx={{ mt: 3, ml: 1 }}
                       color="success"
                     >
-                      Editar
-                    </Button>
+                      Guardar cambios
+                    </Button>)
                   )}
                 </Box>
               </React.Fragment>
