@@ -1,4 +1,7 @@
 import * as React from 'react';
+import { AuthenticatedTemplate, UnauthenticatedTemplate, 
+    useMsal, useAccount } from "@azure/msal-react";
+import { loginRequest } from "../../authConfig";
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
@@ -21,36 +24,71 @@ const theme = createTheme({
     },
   });
 
-function IndexLevels() {
+function IndexLevelsContent() {
     const {domain, setDomain} = useDomain()
+    const [levelList, setLevelList] = React.useState([]);
+    
+    const { instance, accounts} = useMsal();
+    const account = useAccount(accounts[0] || {});
+    const [accessToken, setAccessToken] = React.useState(null);
+    function RequestAccessToken() {
+        const request = {
+            ...loginRequest,
+            account: account
+        };
 
+        // Silently acquires an access token which is then attached to a request for Microsoft Graph data
+        instance.acquireTokenSilent(request).then((response) => {
+            setAccessToken(response.accessToken);
+        }).catch((e) => {
+            instance.acquireTokenPopup(request).then((response) => {
+                setAccessToken(response.accessToken);
+            });
+        });
+    }
+    React.useEffect(() => {  
+        if (!accessToken && !levelList.length) {
+            RequestAccessToken();
+            obtainData();
+        
+        } else if(accessToken && !levelList.length){
+            obtainData();
 
-    const [levelList, setLevelList] = React.useState([])
+        }  
+    }, [accessToken]);
 
-    React.useEffect(() => {
-        obtainData()
-        }, [])
 
     const obtainData = async () => {
         defineDomain("", "level", domain, setDomain);
+        const bearer = `Bearer ${accessToken}`; 
         const unit_id = window.location.pathname.split("/")[6];
-        const data = await fetch(`${process.env.REACT_APP_API_URL}/unit/${unit_id}/levels`)
+        const data = await fetch(`${process.env.REACT_APP_API_URL}/unit/${unit_id}/levels`,{
+            method: "GET",
+            headers: {
+            Authorization: bearer}
+        })
         const raw = await data.json()
-        console.log(raw)
         const array = []
+        //raw.forEach((obj) => {
+            //if ( obj.status === "Activo") {
+            //    array.push(obj)
+            //}
+        //})
         raw.forEach((obj) => {
             array.push(obj)
-
         })
+
         setLevelList(array)
     }
 
     const handleDelete = async (id) => {
         const unit_id = window.location.pathname.split("/")[6];
-        await fetch(`${process.env.REACT_APP_API_URL}/unit/${unit_id}/updateLevel/${id}}`, {
+        const bearer = `Bearer ${accessToken}`; 
+        await fetch(`${process.env.REACT_APP_API_URL}/unit/${unit_id}/updateLevel/${id}`, {
             method: 'PUT',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                Authorization: bearer,
             },
             body: JSON.stringify({
                 status: "Inactivo"
@@ -83,6 +121,9 @@ function IndexLevels() {
                                         <CardContent>
                                             <Typography gutterBottom variant="h5" component="h2">
                                                 {level.index}
+                                            </Typography>
+                                            <Typography variant="body2" color="textSecondary" component="p">
+                                                Capas: {level.layers.length}
                                             </Typography>
                                         </CardContent>
                                         <CardActions>
@@ -126,5 +167,16 @@ function IndexLevels() {
         </ThemeProvider>
     );
 }
+function IndexLevels(){
+    return(
+        <><AuthenticatedTemplate>
+            <IndexLevelsContent/>
+        </AuthenticatedTemplate><UnauthenticatedTemplate>
+                <p>Aún no has iniciado sesión</p>
+            </UnauthenticatedTemplate></>  
+    );
+    
 
+
+}
 export default IndexLevels;

@@ -13,7 +13,7 @@ import Users from "./views/Users";
 import FormShow from "./views/Forms/Show";
 import Proyectos from "./views/Proyecto/Index";
 import CustomizedBreadcrumbs from "./components/Breadcrumb";
-import NewProyect from "./views/Proyecto/New";
+import NewProject from "./views/Proyecto/New";
 import NewSite from "./views/Sitio/New";
 import NewUnit from "./views/Unidad/New";
 import NewLevel from "./views/Nivel/New";
@@ -27,6 +27,7 @@ import IndexSites from "./views/Proyecto/IndexSites";
 import IndexUnits from "./views/Sitio/IndexUnits";
 import IndexLevels from "./views/Unidad/IndexLevels";
 import IndexLayers from "./views/Nivel/IndexLayers";
+import Dashboard from "./views/Unidad/dashboard";
 
 import { MsalProvider } from "@azure/msal-react";
 import { ProvideDomain } from "./useDomain";
@@ -44,12 +45,13 @@ function App({ instance }) {
 				<Route path="/SignIn" element={<SignIn />} />
 				<Route path="/SignUp" element={<SignUp />} />
 				<Route path="/Hello" element={<Hello/>} />
+				<Route path="/Dashboard" element={<Dashboard />} />
 				<Route path="/Users" element={<Users />} />
 				<Route path="/Form" element={<Form />} />
 				<Route path="/Forms" element={<FormList />} />
 				<Route path="/Forms/:id" element={<FormShow />} />
 				<Route path="/Proyects" element={<Proyectos />} />
-				<Route path="/Proyects/new" element={<NewProyect />} />
+				<Route path="/Proyects/new" element={<NewProject />} />
 				<Route path="/Proyects/:id" element={<ProyectShow />} />
 				<Route path="/Proyects/:id/Sites" element={<IndexSites />} />
 				<Route path="/Proyects/:id/Sites/new" element={<NewSite />} />

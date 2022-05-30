@@ -1,4 +1,7 @@
 import * as React from 'react';
+import { AuthenticatedTemplate, UnauthenticatedTemplate, 
+  useMsal, useAccount } from "@azure/msal-react";
+import { loginRequest } from "../../authConfig";
 import { useNavigate } from "react-router-dom";
 import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
@@ -50,13 +53,35 @@ return (
 
 
 
-function NewUnit () {
+function NewUnitContent() {
   const navigate = useNavigate();
   const [startDate, setStartDate] = React.useState(new Date());
   const [endDate, setEndDate] = React.useState(new Date());
+  const { instance, accounts} = useMsal();
+  const account = useAccount(accounts[0] || {});
+  const [accessToken, setAccessToken] = React.useState(null);
+  function RequestAccessToken() {
+    const request = {
+      ...loginRequest,
+      account: account
+    };
 
+    // Silently acquires an access token which is then attached to a request for Microsoft Graph data
+    instance.acquireTokenSilent(request).then((response) => {
+      setAccessToken(response.accessToken);
+    }).catch((e) => {
+      instance.acquireTokenPopup(request).then((response) => {
+        setAccessToken(response.accessToken);
+      });
+    });
+  };
+  React.useEffect(() => {  
+    if (!accessToken){
+      RequestAccessToken();
+    } 
+}, [accessToken]);
   async function handleSubmit(){
-
+    const bearer = `Bearer ${accessToken}`;
     const proyect_id = window.location.pathname.split("/")[2];
     const site_id = window.location.pathname.split("/")[4];
     DATA_FORM.excavationSite = site_id;
@@ -68,6 +93,7 @@ function NewUnit () {
       headers: {
         'Content-Type': 'application/json',
         'accept': 'application/json',
+        Authorization: bearer,
       },
     });
     navigate(`/Proyects/${proyect_id}/Sites/${site_id}/Units`)
@@ -183,6 +209,18 @@ function NewUnit () {
     </div>
 
   )
+}
+function NewUnit(){
+  return(
+      <><AuthenticatedTemplate>
+          <NewUnitContent/>
+      </AuthenticatedTemplate><UnauthenticatedTemplate>
+              <p>Aún no has iniciado sesión</p>
+          </UnauthenticatedTemplate></>  
+  );
+  
+
+
 }
 
 export default NewUnit;

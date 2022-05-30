@@ -1,4 +1,7 @@
 import * as React from 'react';
+import { AuthenticatedTemplate, UnauthenticatedTemplate, 
+  useMsal, useAccount } from "@azure/msal-react";
+import { loginRequest } from "../../authConfig";
 import { useNavigate } from "react-router-dom";
 import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
@@ -10,9 +13,16 @@ import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { es} from 'date-fns/locale'
 
 const DATA_FORM = {
+  startDepth: 0,
+  endDepth: 0,
   index: 0,
+  date: "",
+  feature: "",
 }
 
 const theme = createTheme({
@@ -38,14 +48,40 @@ return (
 
 
 
-function NewLevel () {
+function NewLevelContent() {
    const navigate = useNavigate();
+   const [date, setDate] = React.useState(new Date());
+   const { instance, accounts} = useMsal();
+  const account = useAccount(accounts[0] || {});
+  const [accessToken, setAccessToken] = React.useState(null);
+
+  function RequestAccessToken() {
+    const request = {
+      ...loginRequest,
+      account: account
+    };
+
+    // Silently acquires an access token which is then attached to a request for Microsoft Graph data
+    instance.acquireTokenSilent(request).then((response) => {
+      setAccessToken(response.accessToken);
+    }).catch((e) => {
+      instance.acquireTokenPopup(request).then((response) => {
+        setAccessToken(response.accessToken);
+      });
+    });
+  };
+  React.useEffect(() => {  
+    if (!accessToken){
+      RequestAccessToken();
+    } 
+  }, [accessToken]);
 
    async function handleSubmit() {
+    const bearer = `Bearer ${accessToken}`;
     const proyect_id = window.location.pathname.split("/")[2];
     const site_id = window.location.pathname.split("/")[4];
     const unit_id = window.location.pathname.split("/")[6];
-    console.log(DATA_FORM);
+    DATA_FORM.date = date;
 
     await fetch(`${process.env.REACT_APP_API_URL}/unit/${unit_id}/createLevel`, {
       method: 'POST',
@@ -53,6 +89,7 @@ function NewLevel () {
       headers: {
         'Content-Type': 'application/json',
         'accept': 'application/json',
+        Authorization: bearer,
     },
   });
   navigate(`/Proyects/${proyect_id}/Sites/${site_id}/Units/${unit_id}/Levels`)
@@ -82,29 +119,8 @@ function NewLevel () {
             <form onSubmit={handleSubmit}>
               <Grid container spacing={3}>
                 <Grid item xs={12}>
-                  <TextField
-                    type="number"
-                    required
-                    id="start_depth"
-                    name="Profundidad inicial"
-                    label="Profundidad inicial"
-                    fullWidth
-                    autoComplete="Profundidad inicial"
-                    autoFocus
-                    onChange={(e) => {DATA_FORM.startDepth = e.target.value}}
-                  />
-                  <TextField
-                    type="number"
-                    required
-                    id="end_depth"
-                    name="Profundidad final"
-                    label="Profundidad final"
-                    fullWidth
-                    autoComplete="Profundidad final"
-                    autoFocus
-                    onChange={(e) => {DATA_FORM.endDepth = e.target.value}}
-                  />
-                  <TextField
+                
+                <TextField
                     type="number"
                     required
                     id="index"
@@ -112,17 +128,48 @@ function NewLevel () {
                     label="Indice"
                     fullWidth
                     autoComplete="Indice"
+                    helperText="Indice del nivel"
                     autoFocus
                     onChange={(e) => {DATA_FORM.index = e.target.value}}
                   />
+                  Profundidad Inicial:
+                  <TextField
+                    type="number"
+                    required
+                    id="start_depth"
+                    name="Profundidad inicial"
+                    fullWidth
+                    autoComplete="Profundidad inicial"
+                    helperText="Profundidad inicial del nivel"
+                    onChange={(e) => {DATA_FORM.startDepth = e.target.value}}
+                  />
+                  Profundidad Final:
+                  <TextField
+                    type="number"
+                    required
+                    id="end_depth"
+                    name="Profundidad final"
+                    fullWidth
+                    autoComplete="Profundidad final"
+                    helperText="Profundidad final del nivel"
+                    onChange={(e) => {DATA_FORM.endDepth = e.target.value}}
+                  />
+                  Fecha:
+                  <DatePicker
+                  dateFormat="dd/MM/yyyy"
+                  locale={es}
+                  selected={date}
+                  onChange={(date) => setDate(date)} />
+
+                  Características:
                   <TextField
                     required
                     id="feature"
                     name="Caracteristica"
-                    label="Caracteristica"
                     fullWidth
                     autoComplete="Caracteristica"
-                    autoFocus
+                    helperText="Características del nivel"
+
                     onChange={(e) => {DATA_FORM.feature = e.target.value}}
                   />
                   <Button
@@ -144,6 +191,18 @@ function NewLevel () {
     </div>
 
   )
+}
+function NewLevel(){
+  return(
+      <><AuthenticatedTemplate>
+          <NewLevelContent/>
+      </AuthenticatedTemplate><UnauthenticatedTemplate>
+              <p>Aún no has iniciado sesión</p>
+          </UnauthenticatedTemplate></>  
+  );
+  
+
+
 }
 
 export default NewLevel;

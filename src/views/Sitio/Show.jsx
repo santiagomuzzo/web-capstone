@@ -1,4 +1,7 @@
 import * as React from "react";
+import { AuthenticatedTemplate, UnauthenticatedTemplate, 
+  useMsal, useAccount } from "@azure/msal-react";
+import { loginRequest } from "../../authConfig";
 import CssBaseline from '@mui/material/CssBaseline';
 import Container from '@mui/material/Container';
 import Paper from '@mui/material/Paper';
@@ -17,30 +20,63 @@ const theme = createTheme({
     },
   });
 
-function SiteShow() {
+function SiteShowContent() {
 
   const project_id = window.location.pathname.split("/")[2];
   const site_id = window.location.pathname.split("/")[4];
   const [site, setSite] = React.useState({})
   const navigate = useNavigate();
-  
+  //Codigo para obtener el Token
+  const { instance, accounts} = useMsal();
+  const account = useAccount(accounts[0] || {});
+  const [accessToken, setAccessToken] = React.useState(null);
+  function RequestAccessToken() {
+      const request = {
+          ...loginRequest,
+          account: account
+      };
+
+      // Silently acquires an access token which is then attached to a request for Microsoft Graph data
+      instance.acquireTokenSilent(request).then((response) => {
+          setAccessToken(response.accessToken);
+      }).catch((e) => {
+          instance.acquireTokenPopup(request).then((response) => {
+              setAccessToken(response.accessToken);
+          });
+      });
+  }
+  //
 
   React.useEffect(() => {
-    obtainData()
-  }, [])
+  
+    if (!accessToken && !site._id) {
+      RequestAccessToken();
+      obtainData();
+    } else if(accessToken && !site._id) {
+      obtainData();
+    }  
+  }, [accessToken]);
 
   const obtainData = async () => {
-    const data = await fetch(`${process.env.REACT_APP_API_URL}/project/${project_id}/excavationSite/${site_id}`)
+    const bearer = `Bearer ${accessToken}`;
+    const data = await fetch(`${process.env.REACT_APP_API_URL}/project/${project_id}/excavationSite/${site_id}`,{
+      method: "GET",
+      headers: {
+      Authorization: bearer
+      }
+    })
     const raw = await data.json()
     setSite(raw)
     console.log(raw)
   }
   
   const handleEdit = async (id) => {
-    const data = await fetch(`${process.env.REACT_APP_API_URL}/project/${project_id}/updateExcavationSite/${site_id}`, {
+     const bearer = `Bearer ${accessToken}`;
+      await fetch(`${process.env.REACT_APP_API_URL}/project/${project_id}/updateExcavationSite/${site_id}`, {
       method: 'PUT',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        Authorization: bearer,
       },
       body: JSON.stringify({
         name: site.name,
@@ -86,5 +122,14 @@ function SiteShow() {
     </ThemeProvider>
   );
 }
+function SiteShow(){
+  return(
+    <><AuthenticatedTemplate>
+        <SiteShowContent/>
+    </AuthenticatedTemplate><UnauthenticatedTemplate>
+            <p>Aún no has iniciado sesión</p>
+        </UnauthenticatedTemplate></>  
+);
 
+}
 export default SiteShow;
