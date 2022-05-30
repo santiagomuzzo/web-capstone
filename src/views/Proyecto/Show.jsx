@@ -30,6 +30,9 @@ function ProyectShowContent() {
   const { instance, accounts} = useMsal();
   const account = useAccount(accounts[0] || {});
   const [accessToken, setAccessToken] = React.useState(null);
+  const [edit, setEdit] = React.useState(false);
+  const [color, setColor] = React.useState('success');
+  const [text, setText] = React.useState('Editar');
   function RequestAccessToken() {
       const request = {
           ...loginRequest,
@@ -84,6 +87,19 @@ function ProyectShowContent() {
     })
     navigate("/proyects")
   }
+
+  const handleTextfield = () => {
+    if (edit){
+      setColor("success")
+      navigate("/proyects")
+    }
+    else{
+      setColor("error")
+      setEdit(!edit)
+      setText("Cancelar")
+    }
+    
+  }
   
   return (
     <ThemeProvider theme={theme}>
@@ -94,9 +110,23 @@ function ProyectShowContent() {
             Proyecto {project.name}
           </Typography>
           <Grid container spacing={3}>
+            <Grid item xs={4}>
+              <Button
+                variant="outlined"
+                floated="right"
+                onClick={handleTextfield}
+                sx={{ mt: 3, ml: 1 }}
+                color = {color}
+                value="EDITAR"
+              >
+                {text}
+              </Button>
+            </Grid>
+         
             <Grid item xs={12}>
               Nombre:
               <TextField
+                disabled={!edit}
                 required
                 helperText="Nombre del Proyecto"
                 id="name"
@@ -106,14 +136,14 @@ function ProyectShowContent() {
                 value={project.name}
                 onChange={(e) => setProject({...project, name: e.target.value})}
               />
-              <Button
+              {edit && (<Button
                 variant="contained"
                 onClick={handleEdit}
                 sx={{ mt: 3, ml: 1 }}
                 color = "success"
               >
-                Editar
-                </Button>
+                Guardar Cambios
+                </Button>)}
             </Grid>
           </Grid>
         </Paper>

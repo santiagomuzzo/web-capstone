@@ -69,15 +69,15 @@ function IndexLayersContent() {
             Authorization: bearer}
         })
         const raw = await data.json()
-        console.log(raw)
         const array = []
         raw.forEach((obj) => {
-            if (obj.status === "Activo") {
-                array.push(obj)
-            }
+            array.push(obj)
+            
           })
+        
         setLayerList(array)
     }
+    
 
     const handleDelete = async (id) => {
         const unit_id = window.location.pathname.split("/")[6];
