@@ -61,7 +61,7 @@ function UnitShowContent() {
     } else if(accessToken && !unit._id) {
       obtainData();
     }  
-  });
+  }, [accessToken]);
 
  
 

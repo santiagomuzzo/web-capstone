@@ -62,7 +62,7 @@ function LevelShowContent() {
     } else if(accessToken && !level._id) {
       obtainData();
     }  
-  });
+  }, [accessToken]);
 
   const obtainData = async () => {
     const bearer = `Bearer ${accessToken}`; 

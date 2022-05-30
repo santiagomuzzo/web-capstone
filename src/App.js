@@ -27,6 +27,7 @@ import IndexSites from "./views/Proyecto/IndexSites";
 import IndexUnits from "./views/Sitio/IndexUnits";
 import IndexLevels from "./views/Unidad/IndexLevels";
 import IndexLayers from "./views/Nivel/IndexLayers";
+import Dashboard from "./views/Unidad/dashboard";
 
 import { MsalProvider } from "@azure/msal-react";
 import { ProvideDomain } from "./useDomain";
@@ -44,6 +45,7 @@ function App({ instance }) {
 				<Route path="/SignIn" element={<SignIn />} />
 				<Route path="/SignUp" element={<SignUp />} />
 				<Route path="/Hello" element={<Hello/>} />
+				<Route path="/Dashboard" element={<Dashboard />} />
 				<Route path="/Users" element={<Users />} />
 				<Route path="/Form" element={<Form />} />
 				<Route path="/Forms" element={<FormList />} />

@@ -80,8 +80,11 @@ function LayerShowContent() {
   const unit_id = window.location.pathname.split("/")[6];
   const level_id = window.location.pathname.split("/")[8];
   const layer_id = window.location.pathname.split("/")[10];
-  const [layer, setLayer] = React.useState({})
+
+  const [layer, setLayer] = React.useState({});
+
   const navigate = useNavigate();
+
   //Codigo para obtener el Token
   const { instance, accounts} = useMsal();
   const account = useAccount(accounts[0] || {});
@@ -111,7 +114,8 @@ function LayerShowContent() {
     } else if(accessToken && !layer._id) {
       obtainData();
     }  
-  });
+  }, [accessToken]);
+  
   const obtainData = async () => {
     const bearer = `Bearer ${accessToken}`; 
     const data = await fetch(`${process.env.REACT_APP_API_URL}/unit/${unit_id}/level/${level_id}/layer/${layer_id}`,{
@@ -121,9 +125,11 @@ function LayerShowContent() {
       }
     })
     const raw = await data.json()
-    setLayer(raw)
+    setLayer(raw);
     
-    console.log("data de layeeeer", raw)
+    console.log("data de layeeeer RAW", raw)
+    const layer = raw;
+    console.log("data de layeeeer", layer)
   }
 
   const handleEdit = async (id) => {
@@ -140,7 +146,7 @@ function LayerShowContent() {
         matrixDescription: {
           sedimentType: layer.matrixDescription.sedimentType,
           compaction: layer.matrixDescription.compaction,
-          munshell: layer.matrixDescription.munshell,
+          munsell: layer.matrixDescription.munsell,
           inclusionType: layer.matrixDescription.inclusionType,
           inclusionSize: layer.matrixDescription.inclusionSize,
           inclusionDensity: layer.matrixDescription.inclusionDensity,
@@ -224,13 +230,13 @@ function LayerShowContent() {
           <Grid item xs={12} md={6}>
             <TextField
               required
-              id="codigo_munshell"
-              label="Código Munshell"
+              id="codigo_munsell"
+              label="Código Munsell"
               fullWidth
               autoComplete="cc-exp"
               variant="standard"
               value={layer.matrixDescription}
-              onChange={(e) => setLayer({...layer.matrixDescription, munshell: e.target.value})}
+              onChange={(e) => setLayer({...layer.matrixDescription, munsell: e.target.value})}
   
             />
           </Grid>

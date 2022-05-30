@@ -58,8 +58,8 @@ function ProyectosContent() {
         } else if(accessToken && !projectList.length){
             obtainData();
 
-        }  
-    });
+        }
+    }, [accessToken]);
         
     const obtainData = async () => {
         defineDomain("", "all", domain, setDomain);   
@@ -130,13 +130,13 @@ function ProyectosContent() {
                                                 </Typography>
                                             </CardContent>
                                             <CardActions>
-                                                <Button size="small" color="primary">
+                                                <Button size="small" variant="outlined" color="primary">
                                                     <Link to={`/Proyects/${project._id}`}>Ver/Editar</Link>
                                                 </Button>
-                                                <Button size="small" color='secondary' onClick={()=> defineDomain(project._id, 'project', domain, setDomain)}>
-                                                    <Link to={`/Proyects/${project._id}/Sites`}>Ver Sitios</Link>
+                                                <Button size="small" variant="outlined" color='secondary' onClick={()=> defineDomain(project._id, 'project', domain, setDomain)}>
+                                                    <Link to={`/Proyects/${project._id}/Sites`}  >Ver Sitios</Link>
                                                 </Button>
-                                                <Button size="small" color='error' onClick={()=> handleDelete(project._id)}>Archivar</Button>
+                                                <Button size="small" color='error' variant="outlined" onClick={()=> handleDelete(project._id)}>Archivar</Button>
                                             </CardActions>
                                         </Card>
                                     </Grid>

@@ -55,7 +55,7 @@ function IndexLevelsContent() {
             obtainData();
 
         }  
-    });
+    }, [accessToken]);
 
 
     const obtainData = async () => {

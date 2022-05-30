@@ -53,7 +53,7 @@ function IndexSitesContent() {
         } else if(accessToken && !siteList.length){
             obtainData();
         }  
-    });
+    }, [accessToken]);
 
     const obtainData = async () => {
         defineDomain("", "site", domain, setDomain);

@@ -55,7 +55,7 @@ function SiteShowContent() {
     } else if(accessToken && !site._id) {
       obtainData();
     }  
-  });
+  }, [accessToken]);
 
   const obtainData = async () => {
     const bearer = `Bearer ${accessToken}`;

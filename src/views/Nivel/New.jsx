@@ -74,7 +74,7 @@ function NewLevelContent() {
     if (!accessToken){
       RequestAccessToken();
     } 
-  });
+  }, [accessToken]);
 
    async function handleSubmit() {
     const bearer = `Bearer ${accessToken}`;

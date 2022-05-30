@@ -24,7 +24,7 @@ const theme = createTheme({
     },
   });
 
-function IndexUnitsContent() {
+function DashboardContent() {
     const {domain, setDomain} = useDomain()
 
     const [unitList, setUnitList] = React.useState([]);
@@ -69,28 +69,16 @@ function IndexUnitsContent() {
         const raw = await data.json()
         const array = []
         raw.forEach((obj) => {
-            if (obj.excavationSite === site_id && obj.status === "Activo") {
-                array.push(obj)
-            }
-          })
+            if (obj.startDate) {
+                array.push(obj);
+        }
+        })
+        
+    
         setUnitList(array)
+        console.log(array)
     }
 
-    const handleDelete = async (id) => {
-        const bearer = `Bearer ${accessToken}`; 
-        await fetch(`${process.env.REACT_APP_API_URL}/unit/${id}`, {
-            method: 'PUT',
-            headers: {
-              'Content-Type': 'application/json',
-              Authorization: bearer,
-            },
-            body: JSON.stringify({
-                status: "Inactivo"
-      
-            })
-          })
-        window.location.reload()
-    }
     return (
         <ThemeProvider theme={theme}>
             <CssBaseline />
@@ -106,55 +94,25 @@ function IndexUnitsContent() {
                             {unitList.map((unit, index) => (
                                 <Grid item xs={12} sm={6} md={4} key={index}>
                                     <Card>
-                                        <CardMedia
-                                            component="img"
-                                            alt="Contemplative Reptile"
-                                            height="140"
-                                            image={`https://source.unsplash.com/random?${index}`}
-                                            title="Contemplative Reptile"
-                                        />
+                                        
                                         <CardContent>
                                             <Typography gutterBottom variant="h5" component="h2">
                                                 {unit.name}
                                             </Typography>
                                             <Typography variant="body2" color="textSecondary" component="p">
                                                 Niveles: {unit.levels.length}
+                                                <br/>
+                                                Status: {unit.status}
+                                                <br/>
+                                                Inicio: {unit.startDate.split("T")[0]}
+                                                <br/>
+                                                Fin: {unit.endDate.split("T")[0]}
                                             </Typography>
                                         </CardContent>
-                                        <CardActions>
-                                            <Button size="small" color="primary">
-                                            <Link to={`./${unit._id}`}>Ver/Editar</Link>
-                                            </Button>
-                                            <Button onClick={()=> defineDomain(unit._id, 'unit', domain, setDomain)}>
-                                                <Link to={`./${unit._id}/Levels`}>Ver Niveles</Link>
-                                            </Button>
-                                            <Button size="small" color='error' onClick={()=> handleDelete(unit._id)}>Archivar</Button>
-                                        </CardActions>
                                     </Card>
                                 </Grid>
                             ))}
-                            <Grid item xs={12} sm={6} md={4}>
-                            <Card>
-                                <CardMedia
-                                    component="img"
-                                    alt="Contemplative Reptile"
-                                    height="140"
-                                    image="https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/OOjs_UI_icon_add.svg/1200px-OOjs_UI_icon_add.svg.png"
-                                    title="Contemplative Reptile"
-                                />
-                                <CardContent>
-                                    <Typography gutterBottom variant="h5" component="h2">
-                                        Crear nueva Unidad
-                                    </Typography>
-                                    
-                                </CardContent>
-                                <CardActions>
-                                    <Button size="small" color="primary">
-                                        <Link to={`./new`}>Crear</Link>
-                                    </Button>
-                                </CardActions>
-                            </Card>
-                            </Grid>
+                            
                         </Grid>
                     </Grid>
                 </Grid>
@@ -162,10 +120,10 @@ function IndexUnitsContent() {
         </ThemeProvider>
     );
 }
-function IndexUnits(){
+function Dashboard(){
     return(
         <><AuthenticatedTemplate>
-            <IndexUnitsContent/>
+            <DashboardContent/>
         </AuthenticatedTemplate><UnauthenticatedTemplate>
                 <p>Aún no has iniciado sesión</p>
             </UnauthenticatedTemplate></>  
@@ -174,4 +132,4 @@ function IndexUnits(){
 
 
 }
-export default IndexUnits;
+export default Dashboard;

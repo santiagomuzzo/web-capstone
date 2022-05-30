@@ -99,7 +99,7 @@ function NewLayerContent () {
     if (!accessToken){
       RequestAccessToken();
     } 
-});
+}, [accessToken]);
   function RequestAccessToken() {
     const request = {
       ...loginRequest,

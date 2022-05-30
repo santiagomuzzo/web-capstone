@@ -56,7 +56,7 @@ function IndexLayersContent() {
             obtainData();
 
         }  
-    });
+    }, [accessToken]);
 
     const obtainData = async () => {
         const bearer = `Bearer ${accessToken}`; 

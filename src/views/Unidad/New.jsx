@@ -79,7 +79,7 @@ function NewUnitContent() {
     if (!accessToken){
       RequestAccessToken();
     } 
-});
+}, [accessToken]);
   async function handleSubmit(){
     const bearer = `Bearer ${accessToken}`;
     const proyect_id = window.location.pathname.split("/")[2];

@@ -55,7 +55,7 @@ function ProyectShowContent() {
     } else if(accessToken && !project._id) {
       obtainData();
     }  
-  });
+  }, [accessToken]);
 
   const obtainData = async () => {
     const bearer = `Bearer ${accessToken}`; 

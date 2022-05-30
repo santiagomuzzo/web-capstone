@@ -74,7 +74,7 @@ function NewSiteContent() {
   React.useEffect(() => {  
     if (!accessToken){
       RequestAccessToken();
-    } });
+    } }, [accessToken]);
   
   async function handleSubmit(domain){
     const bearer = `Bearer ${accessToken}`;
