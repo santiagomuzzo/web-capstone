@@ -275,7 +275,7 @@ function PaymentForm() {
           <TextField
             required
             id="codigo_munshell"
-            label="Código Munshell"
+            label="Código Munsell"
             fullWidth
             autoComplete="cc-exp"
             variant="standard"
@@ -382,7 +382,7 @@ function PaymentForm() {
           </TextField>
         </Grid>
         <Grid item xs={12}>
-          <h4>Obersvaciones de la Matriz / Descripción del Rasgo:</h4>
+          <h4>Observaciones de la Matriz / Descripción del Rasgo:</h4>
           <textarea
             name="observaciones_matriz"
             rows="4"
@@ -570,23 +570,8 @@ function Review() {
               }
             />
           </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField
-              required
-              id="total"
-              name="total"
-              label="Numero Total de Materiales"
-              fullWidth
-              autoComplete="given-name"
-              variant="standard"
-              type="number"
-              onChange={(e) =>
-                (DATA_FORM.materialDescription.totalNumber = e.target.value)
-              }
-            />
-          </Grid>
           <Grid item xs={12}>
-            <h4>Obersvaciones de los materiales:</h4>
+            <h4>Observaciones de los materiales:</h4>
             <textarea
               name="observaciones_materiales"
               rows="4"
@@ -606,8 +591,8 @@ function NewLayer(){
     <><AuthenticatedTemplate>
         <NewLayerContent/>
     </AuthenticatedTemplate><UnauthenticatedTemplate>
-            <p>Aún no has iniciado sesión</p>
-        </UnauthenticatedTemplate></>  
+    <p>Aún no has iniciado sesión</p>
+    </UnauthenticatedTemplate></>  
 );
 
 }

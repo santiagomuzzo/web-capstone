@@ -7,7 +7,11 @@ function Home() {
   return (
     <div className="App">
       <header className="App-header">
-        <img src={background} className="App-logo" alt="logo" />
+        <div class="">
+          <h1>Bienvenido a Mankuk app!</h1>
+          <img src={background} className="App-logo" alt="logo" />
+          <h4>Para comenzar a registrar tus fichas arquelogicas, selecciona el proyecto en el que estas trabajando!</h4>
+        </div>
       </header>
     </div>
   );
