@@ -126,7 +126,7 @@ function ProyectosContent() {
                                                     {project.name}
                                                 </Typography>
                                                 <Typography variant="body2" color="textSecondary" component="p">
-                                                    Sitios: {project.excavationSites.length}
+                                                    Sitios: {project.lenExcavationSites}
                                                 </Typography>
                                             </CardContent>
                                             <CardActions>

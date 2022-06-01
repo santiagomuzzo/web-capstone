@@ -123,7 +123,7 @@ function IndexLevelsContent() {
                                                 {level.index}
                                             </Typography>
                                             <Typography variant="body2" color="textSecondary" component="p">
-                                                Capas: {level.layers.length}
+                                                Capas: {level.lenLayers}
                                             </Typography>
                                         </CardContent>
                                         <CardActions>

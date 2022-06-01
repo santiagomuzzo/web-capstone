@@ -61,7 +61,7 @@ function IndexUnitsContent() {
         defineDomain("", "unit", domain, setDomain);
         const site_id = window.location.pathname.split("/")[4];
         const bearer = `Bearer ${accessToken}`; 
-        const data = await fetch(`${process.env.REACT_APP_API_URL}/unit`,{
+        const data = await fetch(`${process.env.REACT_APP_API_URL}/unit/excavationSite/${site_id}`,{
             method: "GET",
             headers: {
             Authorization: bearer}
@@ -69,7 +69,7 @@ function IndexUnitsContent() {
         const raw = await data.json()
         const array = []
         raw.forEach((obj) => {
-            if (obj.excavationSite === site_id && obj.status === "Activo") {
+            if (obj.status === "Activo") {
                 array.push(obj)
             }
           })
@@ -118,7 +118,7 @@ function IndexUnitsContent() {
                                                 {unit.name}
                                             </Typography>
                                             <Typography variant="body2" color="textSecondary" component="p">
-                                                Niveles: {unit.levels.length}
+                                                Niveles: {unit.lenLevels}
                                             </Typography>
                                         </CardContent>
                                         <CardActions>
