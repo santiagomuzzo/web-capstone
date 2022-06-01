@@ -73,8 +73,6 @@ function DashboardContent() {
                 array.push(obj);
         }
         })
-        
-    
         setUnitList(array)
         console.log(array)
     }

@@ -14,6 +14,7 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Link } from "react-router-dom";
 import { CircularProgress } from '@material-ui/core';
+import proyectos_2 from '../../assets/proyectos_2.jpeg';
 
 import { useDomain, defineDomain } from '../../useDomain';
 
@@ -118,7 +119,7 @@ function ProyectosContent() {
                                                 component="img"
                                                 alt="Contemplative Reptile"
                                                 height="140"
-                                                image={`https://source.unsplash.com/random?${index}`}
+                                                image= {proyectos_2}
                                                 title="Contemplative Reptile"
                                             />
                                             <CardContent>
@@ -126,7 +127,7 @@ function ProyectosContent() {
                                                     {project.name}
                                                 </Typography>
                                                 <Typography variant="body2" color="textSecondary" component="p">
-                                                    Sitios: {project.excavationSites.length}
+                                                    Sitios: {project.lenExcavationSites}
                                                 </Typography>
                                             </CardContent>
                                             <CardActions>
