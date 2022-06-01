@@ -110,20 +110,11 @@ function IndexLayersContent() {
                     <Grid item xs={12}>
                         <Grid container spacing={3}>
                             {layerList.map((layer, index) => (
-                                <Grid item xs={12} sm={6} md={4} key={index}>
+                                <Grid item xs={12} key={index}>
                                     <Card>
-                                        <CardMedia
-                                            component="img"
-                                            alt="Contemplative Reptile"
-                                            height="140"
-                                            image={`https://source.unsplash.com/random?${index}`}
-                                            title="Contemplative Reptile"
-                                        />
                                         <CardContent>
                                             <Typography gutterBottom variant="h5" component="h2">
-                                                {layer.matrixDescription.sedimentType}
-                                                {layer.status}
-                                                {layer._id}
+                                                Tipo de sedimento: {layer.matrixDescription.sedimentType}
                                             </Typography>
                                         </CardContent>
                                         <CardActions>
@@ -135,15 +126,8 @@ function IndexLayersContent() {
                                     </Card>
                                 </Grid>
                             ))}
-                            <Grid item xs={12} sm={6} md={4}>
+                            <Grid item xs={12}>
                             <Card>
-                                <CardMedia
-                                    component="img"
-                                    alt="Contemplative Reptile"
-                                    height="140"
-                                    image="https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/OOjs_UI_icon_add.svg/1200px-OOjs_UI_icon_add.svg.png"
-                                    title="Contemplative Reptile"
-                                />
                                 <CardContent>
                                     <Typography gutterBottom variant="h5" component="h2">
                                         Crear nueva Capa
