@@ -120,13 +120,19 @@ function IndexLevelsContent() {
                                             </Typography>
                                         </CardContent>
                                         <CardActions>
-                                            <Button size="small" color="primary">
-                                            <Link to={`./${level._id}`}>Ver/Editar</Link>
-                                            </Button>
-                                            <Button onClick={()=> defineDomain(level._id, 'level', domain, setDomain)}>
-                                                <Link to={`./${level._id}/Layers`}>Ver Capas</Link>
-                                            </Button>
-                                            <Button size="small" color='error' onClick={()=> handleDelete(level._id)}>Archivar</Button>
+                                            <Link to={`./${level._id}`} style={{ textDecoration: 'none' }}>
+                                                <Button variant="outlined" size="small" color="primary">
+                                                Ver/Editar
+                                                </Button>
+                                            </Link>
+                                                <Link to={`./${level._id}/Layers`} style={{ textDecoration: 'none' }}>
+                                                    <Button size='small'  color='secondary' variant="outlined" onClick={()=> defineDomain(level._id, 'level', domain, setDomain)}>
+                                                    Ver Capas
+                                                    </Button>
+                                                </Link>
+                                            <Link to={window.location.reload}  style={{ textDecoration: 'none' }} >
+                                                <Button size="small"  variant="outlined" color='error' onClick={()=> handleDelete(level._id)}>Archivar</Button>
+                                            </Link>
                                         </CardActions>
                                     </Card>
                                 </Grid>
@@ -140,9 +146,11 @@ function IndexLevelsContent() {
                                     
                                 </CardContent>
                                 <CardActions>
-                                    <Button size="small" color="primary">
-                                        <Link to={`./new`}>Crear</Link>
-                                    </Button>
+                                    <Link to={`./new`} style={{ textDecoration: 'none' }}>
+                                        <Button variant="outlined" size="small" color="primary">
+                                            Crear
+                                        </Button>
+                                    </Link>
                                 </CardActions>
                             </Card>
                             </Grid>

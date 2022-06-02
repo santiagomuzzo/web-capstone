@@ -22,6 +22,8 @@ import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
 import MenuItem from "@mui/material/MenuItem";
+import MatrixDescription from '../../components/MatrixDescription';
+import MaterialDescription from '../../components/MaterialDescription';
 
 const theme = createTheme({
     palette: {
@@ -52,16 +54,7 @@ function LayerShowContent() {
     "Descripción Materiales",
   ];
   
-  function getStepContent(step) {
-    switch (step) {
-      case 0:
-        return <PaymentForm />;
-      case 1:
-        return <Review />;
-      default:
-        throw new Error("Unknown step");
-    }
-  }
+  
 
 
   const [activeStep, setActiveStep] = React.useState(0);
@@ -132,10 +125,23 @@ function LayerShowContent() {
     const raw = await data.json()
     setMatrixDescription(raw.matrixDescription);
     setMaterialDescription(raw.materialDescription);
+
+    
     
     //console.log("data de layeeeer RAW", raw)
     //const layer = raw;
     //console.log("data de layeeeer", layer)
+  }
+
+  function getStepContent(step) {
+    switch (step) {
+      case 0:
+        return <MatrixDescription matrixDescription={matrixDescription} setMatrixDescription={setMatrixDescription} edit={edit}/>;
+      case 1:
+        return <MaterialDescription materialDescription={materialDescription} setMaterialDescription={setMaterialDescription} edit={edit}/>;
+      default:
+        throw new Error("Unknown step");
+    }
   }
 
   const handleEdit = async (id) => {
@@ -170,409 +176,6 @@ function LayerShowContent() {
     
   }
 
-
-  function PaymentForm() {
-    return (
-      <React.Fragment>
-        <Typography variant="h6" gutterBottom>
-          Descripción Matriz
-        </Typography>
-        <Grid>
-          
-          <Grid item xs={12} sm={6}>
-            <TextField
-              disabled={!edit}
-              required
-              id="rasgo"
-              select
-              label="Tipo de Sedimiento"
-              fullWidth
-              variant="standard"
-              value={matrixDescription.sedimentType}
-              onChange={(e) => setMatrixDescription({...matrixDescription, sedimentType: e.target.value})}
-  
-            >
-              <MenuItem value={"arena"}>Arena</MenuItem>
-              <MenuItem value={"arena_arcillosa"}>Arena Arcillosa</MenuItem>
-              <MenuItem value={"arena_limosa"}>Arena Limosa</MenuItem>
-              <MenuItem value={"arcilla"}>Arcilla</MenuItem>
-              <MenuItem value={"arcilla_limosa"}>Arcilla Limosa</MenuItem>
-              <MenuItem value={"arcilla_arenosa"}>Arcilla Arenosa</MenuItem>
-              <MenuItem value={"limo"}>Limo</MenuItem>
-              <MenuItem value={"limo_arenoso"}>Limo Arenoso</MenuItem>
-              <MenuItem value={"limo_arcilloso"}>Limo Arcilloso</MenuItem>
-            </TextField>
-          </Grid>
-  
-          <Grid item xs={12} sm={6}>
-            <TextField
-              disabled={!edit}
-              required
-              id="compactacion"
-              select
-              label="Compactación"
-              fullWidth
-              variant="standard"
-              value={matrixDescription.compaction}
-              onChange={(e) => setMatrixDescription({...matrixDescription, compaction: e.target.value})}
-  
-            >
-              <MenuItem value={"muy_compacta"}>Muy Compacta</MenuItem>
-              <MenuItem value={"compacta"}>Compacta</MenuItem>
-              <MenuItem value={"semi_compacta"}>Semi Compacta</MenuItem>
-              <MenuItem value={"no_compacta"}>No Compacta</MenuItem>
-            </TextField>
-          </Grid>
-          <Grid item xs={12} md={6}>
-            <TextField
-              disabled={!edit}
-              required
-              id="codigo_munsell"
-              label="Código Munsell"
-              fullWidth
-              autoComplete="cc-exp"
-              variant="standard"
-              value={matrixDescription.munshell}
-              onChange={(e) => setMatrixDescription({...matrixDescription, munshell: e.target.value})}
-  
-            />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField
-              disabled={!edit}
-              required
-              id="tipo_de_inclusiones"
-              select
-              label="Tipo de inclusiones"
-              fullWidth
-              variant="standard"
-              value={matrixDescription.inclusionType}
-              onChange={(e) => setMatrixDescription({...matrixDescription, inclusionType: e.target.value})}
-  
-              
-            >
-              <MenuItem value={"ausentes"}>Ausentes</MenuItem>
-              <MenuItem value={"clastos_angulosos"}>Clastos Angulosos</MenuItem>
-              <MenuItem value={"clastos_subangulosos"}>
-                Clastos Subangulosos
-              </MenuItem>
-              <MenuItem value={"clastos_rodados"}>Clastos Rodados</MenuItem>
-              <MenuItem value={"grava"}>Grava</MenuItem>
-              <MenuItem value={"gravilla"}>Gravilla</MenuItem>
-              <MenuItem value={"maicillo"}>Maicillo</MenuItem>
-              <MenuItem value={"material_constructivo"}>
-                Material constructivo
-              </MenuItem>
-            </TextField>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField
-              disabled={!edit}
-              required
-              id="tamaño_de_inclusiones"
-              select
-              label="Tamaño de inclusiones"
-              fullWidth
-              variant="standard"
-              value={matrixDescription.inclusionSize}
-              onChange={(e) => setMatrixDescription({...matrixDescription, inclusionSize: e.target.value})}
-  
-            >
-              <MenuItem value={"grande"}>Grande</MenuItem>
-              <MenuItem value={"mediano"}>Mediano</MenuItem>
-              <MenuItem value={"pequeño"}>Pequeño</MenuItem>
-              <MenuItem value={"muy_pequeño"}>Muy Pequeño</MenuItem>
-            </TextField>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField
-              disabled={!edit}
-              required
-              id="densidad_de_inclusiones"
-              select
-              label="Densidad de inclusiones"
-              fullWidth
-              variant="standard"
-              value={matrixDescription.inclusionDensity}
-              onChange={(e) => setMatrixDescription({...matrixDescription, inclusionDensity: e.target.value})}
-            >
-              <MenuItem value={"alta"}>Alta</MenuItem>
-              <MenuItem value={"media"}>Media</MenuItem>
-              <MenuItem value={"baja"}>Baja</MenuItem>
-              <MenuItem value={"muy_baja"}>Muy Baja</MenuItem>
-            </TextField>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField
-              disabled={!edit}
-              required
-              id="contenido_de_materia_organica"
-              select
-              label="Contenido de materia orgánica"
-              fullWidth
-              variant="standard"
-              value={matrixDescription.organicMatter}
-              onChange={(e) => setMatrixDescription({...matrixDescription, organicMatter: e.target.value})}
-  
-            >
-              <MenuItem value={"alto"}>Alto</MenuItem>
-              <MenuItem value={"medio"}>Medio</MenuItem>
-              <MenuItem value={"bajo"}>Bajo</MenuItem>
-            </TextField>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField
-              disabled={!edit}
-              required
-              id="humedad"
-              select
-              label="Humedad"
-              fullWidth
-              variant="standard"
-              value={matrixDescription.humidity}
-              onChange={(e) => setMatrixDescription({...matrixDescription, humidity: e.target.value})}
-  
-            >
-              <MenuItem value={"muy_humeda"}>Muy Húmeda</MenuItem>
-              <MenuItem value={"humeda"}>Húmeda</MenuItem>
-              <MenuItem value={"ligeramente"}>Ligeramente</MenuItem>
-              <MenuItem value={"sin_humedad"}>Sin Humedad</MenuItem>
-            </TextField>
-          </Grid>
-          <Grid item xs={12}>
-            <h4>Obersvaciones de la Matriz / Descripción del Rasgo:</h4>
-            <textarea
-              disabled={!edit}
-              name="observaciones_matriz"
-              rows="4"
-              cols="50"
-              value={matrixDescription.observations}
-              onChange={(e) => setMatrixDescription({...matrixDescription, observations: e.target.value})}
-  
-              
-            ></textarea>
-          </Grid>
-        </Grid>
-      </React.Fragment>
-    );
-  }
-  
-  function Review() {
-    return (
-      <React.Fragment>
-        <Typography variant="h6" gutterBottom>
-          Descripción de Materiales. Tipo y Cantidad
-        </Typography>
-  
-        <Grid item xs={12} sm={6}>
-          <TextField
-            disabled={!edit}
-            id="loza"
-            name="Loza"
-            label="Loza"
-            fullWidth
-            autoComplete="given-name"
-            variant="standard"
-            type="number"
-            value={materialDescription.crockery}
-            onChange={(e) => setMaterialDescription({...materialDescription, crockery: e.target.value})}
-  
-          />
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <TextField
-            disabled={!edit}
-            id="metal"
-            name="metal"
-            label="Metal"
-            fullWidth
-            autoComplete="given-name"
-            variant="standard"
-            type="number"
-            value={materialDescription.metal}
-            onChange={(e) => setMaterialDescription({...materialDescription, metal: e.target.value})}
-          />
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <TextField
-            disabled={!edit}
-            id="ceramica"
-            name="cerámica"
-            label="Cerámica"
-            fullWidth
-            autoComplete="given-name"
-            variant="standard"
-            type="number"
-            value={materialDescription.ceramic}
-            onChange={(e) => setMaterialDescription({...materialDescription, ceramic: e.target.value})}
-  
-          />
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <TextField
-            disabled={!edit}  
-            id="vidrio"
-            name="vidrio"
-            label="Vidrio"
-            fullWidth
-            autoComplete="given-name"
-            variant="standard"
-            type="number"
-            value={materialDescription.glass}
-            onChange={(e) => setMaterialDescription({...materialDescription, glass: e.target.value})}
-  
-          />
-          <Grid item xs={12} sm={6}>
-            <TextField
-              disabled={!edit}
-              id="litico"
-              name="litico"
-              label="Lítico"
-              fullWidth
-              autoComplete="given-name"
-              variant="standard"
-              type="number"
-              value={materialDescription.lithic}
-              onChange={(e) => setMaterialDescription({...materialDescription, lithic: e.target.value})}
-  
-            />
-            <Grid item xs={12} sm={6}>
-              <TextField
-                disabled={!edit}
-                id="cuero"
-                name="cuero"
-                label="Cuero"
-                fullWidth
-                autoComplete="given-name"
-                variant="standard"
-                type="number"
-                value={materialDescription.leather}
-                onChange={(e) => setMaterialDescription({...materialDescription, leather: e.target.value})}
-  
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                disabled={!edit}
-                id="textil"
-                name="textil"
-                label="Textil"
-                fullWidth
-                autoComplete="given-name"
-                variant="standard"
-                type="number"
-                value={materialDescription.textile}
-                onChange={(e) => setMaterialDescription({...materialDescription, textile: e.target.value})}
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                disabled={!edit}
-                id="osteofauna"
-                name="osteofauna"
-                label="Osteofauna"
-                fullWidth
-                autoComplete="given-name"
-                variant="standard"
-                type="number"
-                value={materialDescription.animalBones}
-                onChange={(e) => setMaterialDescription({...materialDescription, animalBones: e.target.value})}
-  
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                disabled={!edit}
-                id="madera"
-                name="madera"
-                label="Madera"
-                fullWidth
-                autoComplete="given-name"
-                variant="standard"
-                type="number"
-                value={materialDescription.wood}
-                onChange={(e) => setMaterialDescription({...materialDescription, wood: e.target.value})}
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                disabled={!edit}
-                id="bioantropologico"
-                name="bioantropologico"
-                label="Bioantropológico"
-                fullWidth
-                autoComplete="given-name"
-                variant="standard"
-                type="number"
-                value={materialDescription.bioAntro}
-                onChange={(e) => setMaterialDescription({...materialDescription, bioAntro: e.target.value})}
-  
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                disabled={!edit}
-                id="arqueobotanico"
-                name="arqueobotanico"
-                label="Arqueobotánico"
-                fullWidth
-                autoComplete="given-name"
-                variant="standard"
-                type="number"
-                value={materialDescription.archeoBotanical}
-                onChange={(e) => setMaterialDescription({...materialDescription, archeoBotanical: e.target.value})}
-  
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                disabled={!edit}
-                id="malacologico"
-                name="malacologico"
-                label="Malacológico"
-                fullWidth
-                autoComplete="given-name"
-                variant="standard"
-                type="number"
-                value={materialDescription.malacological}
-                onChange={(e) => setMaterialDescription({...materialDescription, malacological: e.target.value})}
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                disabled={!edit}
-                required
-                id="total"
-                name="total"
-                label="Numero Total de Materiales"
-                fullWidth
-                autoComplete="given-name"
-                variant="standard"
-                type="number"
-                value={materialDescription.totalNumber}
-                onChange={(e) => setMaterialDescription({...materialDescription, totalNumber: e.target.value})}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <h4>Obersvaciones de los materiales:</h4>
-              <textarea
-                disabled={!edit}
-                name="observaciones_materiales"
-                rows="4"
-                cols="50"
-                value={materialDescription.observations}
-                onChange={(e) => setMaterialDescription({...materialDescription, observations: e.target.value})}
-              ></textarea>
-            </Grid>
-          </Grid>
-        </Grid>
-      </React.Fragment>
-    );
-  }
-
-
-
-  
 
   return (
     <ThemeProvider theme={theme}>

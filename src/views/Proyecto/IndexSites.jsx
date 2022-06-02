@@ -123,13 +123,23 @@ function IndexSitesContent() {
                                             </Typography>
                                         </CardContent>
                                         <CardActions>
-                                            <Button size="small" color="primary">
-                                            <Link to={`./${site._id}`}>Ver/Editar</Link>
-                                            </Button>
-                                            <Button onClick={()=> defineDomain(site._id, 'site', domain, setDomain)}>
-                                                <Link to={`./${site._id}/Units`}>Ver Unidades</Link>
-                                            </Button>
-                                            <Button size="small" color='error' onClick={()=> handleDelete(site._id)}>Archivar</Button>
+                                            <Link to={`./${site._id}`} style={{ textDecoration: 'none' }}>
+                                                <Button variant="outlined" size="small" color="primary">
+                                                    Ver/Editar
+                                                </Button>
+                                            </Link>
+                                            
+                                            
+                                            <Link to={`./${site._id}/Units`} style={{ textDecoration: 'none' }}>
+                                                <Button  size="small" variant="outlined" color='secondary' onClick={()=> defineDomain(site._id, 'site', domain, setDomain)}>
+                                                    Ver Unidades
+                                                </Button>
+                                            </Link>
+                                            <Link to={window.location.reload}  style={{ textDecoration: 'none' }}>
+                                                <Button size="small" variant="outlined" color='error' onClick={()=> handleDelete(site._id)}>
+                                                    Archivar
+                                                </Button>
+                                            </Link>
                                         </CardActions>
                                     </Card>
                                 </Grid>
@@ -150,9 +160,11 @@ function IndexSitesContent() {
                                     
                                 </CardContent>
                                 <CardActions>
-                                    <Button size="small" color="primary">
-                                        <Link to={`./new`}>Crear</Link>
-                                    </Button>
+                                    <Link to={`./new`} style={{ textDecoration: 'none' }}>
+                                        <Button variant="outlined" size="small" color="primary">
+                                            Crear
+                                        </Button>
+                                    </Link>
                                 </CardActions>
                             </Card>
                             </Grid>
