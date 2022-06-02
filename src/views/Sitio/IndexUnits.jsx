@@ -123,13 +123,21 @@ function IndexUnitsContent() {
                                             </Typography>
                                         </CardContent>
                                         <CardActions>
-                                            <Button size="small" color="primary">
-                                            <Link to={`./${unit._id}`}>Ver/Editar</Link>
-                                            </Button>
-                                            <Button onClick={()=> defineDomain(unit._id, 'unit', domain, setDomain)}>
-                                                <Link to={`./${unit._id}/Levels`}>Ver Niveles</Link>
-                                            </Button>
-                                            <Button size="small" color='error' onClick={()=> handleDelete(unit._id)}>Archivar</Button>
+                                            <Link to={`./${unit._id}`} style={{ textDecoration: 'none' }}>
+                                                <Button variant="outlined" size="small" color="primary">
+                                                    Ver/Editar
+                                                </Button>
+                                            </Link>
+                                                <Link to={`./${unit._id}/Levels`} style={{ textDecoration: 'none' }}>
+                                                    <Button size="small" color='secondary' variant="outlined" onClick={()=> defineDomain(unit._id, 'unit', domain, setDomain)}>
+                                                    Ver Niveles
+                                                    </Button>
+                                                </Link>
+                                            <Link to={window.location.reload}  style={{ textDecoration: 'none' }} >
+                                                <Button size="small" variant="outlined" color='error' onClick={()=> handleDelete(unit._id)}>
+                                                    Archivar
+                                                </Button>
+                                            </Link>
                                         </CardActions>
                                     </Card>
                                 </Grid>
@@ -150,9 +158,12 @@ function IndexUnitsContent() {
                                     
                                 </CardContent>
                                 <CardActions>
-                                    <Button size="small" color="primary">
-                                        <Link to={`./new`}>Crear</Link>
-                                    </Button>
+                                    
+                                    <Link to={`./new`} style={{ textDecoration: 'none' }}>
+                                        <Button  variant="outlined" size="small" color="primary">
+                                            Crear
+                                        </Button>
+                                    </Link>
                                 </CardActions>
                             </Card>
                             </Grid>

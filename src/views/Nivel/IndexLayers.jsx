@@ -118,10 +118,14 @@ function IndexLayersContent() {
                                             </Typography>
                                         </CardContent>
                                         <CardActions>
-                                            <Button size="small" color="primary">
-                                            <Link to={`./${layer._id}`}>Ver/Editar</Link>
-                                            </Button>
-                                            <Button size="small" color='error' onClick={()=> handleDelete(layer._id)}>Archivar</Button>
+                                            <Link to={`./${layer._id}`} style={{ textDecoration: 'none' }}>
+                                                <Button variant='outlined' size="small" color="primary">
+                                                Ver/Editar
+                                                </Button>
+                                            </Link>
+                                            <Link to={window.location.reload}  style={{ textDecoration: 'none' }} >
+                                            <Button variant='outlined' size="small" color='error' onClick={()=> handleDelete(layer._id)}>Archivar</Button>
+                                            </Link>
                                         </CardActions>
                                     </Card>
                                 </Grid>
@@ -135,9 +139,11 @@ function IndexLayersContent() {
                                     
                                 </CardContent>
                                 <CardActions>
-                                    <Button size="small" color="primary">
-                                        <Link to={`./new`}>Crear</Link>
-                                    </Button>
+                                    <Link to={`./new`} style={{ textDecoration: 'none' }}>
+                                        <Button variant='outlined' size="small" color="primary">
+                                            Crear
+                                        </Button>
+                                    </Link>
                                 </CardActions>
                             </Card>
                             </Grid>

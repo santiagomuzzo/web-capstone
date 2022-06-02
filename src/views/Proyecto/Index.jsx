@@ -131,13 +131,21 @@ function ProyectosContent() {
                                                 </Typography>
                                             </CardContent>
                                             <CardActions>
-                                                <Button size="small" variant="outlined" color="primary">
-                                                    <Link to={`/Proyects/${project._id}`}>Ver/Editar</Link>
-                                                </Button>
-                                                <Button size="small" variant="outlined" color='secondary' onClick={()=> defineDomain(project._id, 'project', domain, setDomain)}>
-                                                    <Link to={`/Proyects/${project._id}/Sites`}  >Ver Sitios</Link>
-                                                </Button>
-                                                <Button size="small" color='error' variant="outlined" onClick={()=> handleDelete(project._id)}>Archivar</Button>
+                                                
+                                                <Link  to={`/Proyects/${project._id}`} style={{ textDecoration: 'none' }}>
+                                                    <Button size="small" variant="outlined" color="primary">
+                                                        Ver/Editar
+                                                    </Button>
+                                                </Link>
+                                                
+                                                 <Link to={`/Proyects/${project._id}/Sites`}  style={{ textDecoration: 'none' }}>
+                                                    <Button size="small" variant="outlined" color='secondary' onClick={()=> defineDomain(project._id, 'project', domain, setDomain)}>
+                                                        Ver Sitios
+                                                    </Button>
+                                                </Link>
+                                                <Link to={window.location.reload}  style={{ textDecoration: 'none' }}>
+                                                    <Button size="small" color='error' variant="outlined" onClick={()=> handleDelete(project._id)}>Archivar</Button>
+                                                </Link>
                                             </CardActions>
                                         </Card>
                                     </Grid>
@@ -158,9 +166,12 @@ function ProyectosContent() {
                                     
                                 </CardContent>
                                 <CardActions>
-                                    <Button size="small" color="primary">
-                                        <Link to={`/Proyects/new`}>Crear</Link>
-                                    </Button>
+                                    <Link to={`/Proyects/new`} style={{ textDecoration: 'none' }}>
+                                        <Button variant="outlined" size="small" color="primary">
+                                            Crear
+                                        </Button>
+                                    </Link>
+                                    
                                 </CardActions>
                             </Card>
                             </Grid>
