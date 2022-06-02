@@ -27,7 +27,7 @@ import IndexSites from "./views/Proyecto/IndexSites";
 import IndexUnits from "./views/Sitio/IndexUnits";
 import IndexLevels from "./views/Unidad/IndexLevels";
 import IndexLayers from "./views/Nivel/IndexLayers";
-import Dashboard from "./views/Unidad/dashboard";
+import Dashboard from "./views/Unidad/Dashboard";
 
 import { MsalProvider } from "@azure/msal-react";
 import { ProvideDomain } from "./useDomain";
