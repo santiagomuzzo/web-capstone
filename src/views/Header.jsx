@@ -16,10 +16,10 @@ export const Header = () => {
                 <div className="ml-auto">
                     <ul>
                     <li>
-                        <Link to="/Dashboard" style={{ textDecoration: 'none' }}><button className='boton-sesion' ><span>Dashboard</span></button></Link>
+                        <Link to="/Dashboard" style={{ textDecoration: 'none' }}><button className='boton-sesion' ><span>Tablero</span></button></Link>
                     </li>
                     <li>
-                        <Dropdown.Item as="button" className= "boton-sesion" onClick={() => instance.logoutRedirect({ postLogoutRedirectUri: "/" })}>Cerra Sesión</Dropdown.Item>
+                        <Dropdown.Item as="button" className= "boton-sesion" onClick={() => instance.logoutRedirect({ postLogoutRedirectUri: "/" })}>Cerrar Sesión</Dropdown.Item>
                     </li>
                     </ul>
                 </div>
