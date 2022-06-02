@@ -14,7 +14,7 @@ env:
  REACT_APP_API_URL: 'https://mankuk-test-api-v2.azurewebsites.net'
  REACT_APP_B2C_CLIENT_ID: ${{ secrets.B2C_CLIENT_ID }}
  REACT_APP_REDIRECT_URI: 'https://white-coast-0eaf9071e.1.azurestaticapps.net'
- REACT_APP_SECRET: ${{ secrets.B2C_SECRET }}
+ REACT_APP_CLIENT_SECRET: ${{ secrets.B2C_SECRET }}
 
 jobs:
   build_and_deploy_job:
