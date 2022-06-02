@@ -570,6 +570,23 @@ function Review() {
               }
             />
           </Grid>
+          <Grid item xs={12} sm={6}>
+              <TextField
+                required
+                id="total"
+                name="total"
+                label="Numero Total de Materiales"
+                fullWidth
+                autoComplete="given-name"
+                variant="standard"
+                type="number"
+                onChange={(e) =>
+                  (DATA_FORM.materialDescription.totalNumber = e.target.value)
+                }
+                
+                
+              />
+            </Grid>
           <Grid item xs={12}>
             <h4>Observaciones de los materiales:</h4>
             <textarea

@@ -70,10 +70,10 @@ function IndexLayersContent() {
         })
         const raw = await data.json()
         const array = []
+        console.log(raw)
         raw.forEach((obj) => {
-            if ( obj.status === "Activo") {
-                array.push(obj)
-            }
+            array.push(obj)
+            
             
           })
         
