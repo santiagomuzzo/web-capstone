@@ -18,6 +18,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { es} from 'date-fns/locale'
 
 const DATA_FORM = {
+  status:"Activo",
   startDepth: 0,
   endDepth: 0,
   index: 0,
