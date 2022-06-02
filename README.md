@@ -1,6 +1,6 @@
 # Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project was bootstrapped with [Create React App] (https://github.com/facebook/create-react-app).
 
 Deploy: https://white-coast-0eaf9071e.1.azurestaticapps.net
 
