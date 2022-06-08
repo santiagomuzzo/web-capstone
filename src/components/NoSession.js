@@ -32,7 +32,7 @@ export default function NoSession() {
             <Container maxWidth="lg">
                 <Grid container spacing={3}>
                 <div class = "container">
-                    <h1>Porfavor Inicia Sesion para poder acceder a la información!</h1>
+                    <h1>Porfavor Inicia Sesión para poder acceder a la información!</h1>
                     <br></br>
                     <Dropdown.Item className= "boton" as="button" onClick={() => instance.loginRedirect(loginRequest)}>Iniciar Sesión</Dropdown.Item>
                 </div>

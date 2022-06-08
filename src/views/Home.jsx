@@ -1,18 +1,20 @@
 import { AuthenticatedTemplate } from "@azure/msal-react";
 import * as React from "react";
 import background from '../assets/background.jpeg';
+import logo from '../assets/logo.png';
 import '../styles/App.css';
+import '../styles/Home.css';
 
 function Home() {
   return (
     <div className="App">
-      <header className="App-header">
-        <div class="">
-          <h1>Bienvenido a Mankuk app!</h1>
-          <img src={background} className="App-logo" alt="logo" />
+      <div class="header">
+        <div class="inner-header">
+          <h1>Bienvenido a Mankuk!</h1>
+          <img src={logo} className="App-logo" alt="logo" />
           <h4>Para comenzar a registrar tus fichas arquelogicas, selecciona el proyecto en el que estas trabajando!</h4>
         </div>
-      </header>
+      </div>
     </div>
   );
 }

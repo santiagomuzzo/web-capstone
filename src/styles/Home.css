@@ -7,15 +7,24 @@ body {
 .header {
   position:relative;
   text-align:center;
-  background: linear-gradient(60deg, rgba(84,58,183,1) 0%, rgba(0,172,193,1) 100%);
+  background: linear-gradient(60deg, rgb(58, 183, 112) 0%, rgba(0,172,193,1) 100%);
   color:white;
+  border: 0px solid #000;
+}
+.logo {
+  width:50px;
+  fill:white;
+  padding-right:15px;
+  display:inline-block;
+  vertical-align: middle;
 }
 
 .inner-header {
-  height:65vh;
+  height:50vh;
   width:100%;
   margin: 0;
   padding: 0;
+  padding-top: 10%;
 }
 
 .flex { /*Flexbox for containers*/
@@ -33,7 +42,6 @@ body {
   min-height:100px;
   max-height:150px;
 }
-
 
 /* Animation */
 
