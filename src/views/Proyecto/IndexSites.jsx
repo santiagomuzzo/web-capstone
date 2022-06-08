@@ -14,6 +14,7 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Link } from "react-router-dom";
 import proyectos from '../../assets/proyectos.jpeg';
+import NoSession from '../../components/NoSession';
 
 import { useDomain, defineDomain } from '../../useDomain';
 
@@ -181,7 +182,7 @@ function IndexSites(){
         <><AuthenticatedTemplate>
             <IndexSitesContent/>
         </AuthenticatedTemplate><UnauthenticatedTemplate>
-                <p>Aún no has iniciado sesión</p>
+                <NoSession/>
             </UnauthenticatedTemplate></>  
     );
     

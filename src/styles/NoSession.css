@@ -1,0 +1,30 @@
+.boton{
+    align-items: center;
+    justify-content: center;
+    width: 80%;
+    height: 40%;
+    background: #009e45;
+    color: #fff;
+    font-size: 10px;
+    border: none;
+    cursor: pointer;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: .3s ease all;
+    border-radius: 5px;
+    margin-left: 9%;
+}
+
+.boton:hover{
+    transform: scale(1.1);
+    opacity: 0.8;
+    transition: .3s ease all;   
+}
+
+.container {
+    border: #009e45 solid 1px;
+    border-radius: 5px;
+    padding: 5%;
+    margin: 5%;
+
+}

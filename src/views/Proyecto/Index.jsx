@@ -15,6 +15,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Link } from "react-router-dom";
 import { CircularProgress } from '@material-ui/core';
 import proyectos_2 from '../../assets/proyectos_2.jpeg';
+import NoSession from '../../components/NoSession';
 
 import { useDomain, defineDomain } from '../../useDomain';
 
@@ -188,8 +189,8 @@ function Proyectos(){
         <><AuthenticatedTemplate>
             <ProyectosContent/>
         </AuthenticatedTemplate><UnauthenticatedTemplate>
-                <p>Aún no has iniciado sesión</p>
-            </UnauthenticatedTemplate></>  
+            <NoSession/>
+        </UnauthenticatedTemplate></>  
     );
     
 

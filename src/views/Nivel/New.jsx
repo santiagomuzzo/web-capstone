@@ -16,6 +16,7 @@ import TextField from '@mui/material/TextField';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { es} from 'date-fns/locale'
+import NoSession from '../../components/NoSession';
 
 const DATA_FORM = {
   status:"Activo",
@@ -198,7 +199,7 @@ function NewLevel(){
       <><AuthenticatedTemplate>
           <NewLevelContent/>
       </AuthenticatedTemplate><UnauthenticatedTemplate>
-              <p>Aún no has iniciado sesión</p>
+              <NoSession/>
           </UnauthenticatedTemplate></>  
   );
   

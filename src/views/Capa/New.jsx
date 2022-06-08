@@ -21,6 +21,7 @@ import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
 import MenuItem from "@mui/material/MenuItem";
+import NoSession from '../../components/NoSession';
 
 const DATA_FORM = {
   status: 'Activo',
@@ -608,7 +609,7 @@ function NewLayer(){
     <><AuthenticatedTemplate>
         <NewLayerContent/>
     </AuthenticatedTemplate><UnauthenticatedTemplate>
-    <p>Aún no has iniciado sesión</p>
+    <NoSession/>
     </UnauthenticatedTemplate></>  
 );
 

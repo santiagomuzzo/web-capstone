@@ -13,6 +13,7 @@ import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
+import NoSession from '../../components/NoSession';
 
 const DATA_FORM = {
   name: '',
@@ -142,7 +143,7 @@ function NewProject(){
       <><AuthenticatedTemplate>
           <NewProyectForm/>
       </AuthenticatedTemplate><UnauthenticatedTemplate>
-              <p>Aún no has iniciado sesión</p>
+          <NoSession/>
           </UnauthenticatedTemplate></>  
   );
   
