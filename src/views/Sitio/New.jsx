@@ -13,6 +13,7 @@ import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
+import NoSession from '../../components/NoSession';
 
 // eslint-disable-next-line no-unused-vars
 import { useDomain, defineDomain } from '../../useDomain';
@@ -150,7 +151,7 @@ function NewSite(){
       <><AuthenticatedTemplate>
           <NewSiteContent/>
       </AuthenticatedTemplate><UnauthenticatedTemplate>
-              <p>Aún no has iniciado sesión</p>
+              <NoSession/>
           </UnauthenticatedTemplate></>  
   );
 }

@@ -14,6 +14,7 @@ import Button from '@mui/material/Button';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { es} from 'date-fns/locale'
+import NoSession from '../../components/NoSession';
 
 const theme = createTheme({
     palette: {
@@ -217,7 +218,7 @@ function LevelShow(){
     <><AuthenticatedTemplate>
         <LevelShowContent/>
     </AuthenticatedTemplate><UnauthenticatedTemplate>
-            <p>Aún no has iniciado sesión</p>
+            <NoSession/>
         </UnauthenticatedTemplate></>  
 );
 
