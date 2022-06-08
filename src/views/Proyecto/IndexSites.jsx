@@ -153,6 +153,7 @@ function IndexSitesContent() {
                                     height="140"
                                     image="https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/OOjs_UI_icon_add.svg/1200px-OOjs_UI_icon_add.svg.png"
                                     title="Contemplative Reptile"
+                                    style={{"padding-top": "3%"}}
                                 />
                                 <CardContent>
                                     <Typography gutterBottom variant="h5" component="h2">
