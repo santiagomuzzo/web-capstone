@@ -74,9 +74,9 @@ function IndexLayersContent() {
         const array = []
         console.log(raw)
         raw.forEach((obj) => {
+            if (obj.matrixDescription) {
             array.push(obj)
-            
-            
+            }
           })
         
         setLayerList(array)

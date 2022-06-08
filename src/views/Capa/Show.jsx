@@ -179,7 +179,6 @@ function LayerShowContent() {
           Descripción Matriz
         </Typography>
         <Grid>
-          
           <Grid item xs={12} sm={6}>
             <TextField
               disabled={!edit}
@@ -193,18 +192,17 @@ function LayerShowContent() {
               onChange={(e) => setMatrixDescription({...matrixDescription, sedimentType: e.target.value})}
   
             >
-              <MenuItem value={"arena"}>Arena</MenuItem>
-              <MenuItem value={"arena_arcillosa"}>Arena Arcillosa</MenuItem>
-              <MenuItem value={"arena_limosa"}>Arena Limosa</MenuItem>
-              <MenuItem value={"arcilla"}>Arcilla</MenuItem>
-              <MenuItem value={"arcilla_limosa"}>Arcilla Limosa</MenuItem>
-              <MenuItem value={"arcilla_arenosa"}>Arcilla Arenosa</MenuItem>
-              <MenuItem value={"limo"}>Limo</MenuItem>
-              <MenuItem value={"limo_arenoso"}>Limo Arenoso</MenuItem>
-              <MenuItem value={"limo_arcilloso"}>Limo Arcilloso</MenuItem>
+              <MenuItem value={"Arena"}>Arena</MenuItem>
+              <MenuItem value={"Arena Arcillosa"}>Arena Arcillosa</MenuItem>
+              <MenuItem value={"Arena Limosa"}>Arena Limosa</MenuItem>
+              <MenuItem value={"Arcilla"}>Arcilla</MenuItem>
+              <MenuItem value={"Arcilla Limosa"}>Arcilla Limosa</MenuItem>
+              <MenuItem value={"Arcilla Arenosa"}>Arcilla Arenosa</MenuItem>
+              <MenuItem value={"Limo"}>Limo</MenuItem>
+              <MenuItem value={"Limo Arenoso"}>Limo Arenoso</MenuItem>
+              <MenuItem value={"Limo Arcilloso"}>Limo Arcilloso</MenuItem>
             </TextField>
           </Grid>
-  
           <Grid item xs={12} sm={6}>
             <TextField
               disabled={!edit}
@@ -216,12 +214,11 @@ function LayerShowContent() {
               variant="standard"
               value={matrixDescription.compaction}
               onChange={(e) => setMatrixDescription({...matrixDescription, compaction: e.target.value})}
-  
             >
-              <MenuItem value={"muy_compacta"}>Muy Compacta</MenuItem>
-              <MenuItem value={"compacta"}>Compacta</MenuItem>
-              <MenuItem value={"semi_compacta"}>Semi Compacta</MenuItem>
-              <MenuItem value={"no_compacta"}>No Compacta</MenuItem>
+              <MenuItem value={"Muy Compacta"}>Muy Compacta</MenuItem>
+              <MenuItem value={"Compacta"}>Compacta</MenuItem>
+              <MenuItem value={"Semi Compacta"}>Semi Compacta</MenuItem>
+              <MenuItem value={"No Compacta"}>No Compacta</MenuItem>
             </TextField>
           </Grid>
           <Grid item xs={12} md={6}>
@@ -235,7 +232,6 @@ function LayerShowContent() {
               variant="standard"
               value={matrixDescription.munshell}
               onChange={(e) => setMatrixDescription({...matrixDescription, munshell: e.target.value})}
-  
             />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -249,21 +245,16 @@ function LayerShowContent() {
               variant="standard"
               value={matrixDescription.inclusionType}
               onChange={(e) => setMatrixDescription({...matrixDescription, inclusionType: e.target.value})}
-  
-              
             >
-              <MenuItem value={"ausentes"}>Ausentes</MenuItem>
-              <MenuItem value={"clastos_angulosos"}>Clastos Angulosos</MenuItem>
-              <MenuItem value={"clastos_subangulosos"}>
-                Clastos Subangulosos
-              </MenuItem>
-              <MenuItem value={"clastos_rodados"}>Clastos Rodados</MenuItem>
-              <MenuItem value={"grava"}>Grava</MenuItem>
-              <MenuItem value={"gravilla"}>Gravilla</MenuItem>
-              <MenuItem value={"maicillo"}>Maicillo</MenuItem>
-              <MenuItem value={"material_constructivo"}>
-                Material constructivo
-              </MenuItem>
+              <MenuItem value={"Ausentes"}>Ausentes</MenuItem>
+              <MenuItem value={"Clastos Angulosos"}>Clastos Angulosos</MenuItem>
+              <MenuItem value={"Clastos Subangulosos"}>Clastos Subangulosos</MenuItem>
+              <MenuItem value={"Clastos Rodados"}>Clastos Rodados</MenuItem>
+              <MenuItem value={"Grava"}>Grava</MenuItem>
+              <MenuItem value={"Gravilla"}>Gravilla</MenuItem>
+              <MenuItem value={"Maicillo"}>Maicillo</MenuItem>
+              <MenuItem value={"Material Constructivo"}> Material constructivo </MenuItem>
+              <MenuItem value={"Otro"}>Otro</MenuItem>
             </TextField>
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -279,10 +270,11 @@ function LayerShowContent() {
               onChange={(e) => setMatrixDescription({...matrixDescription, inclusionSize: e.target.value})}
   
             >
-              <MenuItem value={"grande"}>Grande</MenuItem>
-              <MenuItem value={"mediano"}>Mediano</MenuItem>
-              <MenuItem value={"pequeño"}>Pequeño</MenuItem>
-              <MenuItem value={"muy_pequeño"}>Muy Pequeño</MenuItem>
+              <MenuItem value={"Grandes"}>Grandes</MenuItem>
+              <MenuItem value={"Medianos"}>Medianos</MenuItem>
+              <MenuItem value={"Pequeños"}>Pequeños</MenuItem>
+              <MenuItem value={"Muy Pequeños"}>Muy Pequeños</MenuItem>
+              <MenuItem value={"No Aplica"}>No Aplica</MenuItem>
             </TextField>
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -297,10 +289,11 @@ function LayerShowContent() {
               value={matrixDescription.inclusionDensity}
               onChange={(e) => setMatrixDescription({...matrixDescription, inclusionDensity: e.target.value})}
             >
-              <MenuItem value={"alta"}>Alta</MenuItem>
-              <MenuItem value={"media"}>Media</MenuItem>
-              <MenuItem value={"baja"}>Baja</MenuItem>
-              <MenuItem value={"muy_baja"}>Muy Baja</MenuItem>
+              <MenuItem value={"Alta"}>Alta</MenuItem>
+              <MenuItem value={"Media"}>Media</MenuItem>
+              <MenuItem value={"Baja"}>Baja</MenuItem>
+              <MenuItem value={"Muy Baja"}>Muy Baja</MenuItem>
+              <MenuItem value={"No Aplica"}>No Aplica</MenuItem>
             </TextField>
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -316,9 +309,10 @@ function LayerShowContent() {
               onChange={(e) => setMatrixDescription({...matrixDescription, organicMatter: e.target.value})}
   
             >
-              <MenuItem value={"alto"}>Alto</MenuItem>
-              <MenuItem value={"medio"}>Medio</MenuItem>
-              <MenuItem value={"bajo"}>Bajo</MenuItem>
+              <MenuItem value={"Alto"}>Alto</MenuItem>
+              <MenuItem value={"Medio"}>Medio</MenuItem>
+              <MenuItem value={"Bajo"}>Bajo</MenuItem>
+              <MenuItem value={"No Se Encuentra"}>No Se Encuentra</MenuItem>
             </TextField>
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -334,10 +328,10 @@ function LayerShowContent() {
               onChange={(e) => setMatrixDescription({...matrixDescription, humidity: e.target.value})}
   
             >
-              <MenuItem value={"muy_humeda"}>Muy Húmeda</MenuItem>
-              <MenuItem value={"humeda"}>Húmeda</MenuItem>
-              <MenuItem value={"ligeramente"}>Ligeramente</MenuItem>
-              <MenuItem value={"sin_humedad"}>Sin Humedad</MenuItem>
+              <MenuItem value={"Muy Humeda"}>Muy Húmeda</MenuItem>
+              <MenuItem value={"Humeda"}>Húmeda</MenuItem>
+              <MenuItem value={"Ligeramente"}>Ligeramente</MenuItem>
+              <MenuItem value={"Sin Humedad"}>Sin Humedad</MenuItem>
             </TextField>
           </Grid>
           <Grid item xs={12}>
