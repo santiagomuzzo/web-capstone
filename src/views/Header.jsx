@@ -13,19 +13,36 @@ export const Header = () => {
             <div className="content">
             <Link to="/"><img src={logo} class="logo" alt="Main Logo" /></Link>    
             <AuthenticatedTemplate>
-                <div className="ml-auto">
+                
                     <ul>
-                    <li>
-                        <Link to="/Dashboard" style={{ textDecoration: 'none' }}><button className='boton-sesion' ><span>Tablero</span></button></Link>
-                    </li>
-                    <li>
-                        <Dropdown.Item as="button" className= "boton-sesion" onClick={() => instance.logoutRedirect({ postLogoutRedirectUri: "/" })}>Cerrar Sesión</Dropdown.Item>
-                    </li>
+                        <li>
+                            <Link to="/Proyects" style={{ textDecoration: 'none' }}><a className='boton-navbar' >Proyectos</a></Link>
+                        </li>
+                        <li>
+                            <Link to="/Dashboard" style={{ textDecoration: 'none' }}><a className='boton-navbar' >Tablero</a></Link>
+                        </li>
+                        <li>
+                            <Link to="/" style={{ textDecoration: 'none' }}><a className='boton-navbar' >Cuerpos de Fichas</a></Link>
+                        </li>
+                        <li>
+                            <Link to="/" style={{ textDecoration: 'none' }}><a className='boton-navbar' >Informes Especialistas</a></Link>
+                        </li>
                     </ul>
-                </div>
+                
+                
+                    <Dropdown.Item as="text" className= "boton-sesion" onClick={() => instance.logoutRedirect({ postLogoutRedirectUri: "/" })}>Cerrar Sesión</Dropdown.Item>
+                
             </AuthenticatedTemplate>
             <UnauthenticatedTemplate>
-                <Dropdown.Item className= "boton-sesion" as="button" onClick={() => instance.loginRedirect(loginRequest)}>Iniciar Sesión</Dropdown.Item>
+                <ul>
+                    <li>
+                        <Link to="/Proyects" style={{ textDecoration: 'none' }}><a className='boton-navbar' >Proyectos</a></Link>
+                    </li>
+                    
+                </ul>
+
+                <Dropdown.Item className= "boton-sesion" as="text" onClick={() => instance.loginRedirect(loginRequest)}>Iniciar Sesión</Dropdown.Item>
+                
             </UnauthenticatedTemplate>
             </div>
         </div>
