@@ -26,5 +26,9 @@
     border-radius: 5px;
     padding: 5%;
     margin: 5%;
-
+    margin-top: 15%;
+    padding-bottom: 15%;
+    @media screen and (max-width: 600px) {
+        padding-bottom: 0%;
+    }
 }

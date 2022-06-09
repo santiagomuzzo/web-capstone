@@ -56,3 +56,7 @@
     opacity: 0.8;
     transition: .3s ease all;   
 }
+
+.ml-auto {
+    flex-direction: row;
+}

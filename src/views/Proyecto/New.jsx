@@ -14,6 +14,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
 import NoSession from '../../components/NoSession';
+import '../../styles/App.css';
 
 const DATA_FORM = {
   name: '',
@@ -83,7 +84,7 @@ function NewProyectForm () {
   }
   
   return (
-    <div>
+    <div class="newForm">
       <ThemeProvider theme={theme}>
       <CssBaseline />
       <Container maxWidth="sm">
