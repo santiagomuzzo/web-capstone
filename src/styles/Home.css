@@ -12,13 +12,7 @@ body {
   border: 0px solid #000;
   padding-top: 1%;
 }
-.logo {
-  width:50px;
-  fill:white;
-  padding-right:15px;
-  display:inline-block;
-  vertical-align: middle;
-}
+
 
 .inner-header {
   height:50vh;
