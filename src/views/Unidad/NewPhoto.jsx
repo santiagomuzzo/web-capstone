@@ -90,7 +90,7 @@ function UnitNewPhoto() {
                   required
                   id="description"
                   name="description"
-                  label="Descripción"
+                  label="Ingresa una descripción para la foto"
                   fullWidth
                   value={description}
                   onChange={e => setDescription(e.target.value)}
@@ -103,7 +103,7 @@ function UnitNewPhoto() {
                   sx={{ mt: 3, ml: 1 }}
                   color = "success"
                 >
-                  Subir
+                  Subir Imagen
                 </Button>
               </Grid>
             </Grid>

@@ -87,8 +87,9 @@ function LevelNewPhoto() {
                         </Grid>
                         <Grid item xs={12}>
                         <TextField
+                          required
                             id="description"
-                            label="Descripción"
+                            label="Ingresa una descripción para la foto"
                             name="description"
                             value={description}
                             onChange={(e) => setDescription(e.target.value)}
@@ -97,7 +98,7 @@ function LevelNewPhoto() {
                         </Grid>
                         <Grid item xs={12}>
                         <Button variant="contained" color="primary" onClick={handleSubmit}>
-                            Subir
+                            Subir Imagen
                         </Button>
                         </Grid>
                     </Grid>
