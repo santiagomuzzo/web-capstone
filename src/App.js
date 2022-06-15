@@ -28,7 +28,10 @@ import IndexUnits from "./views/Sitio/IndexUnits";
 import IndexLevels from "./views/Unidad/IndexLevels";
 import IndexLayers from "./views/Nivel/IndexLayers";
 import Dashboard from "./views/Unidad/dashboard";
-import Background from "./components/Background";
+import UnitPhoto from "./views/Unidad/NewPhoto";
+import UnitPhotoShow from "./views/Unidad/Photo";
+import LevelPhoto from "./views/Nivel/NewPhoto";
+import LevelPhotoShow from "./views/Nivel/Photo";
 
 import { MsalProvider } from "@azure/msal-react";
 import { ProvideDomain } from "./useDomain";
@@ -64,9 +67,13 @@ function App({ instance }) {
 					<Route path="/Proyects/:id/Sites/:id/Units" element={<IndexUnits />} />
 					<Route path="/Proyects/:id/Sites/:id/Units/new" element={<NewUnit />} />
 					<Route path="/Proyects/:id/Sites/:id/Units/:id" element={<UnitShow />} />
+					<Route path="/Proyects/:id/Sites/:id/Units/:id/Photos" element={<UnitPhoto />} />
+					<Route path="/Proyects/:id/Sites/:id/Units/:id/Photos/:id" element={<UnitPhotoShow />} />
 					<Route path="/Proyects/:id/Sites/:id/Units/:id/Levels" element={<IndexLevels />} />
 					<Route path="/Proyects/:id/Sites/:id/Units/:id/Levels/new" element={<NewLevel />} />
 					<Route path="/Proyects/:id/Sites/:id/Units/:id/Levels/:id" element={<LevelShow />} />
+					<Route path="/Proyects/:id/Sites/:id/Units/:id/Levels/:id/Photos" element={<LevelPhoto />} />
+					<Route path="/Proyects/:id/Sites/:id/Units/:id/Levels/:id/Photos/:id" element={<LevelPhotoShow />} />
 					<Route path="/Proyects/:id/Sites/:id/Units/:id/Levels/:id/Layers" element={<IndexLayers />} />
 					<Route path="/Proyects/:id/Sites/:id/Units/:id/Levels/:id/Layers/new" element={<NewLayer />} />
 					<Route path="/Proyects/:id/Sites/:id/Units/:id/Levels/:id/Layers/:id" element={<LayerShow />} />
