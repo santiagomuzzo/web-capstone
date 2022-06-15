@@ -123,11 +123,16 @@ function IndexLevelsContent() {
                                                 Ver/Editar
                                                 </Button>
                                             </Link>
-                                                <Link to={`./${level._id}/Layers`} style={{ textDecoration: 'none' }}>
-                                                    <Button size='small'  color='secondary' variant="outlined" onClick={()=> defineDomain(level._id, 'level', domain, setDomain)}>
-                                                    Ver Capas
-                                                    </Button>
-                                                </Link>
+                                            <Link to={`./${level._id}/Layers`} style={{ textDecoration: 'none' }}>
+                                                <Button size='small'  color='secondary' variant="outlined" onClick={()=> defineDomain(level._id, 'level', domain, setDomain)}>
+                                                Ver Capas
+                                                </Button>
+                                            </Link>
+                                            <Link to={`./${level._id}/Photos`} style={{ textDecoration: 'none' }}>
+                                                <Button size="small" color='secondary' variant="outlined">
+                                                    Ver Fotos del Nivel
+                                                </Button>
+                                            </Link>
                                             <Link to={window.location.reload}  style={{ textDecoration: 'none' }} >
                                                 <Button size="small"  variant="outlined" color='error' onClick={()=> handleDelete(level._id)}>Archivar</Button>
                                             </Link>

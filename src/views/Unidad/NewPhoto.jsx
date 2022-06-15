@@ -8,14 +8,12 @@ import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
-import Link from '@mui/material/Link';
+import { Link } from "react-router-dom";
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
-import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { es} from 'date-fns/locale'
 import NoSession from '../../components/NoSession';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
@@ -36,9 +34,7 @@ function UnitNewPhoto() {
   const unit_id = window.location.pathname.split("/")[6];
 
   const [file, setFile] = React.useState(null)
-  const [fileName, setFileName] = React.useState(null)
   const [description, setDescription] = React.useState("")
-  const [images, setImages] = React.useState([])
   const [dataImages, setDataImages] = React.useState([])
 
   React.useEffect(() => {
@@ -47,19 +43,15 @@ function UnitNewPhoto() {
 
 
   const obtainData = async () => {
-    console.log("obtainData");
-    const response = await fetch(`${process.env.REACT_APP_API_URL}/unit/${unit_id}/unitImages`, {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/unit/${unit_id}/unitImages/active`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
       }
     })
     const data = await response.json()
-    console.log(data)
     setDataImages(data)
-    console.log(dataImages);
   }
-
 
   async function handleSubmit() {
     const formData = new FormData();
@@ -84,8 +76,7 @@ function UnitNewPhoto() {
   return (
     <div>
       <ThemeProvider theme={theme}>
-        <CssBaseline/>
-        <Container maxWidth="sm">
+        <Container maxWidth="lg">
           <Box my={4}>
             <Typography variant="h4" component="h1" gutterBottom>
               Fotos
@@ -117,15 +108,20 @@ function UnitNewPhoto() {
               </Grid>
             </Grid>
           </Box>
-          <ImageList sx={{ width: 500, height: 450 }}>
+          <ImageList sx={{ width: 1150, height: 450 }} cols={3}>
           {dataImages.map((item) => (
             <ImageListItem key={item.img}>
               <img
-                src={`${item.url}?w=248&fit=crop&auto=format`}
-                srcSet={`${item.url}?w=248&fit=crop&auto=format&dpr=2 2x`}
-                alt={item.description}
+                src={`${item.url}`}
+                srcSet={`${item.url}`}
+                alt={item.url}
                 loading="lazy"
               />
+              <Link to={`./${item._id}`} style={{ textDecoration: 'none' }}>
+                  <Button variant="outlined" size="small" color="secondary">
+                      Ver
+                  </Button>
+              </Link>
               <ImageListItemBar
                 title={item.description}
                 position="below"

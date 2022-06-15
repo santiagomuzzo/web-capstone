@@ -136,7 +136,7 @@ function IndexUnitsContent() {
                                             </Link>
                                             <Link to={`./${unit._id}/Photos`} style={{ textDecoration: 'none' }}>
                                                 <Button size="small" color='secondary' variant="outlined">
-                                                    Ver Fotos
+                                                    Ver Fotos de la Unidad
                                                 </Button>
                                             </Link>
                                             <Link to={window.location.reload}  style={{ textDecoration: 'none' }} >
@@ -144,7 +144,6 @@ function IndexUnitsContent() {
                                                     Archivar
                                                 </Button>
                                             </Link>
-                                            
                                         </CardActions>
                                     </Card>
                                 </Grid>
