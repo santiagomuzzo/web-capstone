@@ -17,6 +17,9 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { es} from 'date-fns/locale'
 import NoSession from '../../components/NoSession';
+import ImageList from '@mui/material/ImageList';
+import ImageListItem from '@mui/material/ImageListItem';
+import ImageListItemBar from '@mui/material/ImageListItemBar';
 
 const theme = createTheme({
     palette: {
@@ -32,6 +35,12 @@ function UnitNewPhoto() {
   const site_id = window.location.pathname.split("/")[4];
   const unit_id = window.location.pathname.split("/")[6];
 
+  const [file, setFile] = React.useState(null)
+  const [fileName, setFileName] = React.useState(null)
+  const [description, setDescription] = React.useState("")
+  const [images, setImages] = React.useState([])
+  const [dataImages, setDataImages] = React.useState([])
+
   React.useEffect(() => {
     obtainData();
   }, []);
@@ -39,14 +48,16 @@ function UnitNewPhoto() {
 
   const obtainData = async () => {
     console.log("obtainData");
-    const response = await fetch(`${process.env.REACT_APP_API_URL}/unit/${unit_id}/unitImages/active`, {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/unit/${unit_id}/unitImages`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
       }
     })
     const data = await response.json()
-    console.log(data);
+    console.log(data)
+    setDataImages(data)
+    console.log(dataImages);
   }
 
 
@@ -68,10 +79,7 @@ function UnitNewPhoto() {
     const file = event.target.files[0]
       setFile(file)
     }
-  const [file, setFile] = React.useState(null)
-  const [fileName, setFileName] = React.useState(null)
-  const [description, setDescription] = React.useState("")
-  const [images, setImages] = React.useState([])
+
 
   return (
     <div>
@@ -109,6 +117,22 @@ function UnitNewPhoto() {
               </Grid>
             </Grid>
           </Box>
+          <ImageList sx={{ width: 500, height: 450 }}>
+          {dataImages.map((item) => (
+            <ImageListItem key={item.img}>
+              <img
+                src={`${item.url}?w=248&fit=crop&auto=format`}
+                srcSet={`${item.url}?w=248&fit=crop&auto=format&dpr=2 2x`}
+                alt={item.description}
+                loading="lazy"
+              />
+              <ImageListItemBar
+                title={item.description}
+                position="below"
+              />
+            </ImageListItem>
+          ))}
+        </ImageList>
         </Container>
       </ThemeProvider>
     </div>
