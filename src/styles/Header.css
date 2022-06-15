@@ -3,35 +3,91 @@
     padding: 0;
 }
 
-.logo{
-    width: 130px;
-    cursor: pointer;
-}
-
-.logo:hover{
-    transform: scale(1.1);
-    transition: .3s;
-}
-
 .navbar {
     border: none;
-    background: linear-gradient(to right, #cecee1, #7d7d92);
+    background: #e4e4e4;
     box-shadow: 0px 0px 2px rgba(0, 0, 0, 1);
+    position: sticky;
+    height: 60px;
 }
 
 .content{
     width: 80%;
     margin: auto;
-    padding: 5px 10px 5px 10px;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    height: 100%;
+    
 }
 
-.navbar ul li{
+.logo{
+    width: 150px;
+    cursor: pointer;
+    align-items: center;
+}
+
+.logo:hover{
+    transform: scale(1.05);
+    transition: .2s;
+}
+
+.content ul{
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.content ul li{
     list-style: none;
-    display: inline-block;
-    margin: 0 15px;
+    display: flex;
+    position: relative;
+    padding: 0 20px;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+.content ul li:active {
+    justify-content: center;
+    align-items: center;
+    background: #d1d1d1;
+}
+
+.boton-navbar{
+    text-decoration: none;
+    color: #000000;
+    font-family: CenturyGothic, "sans-serif";
+    font-size: 1.2rem;
+    cursor: pointer;
+    height: 100%;
+    display: flex;
+    background-size: contain;
+}
+
+.boton-navbar::before {
+    content: "";
+    height: 3px;
+    width: 0%;
+    background: #009e45;
+    position: absolute;
+    left: 0;
+    bottom: 0px;
+    transition: 0.4s ease-out;
+}
+
+.boton-navbar:hover::before {
+    width: 100%;
+}
+
+.boton-navbar:hover::before:active {
+    background: #00481f;
+}
+
+.boton-navbar:active {
+    color: #009e45;
+    background: #d1d1d1;
 }
 
 .boton-sesion{
@@ -49,10 +105,19 @@
     text-decoration: none;
     transition: .3s ease all;
     border-radius: 5px;
+    font-family: CenturyGothic, "sans-serif";
 }
 
 .boton-sesion:hover{
-    transform: scale(1.1);
-    opacity: 0.8;
+    transform: scale(1.04);
     transition: .3s ease all;   
+}
+
+.boton-sesion:active{
+    background: #00481f;
+}
+
+.ml-auto {
+    flex-direction: row;
+    background-size: auto;
 }

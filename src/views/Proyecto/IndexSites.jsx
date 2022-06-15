@@ -14,6 +14,7 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Link } from "react-router-dom";
 import proyectos from '../../assets/proyectos.jpeg';
+import NoSession from '../../components/NoSession';
 
 import { useDomain, defineDomain } from '../../useDomain';
 
@@ -152,6 +153,7 @@ function IndexSitesContent() {
                                     height="140"
                                     image="https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/OOjs_UI_icon_add.svg/1200px-OOjs_UI_icon_add.svg.png"
                                     title="Contemplative Reptile"
+                                    style={{"padding-top": "3%"}}
                                 />
                                 <CardContent>
                                     <Typography gutterBottom variant="h5" component="h2">
@@ -181,7 +183,7 @@ function IndexSites(){
         <><AuthenticatedTemplate>
             <IndexSitesContent/>
         </AuthenticatedTemplate><UnauthenticatedTemplate>
-                <p>Aún no has iniciado sesión</p>
+                <NoSession/>
             </UnauthenticatedTemplate></>  
     );
     

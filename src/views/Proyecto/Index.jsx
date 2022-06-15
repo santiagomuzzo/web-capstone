@@ -15,6 +15,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Link } from "react-router-dom";
 import { CircularProgress } from '@material-ui/core';
 import proyectos_2 from '../../assets/proyectos_2.jpeg';
+import NoSession from '../../components/NoSession';
 
 import { useDomain, defineDomain } from '../../useDomain';
 
@@ -158,6 +159,7 @@ function ProyectosContent() {
                                     height="140"
                                     image="https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/OOjs_UI_icon_add.svg/1200px-OOjs_UI_icon_add.svg.png"
                                     title="Contemplative Reptile"
+                                    style={{"padding-top": "3%"}}
                                 />
                                 <CardContent>
                                     <Typography gutterBottom variant="h5" component="h2">
@@ -188,8 +190,8 @@ function Proyectos(){
         <><AuthenticatedTemplate>
             <ProyectosContent/>
         </AuthenticatedTemplate><UnauthenticatedTemplate>
-                <p>Aún no has iniciado sesión</p>
-            </UnauthenticatedTemplate></>  
+            <NoSession/>
+        </UnauthenticatedTemplate></>  
     );
     
 

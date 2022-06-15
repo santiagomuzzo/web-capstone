@@ -75,7 +75,6 @@ export default function CustomizedBreadcrumbs() {
         )}
       </Breadcrumbs>
       <br />
-      <br />
     </div>
   );
 }

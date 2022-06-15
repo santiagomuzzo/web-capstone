@@ -11,6 +11,8 @@ import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
 import { useNavigate } from "react-router-dom";
 import Button from '@mui/material/Button';
+import NoSession from '../../components/NoSession';
+import '../../styles/App.css';
 
 const theme = createTheme({
     palette: {
@@ -102,6 +104,7 @@ function ProyectShowContent() {
   }
   
   return (
+    <div class = "newForm">
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Container maxWidth="sm">
@@ -149,6 +152,7 @@ function ProyectShowContent() {
         </Paper>
       </Container>
     </ThemeProvider>
+    </div>
   );
 }
 
@@ -157,7 +161,7 @@ function ProyectShow(){
     <><AuthenticatedTemplate>
         <ProyectShowContent/>
     </AuthenticatedTemplate><UnauthenticatedTemplate>
-            <p>Aún no has iniciado sesión</p>
+        <NoSession/>
         </UnauthenticatedTemplate></>  
 );
 

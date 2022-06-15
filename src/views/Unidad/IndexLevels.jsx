@@ -14,6 +14,7 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Link } from "react-router-dom";
 import { useDomain, defineDomain } from '../../useDomain';
+import NoSession from '../../components/NoSession';
 
 
 const theme = createTheme({
@@ -163,7 +164,7 @@ function IndexLevels(){
         <><AuthenticatedTemplate>
             <IndexLevelsContent/>
         </AuthenticatedTemplate><UnauthenticatedTemplate>
-                <p>Aún no has iniciado sesión</p>
+                <NoSession/>
             </UnauthenticatedTemplate></>  
     );
     

@@ -10,6 +10,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import '../../styles/Dashboard.css';
+import NoSession from '../../components/NoSession';
 
 import { useDomain, defineDomain } from '../../useDomain';
 
@@ -192,7 +193,7 @@ function Dashboard(){
         <><AuthenticatedTemplate>
             <DashboardContent/>
         </AuthenticatedTemplate><UnauthenticatedTemplate>
-                <p>Aún no has iniciado sesión</p>
+                <NoSession/>
             </UnauthenticatedTemplate></>  
     );
     

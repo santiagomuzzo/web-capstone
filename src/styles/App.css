@@ -3,7 +3,7 @@
 }
 
 .App-logo {
-  height: 40vmin;
+  height: 10vmin;
   pointer-events: none;
 }
 
@@ -48,4 +48,9 @@
   align-self: center;
   border: none;
   width: 350px;
+}
+
+.newForm {
+  padding-top: 4%;
+  margin-bottom: 4%;
 }
