@@ -28,7 +28,7 @@ import IndexUnits from "./views/Sitio/IndexUnits";
 import IndexLevels from "./views/Unidad/IndexLevels";
 import IndexLayers from "./views/Nivel/IndexLayers";
 import Dashboard from "./views/Unidad/dashboard";
-import Background from "./components/Background";
+import UnitPhoto from "./views/Unidad/NewPhoto";
 
 import { MsalProvider } from "@azure/msal-react";
 import { ProvideDomain } from "./useDomain";
@@ -64,6 +64,7 @@ function App({ instance }) {
 					<Route path="/Proyects/:id/Sites/:id/Units" element={<IndexUnits />} />
 					<Route path="/Proyects/:id/Sites/:id/Units/new" element={<NewUnit />} />
 					<Route path="/Proyects/:id/Sites/:id/Units/:id" element={<UnitShow />} />
+					<Route path="/Proyects/:id/Sites/:id/Units/:id/Photos" element={<UnitPhoto />} />
 					<Route path="/Proyects/:id/Sites/:id/Units/:id/Levels" element={<IndexLevels />} />
 					<Route path="/Proyects/:id/Sites/:id/Units/:id/Levels/new" element={<NewLevel />} />
 					<Route path="/Proyects/:id/Sites/:id/Units/:id/Levels/:id" element={<LevelShow />} />
