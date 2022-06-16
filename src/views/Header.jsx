@@ -5,9 +5,16 @@ import logo from '../assets/logo.png';
 import { Dropdown} from "react-bootstrap";
 
 import { loginRequest } from "../authConfig";
+import Button from '@mui/material/Button';
+import { borderRadius, color } from "@mui/system";
 
+const buttonStyle = {
+    padding: '22px',
+    borderRadius: '0px'
+};
 export const Header = () => {
     const { instance } = useMsal();
+    
     return (
         <div className='navbar'>
             <div className="content">
@@ -16,22 +23,25 @@ export const Header = () => {
                 
                     <ul>
                         <li>
-                            <Link to="/Proyects" style={{ textDecoration: 'none' }}><a className='boton-navbar' >Proyectos</a></Link>
+                            <Link to="/Proyects" style={{ textDecoration: 'none' }}><Button size = "small" style={buttonStyle}><a className='boton-navbar' >Proyectos</a></Button></Link>
                         </li>
                         <li>
-                            <Link to="/Dashboard" style={{ textDecoration: 'none' }}><a className='boton-navbar' >Tablero</a></Link>
+                            <Link to="/Dashboard" style={{ textDecoration: 'none' }}><Button size = "small" style={buttonStyle}><a className='boton-navbar' >Tablero</a></Button></Link>
                         </li>
                         <li>
-                            <Link to="/" style={{ textDecoration: 'none' }}><a className='boton-navbar' >Cuerpos de Fichas</a></Link>
+                            <Link to="/" style={{ textDecoration: 'none' }}><Button size = "small" style={buttonStyle}><a className='boton-navbar' >Analisis</a></Button></Link>
                         </li>
                         <li>
-                            <Link to="/" style={{ textDecoration: 'none' }}><a className='boton-navbar' >Informes Especialistas</a></Link>
+                            <Link to="/" style={{ textDecoration: 'none' }}><Button size = "small" style={buttonStyle}><a className='boton-navbar' >Informes</a></Button></Link>
                         </li>
                     </ul>
                 
-                
-                    <Dropdown.Item as="text" className= "boton-sesion" onClick={() => instance.logoutRedirect({ postLogoutRedirectUri: "/" })}>Cerrar Sesión</Dropdown.Item>
-                
+                    <Dropdown.Item as="text">
+                    <Button  size="small" variant="contained" style={{ backgroundColor: '#009e45' }} onClick={() => instance.logoutRedirect({ postLogoutRedirectUri: "/" })}>
+                                                    Cerrar Sesión
+                    </Button>
+                    </Dropdown.Item>
+
             </AuthenticatedTemplate>
             <UnauthenticatedTemplate>
                 <ul>
@@ -41,8 +51,14 @@ export const Header = () => {
                     
                 </ul>
 
-                <Dropdown.Item className= "boton-sesion" as="text" onClick={() => instance.loginRedirect(loginRequest)}>Iniciar Sesión</Dropdown.Item>
+
+                <Dropdown.Item as="text">
+                <Button  size="small" variant="contained" style={{ backgroundColor: '#009e45' }} onClick={() => instance.loginRedirect(loginRequest)}>
+                                                Iniciar Sesión
+                </Button>
+                </Dropdown.Item>
                 
+
             </UnauthenticatedTemplate>
             </div>
         </div>
