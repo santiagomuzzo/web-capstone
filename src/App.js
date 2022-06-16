@@ -46,8 +46,9 @@ function App({ instance }) {
 	  <ProvideDomain>
       <div className="App">
 			<Header/>
-			<CustomizedBreadcrumbs />
+			
 			<div class="header">
+				<CustomizedBreadcrumbs />
 				<Routes>
 					<Route path="/" element={<Home />} />
 					<Route path="/SignIn" element={<SignIn />} />
