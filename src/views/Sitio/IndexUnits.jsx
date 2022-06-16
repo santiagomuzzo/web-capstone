@@ -129,11 +129,16 @@ function IndexUnitsContent() {
                                                     Ver/Editar
                                                 </Button>
                                             </Link>
-                                                <Link to={`./${unit._id}/Levels`} style={{ textDecoration: 'none' }}>
-                                                    <Button size="small" color='secondary' variant="outlined" onClick={()=> defineDomain(unit._id, 'unit', domain, setDomain)}>
-                                                    Ver Niveles
-                                                    </Button>
-                                                </Link>
+                                            <Link to={`./${unit._id}/Levels`} style={{ textDecoration: 'none' }}>
+                                                <Button size="small" color='secondary' variant="outlined" onClick={()=> defineDomain(unit._id, 'unit', domain, setDomain)}>
+                                                Ver Niveles
+                                                </Button>
+                                            </Link>
+                                            <Link to={`./${unit._id}/Photos`} style={{ textDecoration: 'none' }}>
+                                                <Button size="small" color='secondary' variant="outlined">
+                                                    Ver Fotos de la Unidad
+                                                </Button>
+                                            </Link>
                                             <Link to={window.location.reload}  style={{ textDecoration: 'none' }} >
                                                 <Button size="small" variant="outlined" color='error' onClick={()=> handleDelete(unit._id)}>
                                                     Archivar
