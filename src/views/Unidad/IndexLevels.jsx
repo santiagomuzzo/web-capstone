@@ -105,6 +105,23 @@ function IndexLevelsContent() {
                         </Typography>
                     </Grid>
                     <Grid item xs={12}>
+                        <Card>
+                            <CardContent>
+                                <Typography gutterBottom variant="h5" component="h2">
+                                    Crear nuevo Nivel
+                                </Typography>
+                                
+                            </CardContent>
+                            <CardActions>
+                                <Link to={`./new`} style={{ textDecoration: 'none' }}>
+                                    <Button variant="outlined" size="small" color="primary">
+                                        Crear
+                                    </Button>
+                                </Link>
+                            </CardActions>
+                        </Card>
+                    </Grid>
+                    <Grid item xs={12}>
                         <Grid container spacing={3}>
                             {levelList.map((level, index) => (
                                 <Grid item xs={12} key={index}>
@@ -140,23 +157,6 @@ function IndexLevelsContent() {
                                     </Card>
                                 </Grid>
                             ))}
-                            <Grid item xs={12}>
-                            <Card>
-                                <CardContent>
-                                    <Typography gutterBottom variant="h5" component="h2">
-                                        Crear nuevo Nivel
-                                    </Typography>
-                                    
-                                </CardContent>
-                                <CardActions>
-                                    <Link to={`./new`} style={{ textDecoration: 'none' }}>
-                                        <Button variant="outlined" size="small" color="primary">
-                                            Crear
-                                        </Button>
-                                    </Link>
-                                </CardActions>
-                            </Card>
-                            </Grid>
                         </Grid>
                     </Grid>
                 </Grid>

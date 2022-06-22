@@ -112,6 +112,23 @@ function IndexLayersContent() {
                         </Typography>
                     </Grid>
                     <Grid item xs={12}>
+                        <Card>
+                            <CardContent>
+                                <Typography gutterBottom variant="h5" component="h2">
+                                    Crear nueva Capa
+                                </Typography>
+                                
+                            </CardContent>
+                            <CardActions>
+                                <Link to={`./new`} style={{ textDecoration: 'none' }}>
+                                    <Button variant='outlined' size="small" color="primary">
+                                        Crear
+                                    </Button>
+                                </Link>
+                            </CardActions>
+                        </Card>
+                    </Grid>
+                    <Grid item xs={12}>
                         <Grid container spacing={3}>
                             {layerList.map((layer, index) => (
                                 <Grid item xs={12} key={index}>
@@ -134,23 +151,6 @@ function IndexLayersContent() {
                                     </Card>
                                 </Grid>
                             ))}
-                            <Grid item xs={12}>
-                            <Card>
-                                <CardContent>
-                                    <Typography gutterBottom variant="h5" component="h2">
-                                        Crear nueva Capa
-                                    </Typography>
-                                    
-                                </CardContent>
-                                <CardActions>
-                                    <Link to={`./new`} style={{ textDecoration: 'none' }}>
-                                        <Button variant='outlined' size="small" color="primary">
-                                            Crear
-                                        </Button>
-                                    </Link>
-                                </CardActions>
-                            </Card>
-                            </Grid>
                         </Grid>
                     </Grid>
                 </Grid>
