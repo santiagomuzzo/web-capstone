@@ -125,19 +125,19 @@ function IndexSitesContent() {
                                         </CardContent>
                                         <CardActions>
                                             <Link to={`./${site._id}`} style={{ textDecoration: 'none' }}>
-                                                <Button variant="outlined" size="small" color="primary">
+                                                <Button variant="contained" size="small" color="primary">
                                                     Ver/Editar
                                                 </Button>
                                             </Link>
                                             
                                             
                                             <Link to={`./${site._id}/Units`} style={{ textDecoration: 'none' }}>
-                                                <Button  size="small" variant="outlined" color='secondary' onClick={()=> defineDomain(site._id, 'site', domain, setDomain)}>
+                                                <Button  size="small" variant="contained" color='secondary' onClick={()=> defineDomain(site._id, 'site', domain, setDomain)}>
                                                     Ver Unidades
                                                 </Button>
                                             </Link>
                                             <Link to={window.location.reload}  style={{ textDecoration: 'none' }}>
-                                                <Button size="small" variant="outlined" color='error' onClick={()=> handleDelete(site._id)}>
+                                                <Button size="small" variant="contained" color='error' onClick={()=> handleDelete(site._id)}>
                                                     Archivar
                                                 </Button>
                                             </Link>
@@ -163,7 +163,7 @@ function IndexSitesContent() {
                                 </CardContent>
                                 <CardActions>
                                     <Link to={`./new`} style={{ textDecoration: 'none' }}>
-                                        <Button variant="outlined" size="small" color="primary">
+                                        <Button variant="contained" size="small" color="primary">
                                             Crear
                                         </Button>
                                     </Link>

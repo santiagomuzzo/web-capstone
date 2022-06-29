@@ -121,7 +121,7 @@ function IndexLayersContent() {
                             </CardContent>
                             <CardActions>
                                 <Link to={`./new`} style={{ textDecoration: 'none' }}>
-                                    <Button variant='outlined' size="small" color="primary">
+                                    <Button variant="contained" size="small" color="primary">
                                         Crear
                                     </Button>
                                 </Link>
@@ -140,12 +140,12 @@ function IndexLayersContent() {
                                         </CardContent>
                                         <CardActions>
                                             <Link to={`./${layer._id}`} style={{ textDecoration: 'none' }}>
-                                                <Button variant='outlined' size="small" color="primary">
+                                                <Button variant="contained" size="small" color="primary">
                                                 Ver/Editar
                                                 </Button>
                                             </Link>
                                             <Link to={window.location.reload}  style={{ textDecoration: 'none' }} >
-                                            <Button variant='outlined' size="small" color='error' onClick={()=> handleDelete(layer._id)}>Archivar</Button>
+                                            <Button variant="contained" size="small" color='error' onClick={()=> handleDelete(layer._id)}>Archivar</Button>
                                             </Link>
                                         </CardActions>
                                     </Card>
