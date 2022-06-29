@@ -147,6 +147,13 @@ function IndexUnitsContent() {
                                                 </Button>
                                         </Link>
                                         </CardActions>
+                                        <CardActions>
+                                        <Link to={`./${unit._id}/LevelsPhotos`} style={{ textDecoration: 'none' }}>
+                                                <Button size="small" color='secondary' variant="outlined">
+                                                    Ver Fotos de los niveles
+                                                </Button>
+                                        </Link>
+                                        </CardActions>
 
                                     </Card>
                                 </Grid>

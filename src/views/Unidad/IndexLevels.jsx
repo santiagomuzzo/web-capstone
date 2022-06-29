@@ -144,7 +144,7 @@ function IndexLevelsContent() {
                                             </Link>
                                             <Link to={`./${level._id}/Photos`} style={{ textDecoration: 'none' }}>
                                                 <Button size="small" color='secondary' variant="outlined">
-                                                    Ver Fotos del Nivel
+                                                    Ver Fotos de los hallazgos
                                                 </Button>
                                             </Link>
                                             <Link to={window.location.reload}  style={{ textDecoration: 'none' }} >
