@@ -272,9 +272,25 @@ function PaymentForm() {
             <MenuItem value={"No Compacta"}>No Compacta</MenuItem>
           </TextField>
         </Grid>
-        <Grid item xs={12} md={6}>
+        <Grid item xs={12} sm={6}>
           <TextField
             required
+            id="color"
+            select
+            label="Color"
+            fullWidth
+            variant="standard"
+            onChange={(e) =>
+              (DATA_FORM.matrixDescription.color = e.target.value)
+            }
+          >
+            <MenuItem value={"Blanco"}>Blanco</MenuItem>
+            <MenuItem value={"Gris"}>Gris</MenuItem>
+            <MenuItem value={"Gris osucro"}>Gris Oscuro</MenuItem>
+            </TextField>
+        </Grid>
+        <Grid item xs={12} md={6}>
+          <TextField
             id="codigo_munshell"
             label="Código Munsell"
             fullWidth

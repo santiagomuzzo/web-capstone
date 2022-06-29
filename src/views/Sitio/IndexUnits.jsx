@@ -125,26 +125,36 @@ function IndexUnitsContent() {
                                         </CardContent>
                                         <CardActions>
                                             <Link to={`./${unit._id}`} style={{ textDecoration: 'none' }}>
-                                                <Button variant="outlined" size="small" color="primary">
+                                                <Button variant="contained" size="small" color="primary">
                                                     Ver/Editar
                                                 </Button>
                                             </Link>
                                             <Link to={`./${unit._id}/Levels`} style={{ textDecoration: 'none' }}>
-                                                <Button size="small" color='secondary' variant="outlined" onClick={()=> defineDomain(unit._id, 'unit', domain, setDomain)}>
+                                                <Button size="small" color='secondary' variant="contained" onClick={()=> defineDomain(unit._id, 'unit', domain, setDomain)}>
                                                 Ver Niveles
                                                 </Button>
                                             </Link>
-                                            <Link to={`./${unit._id}/Photos`} style={{ textDecoration: 'none' }}>
-                                                <Button size="small" color='secondary' variant="outlined">
-                                                    Ver Fotos de la Unidad
-                                                </Button>
-                                            </Link>
                                             <Link to={window.location.reload}  style={{ textDecoration: 'none' }} >
-                                                <Button size="small" variant="outlined" color='error' onClick={()=> handleDelete(unit._id)}>
+                                                <Button size="small" variant="contained" color='error' onClick={()=> handleDelete(unit._id)}>
                                                     Archivar
                                                 </Button>
                                             </Link>
                                         </CardActions>
+                                        <CardActions>
+                                        <Link to={`./${unit._id}/Photos`} style={{ textDecoration: 'none' }}>
+                                                <Button size="small" color='secondary' variant="outlined">
+                                                    Ver Fotos de la Unidad
+                                                </Button>
+                                        </Link>
+                                        </CardActions>
+                                        <CardActions>
+                                        <Link to={`./${unit._id}/LevelsPhotos`} style={{ textDecoration: 'none' }}>
+                                                <Button size="small" color='secondary' variant="outlined">
+                                                    Ver Fotos de los niveles
+                                                </Button>
+                                        </Link>
+                                        </CardActions>
+
                                     </Card>
                                 </Grid>
                             ))}
@@ -167,7 +177,7 @@ function IndexUnitsContent() {
                                 <CardActions>
                                     
                                     <Link to={`./new`} style={{ textDecoration: 'none' }}>
-                                        <Button  variant="outlined" size="small" color="primary">
+                                        <Button variant="contained" size="small" color="primary">
                                             Crear
                                         </Button>
                                     </Link>

@@ -32,6 +32,7 @@ import UnitPhoto from "./views/Unidad/NewPhoto";
 import UnitPhotoShow from "./views/Unidad/Photo";
 import LevelPhoto from "./views/Nivel/NewPhoto";
 import LevelPhotoShow from "./views/Nivel/Photo";
+import LevelUnitPhoto from "./views/Unidad/NewLevelPhoto";
 
 import { MsalProvider } from "@azure/msal-react";
 import { ProvideDomain } from "./useDomain";
@@ -70,6 +71,7 @@ function App({ instance }) {
 					<Route path="/Proyects/:id/Sites/:id/Units/:id" element={<UnitShow />} />
 					<Route path="/Proyects/:id/Sites/:id/Units/:id/Photos" element={<UnitPhoto />} />
 					<Route path="/Proyects/:id/Sites/:id/Units/:id/Photos/:id" element={<UnitPhotoShow />} />
+					<Route path="/Proyects/:id/Sites/:id/Units/:id/LevelsPhotos" element={<LevelUnitPhoto />} />
 					<Route path="/Proyects/:id/Sites/:id/Units/:id/Levels" element={<IndexLevels />} />
 					<Route path="/Proyects/:id/Sites/:id/Units/:id/Levels/new" element={<NewLevel />} />
 					<Route path="/Proyects/:id/Sites/:id/Units/:id/Levels/:id" element={<LevelShow />} />

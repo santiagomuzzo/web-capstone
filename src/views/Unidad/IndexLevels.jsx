@@ -105,6 +105,23 @@ function IndexLevelsContent() {
                         </Typography>
                     </Grid>
                     <Grid item xs={12}>
+                        <Card>
+                            <CardContent>
+                                <Typography gutterBottom variant="h5" component="h2">
+                                    Crear nuevo Nivel
+                                </Typography>
+                                
+                            </CardContent>
+                            <CardActions>
+                                <Link to={`./new`} style={{ textDecoration: 'none' }}>
+                                    <Button variant="contained" size="small" color="primary">
+                                        Crear
+                                    </Button>
+                                </Link>
+                            </CardActions>
+                        </Card>
+                    </Grid>
+                    <Grid item xs={12}>
                         <Grid container spacing={3}>
                             {levelList.map((level, index) => (
                                 <Grid item xs={12} key={index}>
@@ -113,50 +130,30 @@ function IndexLevelsContent() {
                                             <Typography gutterBottom variant="h5" component="h2">
                                                 {level.index}
                                             </Typography>
-                                            <Typography variant="body2" color="textSecondary" component="p">
-                                                Capas: {level.lenLayers}
-                                            </Typography>
                                         </CardContent>
                                         <CardActions>
                                             <Link to={`./${level._id}`} style={{ textDecoration: 'none' }}>
-                                                <Button variant="outlined" size="small" color="primary">
+                                                <Button variant="contained" size="small" color="primary">
                                                 Ver/Editar
                                                 </Button>
                                             </Link>
                                             <Link to={`./${level._id}/Layers`} style={{ textDecoration: 'none' }}>
-                                                <Button size='small'  color='secondary' variant="outlined" onClick={()=> defineDomain(level._id, 'level', domain, setDomain)}>
+                                                <Button size='small'  color='secondary' variant="contained" onClick={()=> defineDomain(level._id, 'level', domain, setDomain)}>
                                                 Ver Capas
                                                 </Button>
                                             </Link>
                                             <Link to={`./${level._id}/Photos`} style={{ textDecoration: 'none' }}>
                                                 <Button size="small" color='secondary' variant="outlined">
-                                                    Ver Fotos del Nivel
+                                                    Ver Fotos de los hallazgos
                                                 </Button>
                                             </Link>
                                             <Link to={window.location.reload}  style={{ textDecoration: 'none' }} >
-                                                <Button size="small"  variant="outlined" color='error' onClick={()=> handleDelete(level._id)}>Archivar</Button>
+                                                <Button size="small"  variant="contained" color='error' onClick={()=> handleDelete(level._id)}>Archivar</Button>
                                             </Link>
                                         </CardActions>
                                     </Card>
                                 </Grid>
                             ))}
-                            <Grid item xs={12}>
-                            <Card>
-                                <CardContent>
-                                    <Typography gutterBottom variant="h5" component="h2">
-                                        Crear nuevo Nivel
-                                    </Typography>
-                                    
-                                </CardContent>
-                                <CardActions>
-                                    <Link to={`./new`} style={{ textDecoration: 'none' }}>
-                                        <Button variant="outlined" size="small" color="primary">
-                                            Crear
-                                        </Button>
-                                    </Link>
-                                </CardActions>
-                            </Card>
-                            </Grid>
                         </Grid>
                     </Grid>
                 </Grid>
