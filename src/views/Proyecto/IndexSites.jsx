@@ -15,6 +15,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Link } from "react-router-dom";
 import proyectos from '../../assets/proyectos.jpeg';
 import NoSession from '../../components/NoSession';
+import { useNavigate } from "react-router-dom";
 
 import { useDomain, defineDomain } from '../../useDomain';
 
@@ -33,6 +34,7 @@ function IndexSitesContent() {
     const { instance, accounts} = useMsal();
     const account = useAccount(accounts[0] || {});
     const [accessToken, setAccessToken] = React.useState(null);
+    const navigate = useNavigate();
     function RequestAccessToken() {
         const request = {
             ...loginRequest,
@@ -92,6 +94,11 @@ function IndexSitesContent() {
         })
         window.location.reload()
     }
+    const handleRedirect =  (id) => {
+        const projectId = window.location.pathname.split("/")[2];
+        defineDomain(id, 'site', domain, setDomain);
+        navigate(`/Proyects/${projectId}/Sites/${id}/Units`);
+    }
 
     return (
         <ThemeProvider theme={theme}>
@@ -114,8 +121,9 @@ function IndexSitesContent() {
                                             height="140"
                                             image= {proyectos}
                                             title="Contemplative Reptile"
+                                            onClick={() => handleRedirect(site._id)}
                                         />
-                                        <CardContent>
+                                        <CardContent onClick={() => handleRedirect(site._id)}>
                                             <Typography gutterBottom variant="h5" component="h2">
                                                 {site.name}
                                             </Typography>
