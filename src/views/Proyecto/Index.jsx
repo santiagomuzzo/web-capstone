@@ -16,6 +16,7 @@ import { Link } from "react-router-dom";
 import { CircularProgress } from '@material-ui/core';
 import proyectos_2 from '../../assets/proyectos_2.jpeg';
 import NoSession from '../../components/NoSession';
+import { useNavigate } from "react-router-dom";
 
 import { useDomain, defineDomain } from '../../useDomain';
 
@@ -35,6 +36,7 @@ function ProyectosContent() {
     const { instance, accounts} = useMsal();
     const account = useAccount(accounts[0] || {});
     const [accessToken, setAccessToken] = React.useState(null);
+    const navigate = useNavigate();
     function RequestAccessToken() {
         const request = {
             ...loginRequest,
@@ -94,8 +96,11 @@ function ProyectosContent() {
                 status: "Inactivo"
         })
     })
-    
-        window.location.reload()
+    window.location.reload()
+    }
+    const handleRedirect =  (id) => {
+        defineDomain(id, 'project', domain, setDomain);
+        navigate(`/Proyects/${id}/Sites`)
     }
 
     if (!projectList) {
@@ -122,8 +127,10 @@ function ProyectosContent() {
                                                 height="140"
                                                 image= {proyectos_2}
                                                 title="Contemplative Reptile"
+                                                onClick={() => handleRedirect(project._id)}
+
                                             />
-                                            <CardContent>
+                                            <CardContent onClick={() => handleRedirect(project._id)}>
                                                 <Typography gutterBottom variant="h5" component="h2">
                                                     {project.name}
                                                 </Typography>
