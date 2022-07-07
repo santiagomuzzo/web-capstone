@@ -13,11 +13,12 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Link } from "react-router-dom";
-import { CircularProgress } from '@material-ui/core';
 import proyectos_2 from '../../assets/proyectos_2.jpeg';
 import NoSession from '../../components/NoSession';
+import CircularProgress from '@mui/material/CircularProgress';
 
 import { useDomain, defineDomain } from '../../useDomain';
+import { useNavigate } from "react-router-dom";
 
 const theme = createTheme({
     palette: {
@@ -35,6 +36,8 @@ function ProyectosContent() {
     const { instance, accounts} = useMsal();
     const account = useAccount(accounts[0] || {});
     const [accessToken, setAccessToken] = React.useState(null);
+    const navigate = useNavigate();
+    const [isLoading, setIsLoading] = React.useState(true)
     function RequestAccessToken() {
         const request = {
             ...loginRequest,
@@ -71,7 +74,7 @@ function ProyectosContent() {
             headers: {
             Authorization: bearer
             }
-        });
+        })
         const raw = await data.json()
         const array = []
         raw.forEach((obj) => {
@@ -99,7 +102,7 @@ function ProyectosContent() {
     }
 
     if (!projectList) {
-        return <CircularProgress></CircularProgress>
+        return <CircularProgress />
     }
     return (
         <ThemeProvider theme={theme}>
@@ -111,6 +114,7 @@ function ProyectosContent() {
                             Proyectos
                         </Typography>
                     </Grid>
+
                     <Grid item xs={12}>
                         <Grid container spacing={3}>
                             {projectList.map((project, index) => (
@@ -154,6 +158,7 @@ function ProyectosContent() {
                             <Grid item xs={12} sm={6} md={4}>
                             <Card>
                                 <CardMedia
+                                    onClick={() => navigate(`/Proyects/new`)}
                                     component="img"
                                     alt="Contemplative Reptile"
                                     height="140"
@@ -180,6 +185,7 @@ function ProyectosContent() {
                             </Grid>
                         </Grid>
                     </Grid>
+                
                 </Grid>
             </Container>
         </ThemeProvider>

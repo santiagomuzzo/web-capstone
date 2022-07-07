@@ -32,10 +32,11 @@ export const Header = () => {
                     
                     <ul>
                         <li>
-                            <Link to="/Proyects" style={{ textDecoration: 'none' }}><a className='boton-navbar' ><Button size = "small" style={buttonStyle}>Proyectos</Button></a></Link>
+
+                            <Link to="/Proyects" style={{ textDecoration: 'none' }}><a className='boton-navbar' ><Button variant="text" size = "small" style={buttonStyle}>Proyectos</Button></a></Link>
                         </li>
                         <li>
-                            <Link to="/Dashboard" style={{ textDecoration: 'none' }}><a className='boton-navbar' ><Button size = "small" style={buttonStyle}>Tablero</Button></a></Link>
+                            <Link to="/Dashboard" style={{ textDecoration: 'none' }}><a className='boton-navbar' ><Button variant="text" size = "small" style={buttonStyle}>Tablero</Button></a></Link>
                         </li>
                     </ul>
                 

@@ -17,6 +17,8 @@ import proyectos from '../../assets/proyectos.jpeg';
 import NoSession from '../../components/NoSession';
 
 import { useDomain, defineDomain } from '../../useDomain';
+import { useNavigate } from "react-router-dom";
+
 
 const theme = createTheme({
     palette: {
@@ -33,6 +35,7 @@ function IndexUnitsContent() {
     const { instance, accounts} = useMsal();
     const account = useAccount(accounts[0] || {});
     const [accessToken, setAccessToken] = React.useState(null);
+    const navigate = useNavigate();
     function RequestAccessToken() {
         const request = {
             ...loginRequest,
@@ -161,6 +164,7 @@ function IndexUnitsContent() {
                             <Grid item xs={12} sm={6} md={4}>
                             <Card>
                                 <CardMedia
+                                    onClick={() => navigate(`./new`)}
                                     component="img"
                                     alt="Contemplative Reptile"
                                     height="140"
