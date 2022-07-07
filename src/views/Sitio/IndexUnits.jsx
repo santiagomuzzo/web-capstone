@@ -15,8 +15,6 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Link, Navigate } from "react-router-dom";
 import proyectos from '../../assets/proyectos.jpeg';
 import NoSession from '../../components/NoSession';
-import { useNavigate } from "react-router-dom";
-
 import { useDomain, defineDomain } from '../../useDomain';
 import { useNavigate } from "react-router-dom";
 

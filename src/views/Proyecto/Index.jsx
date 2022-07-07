@@ -16,8 +16,6 @@ import { Link } from "react-router-dom";
 import proyectos_2 from '../../assets/proyectos_2.jpeg';
 import NoSession from '../../components/NoSession';
 import CircularProgress from '@mui/material/CircularProgress';
-
-
 import { useDomain, defineDomain } from '../../useDomain';
 import { useNavigate } from "react-router-dom";
 
