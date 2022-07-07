@@ -35,7 +35,7 @@ function LevelNewPhoto() {
     const level_id = window.location.pathname.split("/")[8];
 
     const [file, setFile] = React.useState(null)
-    const [description, setDescription] = React.useState("")
+    const [name, setName] = React.useState("")
     const [dataImages, setDataImages] = React.useState([])
 
     React.useEffect(() => {
@@ -43,7 +43,7 @@ function LevelNewPhoto() {
       }, []);
 
     const obtainData = async () => {
-        const response = await fetch(`${process.env.REACT_APP_API_URL}/unit/${unit_id}/level/${level_id}/findingsImages/active`, {
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/image/${unit_id}/level/${level_id}/findingsImages/active`, {
             method: 'GET',
             headers: {
             'Content-Type': 'application/json',
@@ -56,8 +56,8 @@ function LevelNewPhoto() {
     async function handleSubmit() {
         const formData = new FormData();
         formData.append("image", file);
-        formData.append("description", description);
-        await fetch(`${process.env.REACT_APP_API_URL}/unit/${unit_id}/level/${level_id}/uploadFindingsImage`, {
+        formData.append("name", name);
+        await fetch(`${process.env.REACT_APP_API_URL}/image/${unit_id}/level/${level_id}/uploadFindingsImage`, {
           method: "POST",
           body: formData,
           headers: {
@@ -88,11 +88,11 @@ function LevelNewPhoto() {
                         <Grid item xs={12}>
                         <TextField
                           required
-                            id="description"
-                            label="Ingresa una descripción para la foto"
-                            name="description"
-                            value={description}
-                            onChange={(e) => setDescription(e.target.value)}
+                            id="name"
+                            label="Ingresa un nombre para la foto"
+                            name="name"
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
                             fullWidth
                         />
                         </Grid>
@@ -118,7 +118,7 @@ function LevelNewPhoto() {
                   </Button>
               </Link>
               <ImageListItemBar
-                title={item.description}
+                title={item.name}
                 position="below"
               />
             </ImageListItem>

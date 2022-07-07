@@ -44,7 +44,7 @@ function LevelPhotoShow() {
     , []);
 
     const obtainData = async () => {
-        const response = await fetch(`${process.env.REACT_APP_API_URL}/unit/${unit_id}/level/${level_id}/findingsImage/${photo_id}`, {
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/image/${unit_id}/level/${level_id}/findingsImage/${photo_id}`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -57,7 +57,7 @@ function LevelPhotoShow() {
 
       async function handleDelete(id) {
         console.log("handleDelete, id: " + id);
-        await fetch(`${process.env.REACT_APP_API_URL}/unit/${unit_id}/level/${level_id}/findingsImage/${id}/softDelete`, {
+        await fetch(`${process.env.REACT_APP_API_URL}/image/${unit_id}/level/${level_id}/findingsImage/${id}/softDelete`, {
           method: 'PUT',
         })
         navigate("/Proyects/" + proyect_id + "/Sites/" + site_id + "/Units/" + unit_id + "/Photos")

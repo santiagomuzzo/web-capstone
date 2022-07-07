@@ -34,7 +34,7 @@ function UnitNewPhoto() {
   const unit_id = window.location.pathname.split("/")[6];
 
   const [file, setFile] = React.useState(null)
-  const [description, setDescription] = React.useState("")
+  const [name, setName] = React.useState("")
   const [dataImages, setDataImages] = React.useState([])
 
   React.useEffect(() => {
@@ -43,21 +43,22 @@ function UnitNewPhoto() {
 
 
   const obtainData = async () => {
-    const response = await fetch(`${process.env.REACT_APP_API_URL}/unit/${unit_id}/unitImages/active`, {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/image/${unit_id}/unitImages/active`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
       }
     })
     const data = await response.json()
+    console.log(data)
     setDataImages(data)
   }
 
   async function handleSubmit() {
     const formData = new FormData();
     formData.append("image", file);
-    formData.append("description", description);
-    await fetch(`${process.env.REACT_APP_API_URL}/unit/${unit_id}/uploadUnitImage`, {
+    formData.append("name", name);
+    await fetch(`${process.env.REACT_APP_API_URL}/image/${unit_id}/uploadUnitImage`, {
       method: "POST",
       body: formData,
       headers: {
@@ -88,12 +89,12 @@ function UnitNewPhoto() {
               <Grid item xs={12}>
                 <TextField
                   required
-                  id="description"
-                  name="description"
-                  label="Ingresa una descripción para la foto"
+                  id="nombre"
+                  name="nombre"
+                  label="Ingresa un nombre para la foto"
                   fullWidth
-                  value={description}
-                  onChange={e => setDescription(e.target.value)}
+                  value={name}
+                  onChange={e => setName(e.target.value)}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -123,7 +124,7 @@ function UnitNewPhoto() {
                   </Button>
               </Link>
               <ImageListItemBar
-                title={item.description}
+                title={item.name}
                 position="below"
               />
             </ImageListItem>

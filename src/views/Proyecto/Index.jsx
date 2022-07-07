@@ -13,11 +13,13 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Link } from "react-router-dom";
-import proyectos_2 from '../../assets/proyectos_2.jpeg';
 import NoSession from '../../components/NoSession';
 import CircularProgress from '@mui/material/CircularProgress';
 import { useDomain, defineDomain } from '../../useDomain';
 import { useNavigate } from "react-router-dom";
+import proyectos_0 from '../../assets/proyectos_0.jpeg';
+import proyectos_1 from '../../assets/proyectos_1.jpeg';
+
 
 const theme = createTheme({
     palette: {
@@ -126,10 +128,9 @@ function ProyectosContent() {
                                                 component="img"
                                                 alt="Contemplative Reptile"
                                                 height="140"
-                                                image= {proyectos_2}
+                                                image={require(`../../assets/proyectos_${index}.jpeg`)}
                                                 title="Contemplative Reptile"
                                                 onClick={() => handleRedirect(project._id)}
-
                                             />
                                             <CardContent onClick={() => handleRedirect(project._id)}>
                                                 <Typography gutterBottom variant="h5" component="h2">
