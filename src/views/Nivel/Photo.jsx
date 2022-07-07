@@ -60,7 +60,7 @@ function LevelPhotoShow() {
         await fetch(`${process.env.REACT_APP_API_URL}/image/${unit_id}/level/${level_id}/findingsImage/${id}/softDelete`, {
           method: 'PUT',
         })
-        navigate("/Proyects/" + proyect_id + "/Sites/" + site_id + "/Units/" + unit_id + "/Photos")
+        navigate("/Proyects/" + proyect_id + "/Sites/" + site_id + "/Units/" + unit_id + "Levels" + level_id + "/Photos")
       }
 
     return (
