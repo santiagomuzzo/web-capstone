@@ -12,9 +12,10 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import proyectos from '../../assets/proyectos.jpeg';
 import NoSession from '../../components/NoSession';
+import { useNavigate } from "react-router-dom";
 
 import { useDomain, defineDomain } from '../../useDomain';
 import { useNavigate } from "react-router-dom";
@@ -96,6 +97,12 @@ function IndexUnitsContent() {
           })
         window.location.reload()
     }
+    const handleRedirect =  (id) => {
+        const projectId = window.location.pathname.split("/")[2];
+        const siteId = window.location.pathname.split("/")[4];
+        defineDomain(id, 'unit', domain, setDomain)
+        navigate(`/Proyects/${projectId}/Sites/${siteId}/Units/${id}/Levels`);
+    }
     return (
         <ThemeProvider theme={theme}>
             <CssBaseline />
@@ -117,8 +124,9 @@ function IndexUnitsContent() {
                                             height="140"
                                             image= {proyectos}
                                             title="Contemplative Reptile"
+                                            onClick={() => handleRedirect(unit._id)}
                                         />
-                                        <CardContent>
+                                        <CardContent onClick={() => handleRedirect(unit._id)}>
                                             <Typography gutterBottom variant="h5" component="h2">
                                                 {unit.name}
                                             </Typography>

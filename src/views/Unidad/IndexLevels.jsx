@@ -96,6 +96,13 @@ function IndexLevelsContent() {
         })
         window.location.reload()
     }
+    const handleRedirect =  (id) => {
+        const projectId = window.location.pathname.split("/")[2];
+        const siteId = window.location.pathname.split("/")[4];
+        const unitId = window.location.pathname.split("/")[6];
+        defineDomain(id, 'level', domain, setDomain)
+        navigate(`/Proyects/${projectId}/Sites/${siteId}/Units/${unitId}/Levels/${id}/Layers`);
+    }
     return (
         <ThemeProvider theme={theme}>
             <CssBaseline />
@@ -128,12 +135,12 @@ function IndexLevelsContent() {
                             {levelList.map((level, index) => (
                                 <Grid item xs={12} key={index}>
                                     <Card>
-                                        <CardContent>
+                                        <CardContent onClick={() => handleRedirect(level._id)}>
                                             <Typography gutterBottom variant="h5" component="h2">
                                                 {level.index}
                                             </Typography>
                                         </CardContent>
-                                        <CardActions>
+                                        <CardActions >
                                             <Link to={`./${level._id}`} style={{ textDecoration: 'none' }}>
                                                 <Button variant="contained" size="small" color="primary">
                                                 Ver/Editar
@@ -146,7 +153,7 @@ function IndexLevelsContent() {
                                             </Link>
                                             <Link to={`./${level._id}/Photos`} style={{ textDecoration: 'none' }}>
                                                 <Button size="small" color='secondary' variant="outlined">
-                                                    Ver Fotos de los hallazgos
+                                                Ver Fotos de los hallazgos
                                                 </Button>
                                             </Link>
                                             <Link to={window.location.reload}  style={{ textDecoration: 'none' }} >
