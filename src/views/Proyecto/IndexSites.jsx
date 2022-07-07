@@ -15,8 +15,11 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Link } from "react-router-dom";
 import proyectos from '../../assets/proyectos.jpeg';
 import NoSession from '../../components/NoSession';
+import { useNavigate } from "react-router-dom";
 
 import { useDomain, defineDomain } from '../../useDomain';
+import { useNavigate } from "react-router-dom";
+
 
 const theme = createTheme({
     palette: {
@@ -33,6 +36,7 @@ function IndexSitesContent() {
     const { instance, accounts} = useMsal();
     const account = useAccount(accounts[0] || {});
     const [accessToken, setAccessToken] = React.useState(null);
+    const navigate = useNavigate();
     function RequestAccessToken() {
         const request = {
             ...loginRequest,
@@ -92,6 +96,11 @@ function IndexSitesContent() {
         })
         window.location.reload()
     }
+    const handleRedirect =  (id) => {
+        const projectId = window.location.pathname.split("/")[2];
+        defineDomain(id, 'site', domain, setDomain);
+        navigate(`/Proyects/${projectId}/Sites/${id}/Units`);
+    }
 
     return (
         <ThemeProvider theme={theme}>
@@ -114,8 +123,9 @@ function IndexSitesContent() {
                                             height="140"
                                             image= {proyectos}
                                             title="Contemplative Reptile"
+                                            onClick={() => handleRedirect(site._id)}
                                         />
-                                        <CardContent>
+                                        <CardContent onClick={() => handleRedirect(site._id)}>
                                             <Typography gutterBottom variant="h5" component="h2">
                                                 {site.name}
                                             </Typography>
@@ -125,19 +135,19 @@ function IndexSitesContent() {
                                         </CardContent>
                                         <CardActions>
                                             <Link to={`./${site._id}`} style={{ textDecoration: 'none' }}>
-                                                <Button variant="outlined" size="small" color="primary">
+                                                <Button variant="contained" size="small" color="primary">
                                                     Ver/Editar
                                                 </Button>
                                             </Link>
                                             
                                             
                                             <Link to={`./${site._id}/Units`} style={{ textDecoration: 'none' }}>
-                                                <Button  size="small" variant="outlined" color='secondary' onClick={()=> defineDomain(site._id, 'site', domain, setDomain)}>
+                                                <Button  size="small" variant="contained" color='secondary' onClick={()=> defineDomain(site._id, 'site', domain, setDomain)}>
                                                     Ver Unidades
                                                 </Button>
                                             </Link>
                                             <Link to={window.location.reload}  style={{ textDecoration: 'none' }}>
-                                                <Button size="small" variant="outlined" color='error' onClick={()=> handleDelete(site._id)}>
+                                                <Button size="small" variant="contained" color='error' onClick={()=> handleDelete(site._id)}>
                                                     Archivar
                                                 </Button>
                                             </Link>
@@ -148,6 +158,7 @@ function IndexSitesContent() {
                             <Grid item xs={12} sm={6} md={4}>
                             <Card>
                                 <CardMedia
+                                    onClick={() => navigate(`./new`)}
                                     component="img"
                                     alt="Contemplative Reptile"
                                     height="140"
@@ -163,7 +174,7 @@ function IndexSitesContent() {
                                 </CardContent>
                                 <CardActions>
                                     <Link to={`./new`} style={{ textDecoration: 'none' }}>
-                                        <Button variant="outlined" size="small" color="primary">
+                                        <Button variant="contained" size="small" color="primary">
                                             Crear
                                         </Button>
                                     </Link>

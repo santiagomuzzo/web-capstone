@@ -143,6 +143,12 @@ function NewLevelContent() {
                     fullWidth
                     autoComplete="Profundidad inicial"
                     helperText="Profundidad inicial del nivel"
+                    InputProps={{
+                      inputProps: { 
+                          min: 0,
+                          step: 5
+                      }
+                  }}
                     onChange={(e) => {DATA_FORM.startDepth = e.target.value}}
                   />
                   Profundidad Final:
@@ -154,6 +160,12 @@ function NewLevelContent() {
                     fullWidth
                     autoComplete="Profundidad final"
                     helperText="Profundidad final del nivel"
+                    InputProps={{
+                      inputProps: { 
+                          min: 0,
+                          step: 5 
+                      }
+                  }}
                     onChange={(e) => {DATA_FORM.endDepth = e.target.value}}
                   />
                   Fecha:

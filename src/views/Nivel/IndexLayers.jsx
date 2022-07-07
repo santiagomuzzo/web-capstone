@@ -15,7 +15,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Link } from "react-router-dom";
 import { useDomain, defineDomain } from '../../useDomain';
 import NoSession from '../../components/NoSession';
-
+import { useNavigate } from "react-router-dom";
 
 
 const theme = createTheme({
@@ -34,6 +34,7 @@ function IndexLayersContent() {
     const { instance, accounts} = useMsal();
     const account = useAccount(accounts[0] || {});
     const [accessToken, setAccessToken] = React.useState(null);
+    const navigate = useNavigate();
     function RequestAccessToken() {
         const request = {
             ...loginRequest,
@@ -112,6 +113,23 @@ function IndexLayersContent() {
                         </Typography>
                     </Grid>
                     <Grid item xs={12}>
+                        <Card onClick={() => navigate(`./new`)}>
+                            <CardContent>
+                                <Typography gutterBottom variant="h5" component="h2">
+                                    Crear nueva Capa
+                                </Typography>
+                                
+                            </CardContent>
+                            <CardActions>
+                                <Link to={`./new`} style={{ textDecoration: 'none' }}>
+                                    <Button variant="contained" size="small" color="primary">
+                                        Crear
+                                    </Button>
+                                </Link>
+                            </CardActions>
+                        </Card>
+                    </Grid>
+                    <Grid item xs={12}>
                         <Grid container spacing={3}>
                             {layerList.map((layer, index) => (
                                 <Grid item xs={12} key={index}>
@@ -123,34 +141,17 @@ function IndexLayersContent() {
                                         </CardContent>
                                         <CardActions>
                                             <Link to={`./${layer._id}`} style={{ textDecoration: 'none' }}>
-                                                <Button variant='outlined' size="small" color="primary">
+                                                <Button variant="contained" size="small" color="primary">
                                                 Ver/Editar
                                                 </Button>
                                             </Link>
                                             <Link to={window.location.reload}  style={{ textDecoration: 'none' }} >
-                                            <Button variant='outlined' size="small" color='error' onClick={()=> handleDelete(layer._id)}>Archivar</Button>
+                                            <Button variant="contained" size="small" color='error' onClick={()=> handleDelete(layer._id)}>Archivar</Button>
                                             </Link>
                                         </CardActions>
                                     </Card>
                                 </Grid>
                             ))}
-                            <Grid item xs={12}>
-                            <Card>
-                                <CardContent>
-                                    <Typography gutterBottom variant="h5" component="h2">
-                                        Crear nueva Capa
-                                    </Typography>
-                                    
-                                </CardContent>
-                                <CardActions>
-                                    <Link to={`./new`} style={{ textDecoration: 'none' }}>
-                                        <Button variant='outlined' size="small" color="primary">
-                                            Crear
-                                        </Button>
-                                    </Link>
-                                </CardActions>
-                            </Card>
-                            </Grid>
                         </Grid>
                     </Grid>
                 </Grid>
