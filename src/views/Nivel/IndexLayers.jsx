@@ -15,7 +15,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Link } from "react-router-dom";
 import { useDomain, defineDomain } from '../../useDomain';
 import NoSession from '../../components/NoSession';
-
+import { useNavigate } from "react-router-dom";
 
 
 const theme = createTheme({
@@ -34,6 +34,7 @@ function IndexLayersContent() {
     const { instance, accounts} = useMsal();
     const account = useAccount(accounts[0] || {});
     const [accessToken, setAccessToken] = React.useState(null);
+    const navigate = useNavigate();
     function RequestAccessToken() {
         const request = {
             ...loginRequest,
@@ -112,7 +113,7 @@ function IndexLayersContent() {
                         </Typography>
                     </Grid>
                     <Grid item xs={12}>
-                        <Card>
+                        <Card onClick={() => navigate(`./new`)}>
                             <CardContent>
                                 <Typography gutterBottom variant="h5" component="h2">
                                     Crear nueva Capa

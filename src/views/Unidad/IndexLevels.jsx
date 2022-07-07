@@ -18,7 +18,6 @@ import NoSession from '../../components/NoSession';
 import { useNavigate } from "react-router-dom";
 
 
-
 const theme = createTheme({
     palette: {
       primary: {
@@ -115,8 +114,8 @@ function IndexLevelsContent() {
                         </Typography>
                     </Grid>
                     <Grid item xs={12}>
-                        <Card>
-                            <CardContent>
+                        <Card onClick={() => navigate(`./new`)}>
+                            <CardContent >
                                 <Typography gutterBottom variant="h5" component="h2">
                                     Crear nuevo Nivel
                                 </Typography>

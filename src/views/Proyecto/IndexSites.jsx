@@ -18,6 +18,8 @@ import NoSession from '../../components/NoSession';
 import { useNavigate } from "react-router-dom";
 
 import { useDomain, defineDomain } from '../../useDomain';
+import { useNavigate } from "react-router-dom";
+
 
 const theme = createTheme({
     palette: {
@@ -156,6 +158,7 @@ function IndexSitesContent() {
                             <Grid item xs={12} sm={6} md={4}>
                             <Card>
                                 <CardMedia
+                                    onClick={() => navigate(`./new`)}
                                     component="img"
                                     alt="Contemplative Reptile"
                                     height="140"
