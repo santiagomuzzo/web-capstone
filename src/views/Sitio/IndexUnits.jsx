@@ -13,7 +13,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Link, Navigate } from "react-router-dom";
-import proyectos from '../../assets/proyectos.jpeg';
+import niveles from '../../assets/niveles.jpeg';
 import NoSession from '../../components/NoSession';
 import { useDomain, defineDomain } from '../../useDomain';
 import { useNavigate } from "react-router-dom";
@@ -120,7 +120,7 @@ function IndexUnitsContent() {
                                             component="img"
                                             alt="Contemplative Reptile"
                                             height="140"
-                                            image= {proyectos}
+                                            image= {niveles}
                                             title="Contemplative Reptile"
                                             onClick={() => handleRedirect(unit._id)}
                                         />
